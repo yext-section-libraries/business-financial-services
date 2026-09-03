@@ -1,0 +1,11 @@
+{
+  "id": "business-financial-services",
+  "displayName": "Business Financial Services",
+  "vertical": [
+    "FINANCIAL_SERVICES"
+  ],
+  "purpose": [
+    "LOCATION"
+  ],
+  "pageSetType": "ENTITY"
+}
