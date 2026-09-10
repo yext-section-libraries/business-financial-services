@@ -1,13 +1,11 @@
 import type { SectionConfig } from "@yext/visual-editor";
 
-import { isValidElement } from "react";
 import type { PuckComponent } from "@puckeditor/core";
 import { CircleSlash2 } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import {
   Body,
   EntityField,
-  MaybeRTF,
   PageSection,
   type StyledTextValue,
   type ThemeColor,
@@ -20,9 +18,9 @@ import {
   getDefaultRTF,
   resolveComponentData,
   resolveYextEntityField,
-  toPuckFields,
   useDocument,
 } from "@yext/visual-editor";
+import { isRichTextEmpty, renderRichText } from "../shared/sectionStyles";
 
 export type BusinessFinancialServicesBannerSectionProps = {
   data: {
@@ -37,16 +35,6 @@ export type BusinessFinancialServicesBannerSectionProps = {
     backgroundColor: ThemeColor;
     visibleOnLivePage: boolean;
   };
-};
-
-const isRichTextEmpty = (value: unknown): boolean => {
-  if (!value) return true;
-  if (typeof value === "string") return value.trim() === "";
-  if (typeof value === "object" && "html" in value) {
-    const html = (value as { html?: unknown }).html;
-    return typeof html !== "string" || html.trim() === "";
-  }
-  return false;
 };
 
 const fields: YextFields<BusinessFinancialServicesBannerSectionProps> = {
@@ -148,7 +136,6 @@ const BusinessFinancialServicesBannerSectionComponent: PuckComponent<
     data.text,
     i18n.language,
     streamDocument,
-    { richTextStyleOverrides },
   );
 
   if (!resolvedText) return <></>;
@@ -170,14 +157,7 @@ const BusinessFinancialServicesBannerSectionComponent: PuckComponent<
         displayName="Banner Text"
         fieldId={data.text.field}
       >
-        {isValidElement(resolvedText) ? (
-          resolvedText
-        ) : typeof resolvedText === "string" ? (
-          <MaybeRTF
-            data={resolvedText}
-            richTextStyleOverrides={richTextStyleOverrides}
-          />
-        ) : null}
+        {renderRichText(resolvedText, richTextStyleOverrides)}
       </EntityField>
     </PageSection>
   );
@@ -186,7 +166,7 @@ const BusinessFinancialServicesBannerSectionComponent: PuckComponent<
 export const BusinessFinancialServicesBannerSection: YextComponentConfig<BusinessFinancialServicesBannerSectionProps> =
   {
     label: "Banner Section",
-    fields: toPuckFields(fields),
+    fields,
     defaultProps: {
       data: {
         text: {

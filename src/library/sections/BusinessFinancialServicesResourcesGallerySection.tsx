@@ -1,22 +1,20 @@
 import type { SectionConfig } from "@yext/visual-editor";
+import { createScopedTypographyStyles } from "../shared/typography";
 
 import * as React from "react";
 import type { PuckComponent } from "@puckeditor/core";
 import { AnalyticsScopeProvider } from "@yext/pages-components";
 import {
+  Background,
   ComprehensiveCTA,
   EntityField,
   getAnalyticsScopeHash,
   getDefaultRTF,
+  getSurfaceColorStyle,
   Image,
-  MaybeRTF,
   type ComprehensiveCTAValue,
-  type RichText,
-  type StyledTextValue,
   type ThemeColor,
   type TranslatableAssetImage,
-  type TranslatableRichText,
-  type TranslatableString,
   type YextComponentConfig,
   type YextEntityField,
   type YextFields,
@@ -26,99 +24,16 @@ import {
   BackgroundProvider,
   isDarkColor,
 } from "@yext/visual-editor";
+import { getTextStyles, renderRichText } from "../shared/sectionStyles";
+import type {
+  StyledRichTextField,
+  StyledTextField,
+} from "../shared/sectionFields";
 
 const resourcesGalleryTypographyScopeClass = "bfs-resources-gallery-typography";
-const resourcesGalleryTypographyStyles = `
-  .${resourcesGalleryTypographyScopeClass} p {
-    font-family: var(--fontFamily-body-fontFamily);
-    font-size: var(--fontSize-body-fontSize);
-    line-height: 1.5;
-    font-weight: var(--fontWeight-body-fontWeight);
-    font-style: var(--fontStyle-body-fontStyle);
-    text-transform: var(--textTransform-body-textTransform);
-  }
-  .${resourcesGalleryTypographyScopeClass} li {
-    font-family: var(--fontFamily-body-fontFamily);
-    font-size: var(--fontSize-body-fontSize);
-    line-height: 1.5;
-    font-weight: var(--fontWeight-body-fontWeight);
-    font-style: var(--fontStyle-body-fontStyle);
-    text-transform: var(--textTransform-body-textTransform);
-  }
-  .${resourcesGalleryTypographyScopeClass} h1 {
-    font-family: var(--fontFamily-h1-fontFamily);
-    font-size: var(--fontSize-h1-fontSize);
-    line-height: 1.2;
-    font-weight: var(--fontWeight-h1-fontWeight);
-    font-style: var(--fontStyle-h1-fontStyle);
-    text-transform: var(--textTransform-h1-textTransform);
-  }
-  .${resourcesGalleryTypographyScopeClass} h2 {
-    font-family: var(--fontFamily-h2-fontFamily);
-    font-size: var(--fontSize-h2-fontSize);
-    line-height: 1.2;
-    font-weight: var(--fontWeight-h2-fontWeight);
-    font-style: var(--fontStyle-h2-fontStyle);
-    text-transform: var(--textTransform-h2-textTransform);
-  }
-  .${resourcesGalleryTypographyScopeClass} h3 {
-    font-family: var(--fontFamily-h3-fontFamily);
-    font-size: var(--fontSize-h3-fontSize);
-    line-height: 1.2;
-    font-weight: var(--fontWeight-h3-fontWeight);
-    font-style: var(--fontStyle-h3-fontStyle);
-    text-transform: var(--textTransform-h3-textTransform);
-  }
-  .${resourcesGalleryTypographyScopeClass} h4 {
-    font-family: var(--fontFamily-h4-fontFamily);
-    font-size: var(--fontSize-h4-fontSize);
-    line-height: 1.2;
-    font-weight: var(--fontWeight-h4-fontWeight);
-    font-style: var(--fontStyle-h4-fontStyle);
-    text-transform: var(--textTransform-h4-textTransform);
-  }
-  .${resourcesGalleryTypographyScopeClass} h5 {
-    font-family: var(--fontFamily-h5-fontFamily);
-    font-size: var(--fontSize-h5-fontSize);
-    line-height: 1.2;
-    font-weight: var(--fontWeight-h5-fontWeight);
-    font-style: var(--fontStyle-h5-fontStyle);
-    text-transform: var(--textTransform-h5-textTransform);
-  }
-  .${resourcesGalleryTypographyScopeClass} h6 {
-    font-family: var(--fontFamily-h6-fontFamily);
-    font-size: var(--fontSize-h6-fontSize);
-    line-height: 1.2;
-    font-weight: var(--fontWeight-h6-fontWeight);
-    font-style: var(--fontStyle-h6-fontStyle);
-    text-transform: var(--textTransform-h6-textTransform);
-  }
-  .${resourcesGalleryTypographyScopeClass} a:not(.font-button-fontFamily) {
-    font-family: var(--fontFamily-link-fontFamily);
-    font-size: var(--fontSize-link-fontSize);
-    font-weight: var(--fontWeight-link-fontWeight);
-    font-style: var(--fontStyle-link-fontStyle);
-    line-height: 1.5;
-    text-decoration: none;
-    text-transform: var(--textTransform-link-textTransform);
-    letter-spacing: var(--letterSpacing-link-letterSpacing);
-  }
-  .${resourcesGalleryTypographyScopeClass} a:not(.font-button-fontFamily):hover {
-    text-decoration: underline;
-  }
-`;
-
-type StyledTextField = {
-  text: YextEntityField<TranslatableString>;
-  styles: StyledTextValue;
-  fontColor?: ThemeColor;
-};
-
-type StyledRichTextField = {
-  text: YextEntityField<TranslatableRichText>;
-  styles: StyledTextValue;
-  fontColor?: ThemeColor;
-};
+const resourcesGalleryTypographyStyles = createScopedTypographyStyles(
+  resourcesGalleryTypographyScopeClass,
+);
 
 type ImageField = {
   image: YextEntityField<TranslatableAssetImage>;
@@ -137,60 +52,6 @@ export type BusinessFinancialServicesResourcesGallerySectionProps = {
     backgroundColor: ThemeColor;
     visibleOnLivePage: boolean;
   };
-};
-
-const resolveThemeColorCssValue = (value?: ThemeColor): string | undefined => {
-  if (!value) return undefined;
-  const color = value.selectedColor;
-  if (color === "white") return "#ffffff";
-  if (color.startsWith("[") && color.endsWith("]")) {
-    return color.slice(1, -1);
-  }
-  if (color.endsWith("-light")) {
-    const base = color.replace(/-light$/, "");
-    return `hsl(from var(--colors-${base}) h s 98)`;
-  }
-  if (color.endsWith("-dark")) {
-    const base = color.replace(/-dark$/, "");
-    return `hsl(from var(--colors-${base}) h s 20)`;
-  }
-  if (color.startsWith("palette-")) return `var(--colors-${color})`;
-  return color;
-};
-
-const getTextStyles = (
-  styles: StyledTextValue,
-  color?: ThemeColor,
-): React.CSSProperties => ({
-  color: resolveThemeColorCssValue(color),
-  fontFamily: styles.fontFamily === "default" ? undefined : styles.fontFamily,
-  fontSize: styles.fontSize === "default" ? undefined : styles.fontSize,
-  fontStyle: styles.fontStyle === "default" ? undefined : styles.fontStyle,
-  fontWeight: styles.fontWeight === "default" ? undefined : styles.fontWeight,
-  textTransform:
-    styles.textTransform === "default" ? undefined : styles.textTransform,
-});
-
-type RichTextStyleOverrides = Omit<Partial<StyledTextValue>, "color"> & {
-  color?: ThemeColor | string;
-};
-
-const renderRichText = (
-  value: unknown,
-  richTextStyleOverrides: RichTextStyleOverrides,
-) => {
-  if (React.isValidElement(value)) return value;
-  if (typeof value === "string") {
-    return (
-      <MaybeRTF data={value} richTextStyleOverrides={richTextStyleOverrides} />
-    );
-  }
-  return (
-    <MaybeRTF
-      data={value as RichText | undefined}
-      richTextStyleOverrides={richTextStyleOverrides}
-    />
-  );
 };
 
 const imageDefault = (path: string): ImageField => ({
@@ -311,7 +172,7 @@ export const BusinessFinancialServicesResourcesGallerySectionComponent: PuckComp
   const heading =
     resolveComponentData(props.featureHeading.text, locale, streamDocument) ||
     "";
-  const bodyRichTextStyleOverrides: RichTextStyleOverrides = {
+  const bodyRichTextStyleOverrides = {
     ...props.featureBody.styles,
     color:
       props.featureBody.fontColor ??
@@ -321,7 +182,6 @@ export const BusinessFinancialServicesResourcesGallerySectionComponent: PuckComp
     props.featureBody.text,
     locale,
     streamDocument,
-    { richTextStyleOverrides: bodyRichTextStyleOverrides },
   );
   const scopeName = `YextBusinessFinancialServicesResourcesGallerySection${getAnalyticsScopeHash(
     props.id,
@@ -357,13 +217,14 @@ export const BusinessFinancialServicesResourcesGallerySectionComponent: PuckComp
       isEditing={props.puck.isEditing}
     >
       <AnalyticsScopeProvider name={scopeName}>
-        <section
+        <Background
+          as="section"
+          background={props.section.backgroundColor}
           className={`${resourcesGalleryTypographyScopeClass} overflow-hidden px-0 pb-5`}
-          style={{
-            backgroundColor: resolveThemeColorCssValue(
-              props.section.backgroundColor,
-            ),
-          }}
+          style={getSurfaceColorStyle(
+            props.section.backgroundColor,
+            streamDocument,
+          )}
         >
           <style>{resourcesGalleryTypographyStyles}</style>
           <div className="mx-auto grid w-full max-w-[1440px] gap-[10px] px-[22px] md:grid-cols-2 xl:grid-cols-[1fr_1fr_1.58fr_1fr_1fr]">
@@ -383,12 +244,10 @@ export const BusinessFinancialServicesResourcesGallerySectionComponent: PuckComp
             </div>
             <div
               className="flex min-h-[340px] flex-col items-center justify-center px-7 py-10 text-center md:col-span-2 xl:col-span-1 xl:min-h-[500px]"
-              style={{
-                backgroundColor: resolveThemeColorCssValue(
-                  props.featureSurface.backgroundColor,
-                ),
-                color: `var(--colors-${props.featureSurface.backgroundColor.contrastingColor})`,
-              }}
+              style={getSurfaceColorStyle(
+                props.featureSurface.backgroundColor,
+                streamDocument,
+              )}
             >
               <EntityField
                 displayName="Feature Heading"
@@ -458,7 +317,7 @@ export const BusinessFinancialServicesResourcesGallerySectionComponent: PuckComp
               {renderGalleryImage(7, "h-full min-h-0")}
             </div>
           </div>
-        </section>
+        </Background>
       </AnalyticsScopeProvider>
     </VisibilityWrapper>
   );

@@ -1,4 +1,5 @@
 import type { SectionConfig } from "@yext/visual-editor";
+import { createScopedTypographyStyles } from "../shared/typography";
 
 import * as React from "react";
 import type { PuckComponent } from "@puckeditor/core";
@@ -10,121 +11,29 @@ import {
   getAggregateRating,
   getDefaultRTF,
   Image,
-  MaybeRTF,
   ReviewStars,
   type ComprehensiveCTAValue,
-  type RichText,
-  type StyledTextValue,
   type ThemeColor,
-  type TranslatableAssetImage,
-  type TranslatableRichText,
-  type TranslatableString,
   type YextComponentConfig,
-  type YextEntityField,
   type YextFields,
   resolveComponentData,
   useDocument,
   VisibilityWrapper,
   BackgroundProvider,
   isDarkColor,
+  getThemeColorCssValue as resolveThemeColorCssValue,
 } from "@yext/visual-editor";
+import { getTextStyles, renderRichText } from "../shared/sectionStyles";
+import type {
+  ImageField,
+  StyledRichTextField,
+  StyledTextField,
+} from "../shared/sectionFields";
 
 const heroTypographyScopeClass = "bfs-hero-typography";
-const heroTypographyStyles = `
-  .${heroTypographyScopeClass} p {
-    font-family: var(--fontFamily-body-fontFamily);
-    font-size: var(--fontSize-body-fontSize);
-    line-height: 1.5;
-    font-weight: var(--fontWeight-body-fontWeight);
-    font-style: var(--fontStyle-body-fontStyle);
-    text-transform: var(--textTransform-body-textTransform);
-  }
-  .${heroTypographyScopeClass} li {
-    font-family: var(--fontFamily-body-fontFamily);
-    font-size: var(--fontSize-body-fontSize);
-    line-height: 1.5;
-    font-weight: var(--fontWeight-body-fontWeight);
-    font-style: var(--fontStyle-body-fontStyle);
-    text-transform: var(--textTransform-body-textTransform);
-  }
-  .${heroTypographyScopeClass} h1 {
-    font-family: var(--fontFamily-h1-fontFamily);
-    font-size: var(--fontSize-h1-fontSize);
-    line-height: 1.2;
-    font-weight: var(--fontWeight-h1-fontWeight);
-    font-style: var(--fontStyle-h1-fontStyle);
-    text-transform: var(--textTransform-h1-textTransform);
-  }
-  .${heroTypographyScopeClass} h2 {
-    font-family: var(--fontFamily-h2-fontFamily);
-    font-size: var(--fontSize-h2-fontSize);
-    line-height: 1.2;
-    font-weight: var(--fontWeight-h2-fontWeight);
-    font-style: var(--fontStyle-h2-fontStyle);
-    text-transform: var(--textTransform-h2-textTransform);
-  }
-  .${heroTypographyScopeClass} h3 {
-    font-family: var(--fontFamily-h3-fontFamily);
-    font-size: var(--fontSize-h3-fontSize);
-    line-height: 1.2;
-    font-weight: var(--fontWeight-h3-fontWeight);
-    font-style: var(--fontStyle-h3-fontStyle);
-    text-transform: var(--textTransform-h3-textTransform);
-  }
-  .${heroTypographyScopeClass} h4 {
-    font-family: var(--fontFamily-h4-fontFamily);
-    font-size: var(--fontSize-h4-fontSize);
-    line-height: 1.2;
-    font-weight: var(--fontWeight-h4-fontWeight);
-    font-style: var(--fontStyle-h4-fontStyle);
-    text-transform: var(--textTransform-h4-textTransform);
-  }
-  .${heroTypographyScopeClass} h5 {
-    font-family: var(--fontFamily-h5-fontFamily);
-    font-size: var(--fontSize-h5-fontSize);
-    line-height: 1.2;
-    font-weight: var(--fontWeight-h5-fontWeight);
-    font-style: var(--fontStyle-h5-fontStyle);
-    text-transform: var(--textTransform-h5-textTransform);
-  }
-  .${heroTypographyScopeClass} h6 {
-    font-family: var(--fontFamily-h6-fontFamily);
-    font-size: var(--fontSize-h6-fontSize);
-    line-height: 1.2;
-    font-weight: var(--fontWeight-h6-fontWeight);
-    font-style: var(--fontStyle-h6-fontStyle);
-    text-transform: var(--textTransform-h6-textTransform);
-  }
-  .${heroTypographyScopeClass} a:not(.font-button-fontFamily) {
-    font-family: var(--fontFamily-link-fontFamily);
-    font-size: var(--fontSize-link-fontSize);
-    font-weight: var(--fontWeight-link-fontWeight);
-    font-style: var(--fontStyle-link-fontStyle);
-    line-height: 1.5;
-    text-decoration: none;
-    text-transform: var(--textTransform-link-textTransform);
-    letter-spacing: var(--letterSpacing-link-letterSpacing);
-  }
-  .${heroTypographyScopeClass} a:not(.font-button-fontFamily):hover {
-    text-decoration: underline;
-  }
-`;
-
-type StyledTextField = {
-  text: YextEntityField<TranslatableString>;
-  styles: StyledTextValue;
-  fontColor?: ThemeColor;
-};
-
-type StyledRichTextField = {
-  text: YextEntityField<TranslatableRichText>;
-  styles: StyledTextValue;
-  fontColor?: ThemeColor;
-};
-
-type ImageField = {
-  image: YextEntityField<TranslatableAssetImage>;
-};
+const heroTypographyStyles = createScopedTypographyStyles(
+  heroTypographyScopeClass,
+);
 
 export type BusinessFinancialServicesHeroSectionProps = {
   backgroundImage: ImageField;
@@ -139,75 +48,6 @@ export type BusinessFinancialServicesHeroSectionProps = {
   overlay: {
     backgroundColor: ThemeColor;
   };
-};
-
-const resolveThemeColorCssValue = (value?: ThemeColor): string | undefined => {
-  if (!value) {
-    return undefined;
-  }
-
-  const color = value.selectedColor;
-  if (color.startsWith("[") && color.endsWith("]")) {
-    return color.slice(1, -1);
-  }
-  if (color === "white") {
-    return "#ffffff";
-  }
-
-  if (color.endsWith("-light")) {
-    const base = color.replace(/-light$/, "");
-    return `hsl(from var(--colors-${base}) h s 98)`;
-  }
-
-  if (color.endsWith("-dark")) {
-    const base = color.replace(/-dark$/, "");
-    return `hsl(from var(--colors-${base}) h s 20)`;
-  }
-
-  if (color.startsWith("palette-")) {
-    return `var(--colors-${color})`;
-  }
-
-  return color;
-};
-
-const getTextStyles = (
-  styles: StyledTextValue,
-  color?: ThemeColor,
-): React.CSSProperties => ({
-  color: resolveThemeColorCssValue(color),
-  fontFamily: styles.fontFamily === "default" ? undefined : styles.fontFamily,
-  fontSize: styles.fontSize === "default" ? undefined : styles.fontSize,
-  fontStyle: styles.fontStyle === "default" ? undefined : styles.fontStyle,
-  fontWeight: styles.fontWeight === "default" ? undefined : styles.fontWeight,
-  textTransform:
-    styles.textTransform === "default" ? undefined : styles.textTransform,
-});
-
-type RichTextStyleOverrides = Omit<Partial<StyledTextValue>, "color"> & {
-  color?: ThemeColor | string;
-};
-
-const renderRichText = (
-  value: unknown,
-  richTextStyleOverrides: RichTextStyleOverrides,
-) => {
-  if (React.isValidElement(value)) {
-    return value;
-  }
-
-  if (typeof value === "string") {
-    return (
-      <MaybeRTF data={value} richTextStyleOverrides={richTextStyleOverrides} />
-    );
-  }
-
-  return (
-    <MaybeRTF
-      data={value as RichText | undefined}
-      richTextStyleOverrides={richTextStyleOverrides}
-    />
-  );
 };
 
 const BusinessFinancialServicesHeroSectionFields: YextFields<BusinessFinancialServicesHeroSectionProps> =
@@ -335,7 +175,7 @@ export const BusinessFinancialServicesHeroSectionComponent: PuckComponent<
     resolveComponentData(props.geomodifier.text, locale, streamDocument) || "";
   const resolvedHeading =
     resolveComponentData(props.heading.text, locale, streamDocument) || "";
-  const bodyRichTextStyleOverrides: RichTextStyleOverrides = {
+  const bodyRichTextStyleOverrides = {
     ...props.body.styles,
     color:
       props.body.fontColor ?? props.overlay.backgroundColor.contrastingColor,
@@ -344,7 +184,6 @@ export const BusinessFinancialServicesHeroSectionComponent: PuckComponent<
     props.body.text,
     locale,
     streamDocument,
-    { richTextStyleOverrides: bodyRichTextStyleOverrides },
   );
   const aggregateRating = getAggregateRating(streamDocument);
   const reviewInfo = aggregateRating
@@ -442,6 +281,7 @@ export const BusinessFinancialServicesHeroSectionComponent: PuckComponent<
                 style={getTextStyles(
                   props.heading.styles,
                   props.heading.fontColor,
+                  props.overlay.backgroundColor.contrastingColor,
                 )}
               >
                 {resolvedHeading}

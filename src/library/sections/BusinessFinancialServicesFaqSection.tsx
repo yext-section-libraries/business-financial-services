@@ -1,16 +1,16 @@
 import type { SectionConfig } from "@yext/visual-editor";
+import { createScopedTypographyStyles } from "../shared/typography";
 
 import * as React from "react";
 import type { PuckComponent } from "@puckeditor/core";
 import { AnalyticsScopeProvider, useAnalytics } from "@yext/pages-components";
 import {
+  Background,
   createItemSource,
   EntityField,
   getAnalyticsScopeHash,
   getDefaultRTF,
-  MaybeRTF,
-  type RichText,
-  type StyledTextValue,
+  getSurfaceColorStyle,
   type ThemeColor,
   type TranslatableRichText,
   type TranslatableString,
@@ -21,107 +21,22 @@ import {
   useDocument,
   VisibilityWrapper,
 } from "@yext/visual-editor";
+import {
+  getTextStyles,
+  renderRichText,
+  type RichTextStyleOverrides,
+} from "../shared/sectionStyles";
+import type {
+  StyledTextField,
+  StyledTextStyles,
+} from "../shared/sectionFields";
 
 const faqTypographyScopeClass = "bfs-faq-typography";
-const faqTypographyStyles = `
-  .${faqTypographyScopeClass} p {
-    font-family: var(--fontFamily-body-fontFamily);
-    font-size: var(--fontSize-body-fontSize);
-    line-height: 1.5;
-    font-weight: var(--fontWeight-body-fontWeight);
-    font-style: var(--fontStyle-body-fontStyle);
-    text-transform: var(--textTransform-body-textTransform);
-  }
-  .${faqTypographyScopeClass} li {
-    font-family: var(--fontFamily-body-fontFamily);
-    font-size: var(--fontSize-body-fontSize);
-    line-height: 1.5;
-    font-weight: var(--fontWeight-body-fontWeight);
-    font-style: var(--fontStyle-body-fontStyle);
-    text-transform: var(--textTransform-body-textTransform);
-  }
-  .${faqTypographyScopeClass} button {
-    font-family: var(--fontFamily-body-fontFamily);
-    font-size: var(--fontSize-body-fontSize);
-    line-height: 1.5;
-    font-weight: var(--fontWeight-body-fontWeight);
-    font-style: var(--fontStyle-body-fontStyle);
-    text-transform: var(--textTransform-body-textTransform);
-  }
-  .${faqTypographyScopeClass} h1 {
-    font-family: var(--fontFamily-h1-fontFamily);
-    font-size: var(--fontSize-h1-fontSize);
-    line-height: 1.2;
-    font-weight: var(--fontWeight-h1-fontWeight);
-    font-style: var(--fontStyle-h1-fontStyle);
-    text-transform: var(--textTransform-h1-textTransform);
-  }
-  .${faqTypographyScopeClass} h2 {
-    font-family: var(--fontFamily-h2-fontFamily);
-    font-size: var(--fontSize-h2-fontSize);
-    line-height: 1.2;
-    font-weight: var(--fontWeight-h2-fontWeight);
-    font-style: var(--fontStyle-h2-fontStyle);
-    text-transform: var(--textTransform-h2-textTransform);
-  }
-  .${faqTypographyScopeClass} h3 {
-    font-family: var(--fontFamily-h3-fontFamily);
-    font-size: var(--fontSize-h3-fontSize);
-    line-height: 1.2;
-    font-weight: var(--fontWeight-h3-fontWeight);
-    font-style: var(--fontStyle-h3-fontStyle);
-    text-transform: var(--textTransform-h3-textTransform);
-  }
-  .${faqTypographyScopeClass} h4 {
-    font-family: var(--fontFamily-h4-fontFamily);
-    font-size: var(--fontSize-h4-fontSize);
-    line-height: 1.2;
-    font-weight: var(--fontWeight-h4-fontWeight);
-    font-style: var(--fontStyle-h4-fontStyle);
-    text-transform: var(--textTransform-h4-textTransform);
-  }
-  .${faqTypographyScopeClass} h5 {
-    font-family: var(--fontFamily-h5-fontFamily);
-    font-size: var(--fontSize-h5-fontSize);
-    line-height: 1.2;
-    font-weight: var(--fontWeight-h5-fontWeight);
-    font-style: var(--fontStyle-h5-fontStyle);
-    text-transform: var(--textTransform-h5-textTransform);
-  }
-  .${faqTypographyScopeClass} h6 {
-    font-family: var(--fontFamily-h6-fontFamily);
-    font-size: var(--fontSize-h6-fontSize);
-    line-height: 1.2;
-    font-weight: var(--fontWeight-h6-fontWeight);
-    font-style: var(--fontStyle-h6-fontStyle);
-    text-transform: var(--textTransform-h6-textTransform);
-  }
-  .${faqTypographyScopeClass} a:not(.font-button-fontFamily) {
-    font-family: var(--fontFamily-link-fontFamily);
-    font-size: var(--fontSize-link-fontSize);
-    font-weight: var(--fontWeight-link-fontWeight);
-    font-style: var(--fontStyle-link-fontStyle);
-    line-height: 1.5;
-    text-decoration: none;
-    text-transform: var(--textTransform-link-textTransform);
-    letter-spacing: var(--letterSpacing-link-letterSpacing);
-  }
-  .${faqTypographyScopeClass} a:not(.font-button-fontFamily):hover {
-    text-decoration: underline;
-  }
-`;
+const faqTypographyStyles = createScopedTypographyStyles(
+  faqTypographyScopeClass,
+  ["button"],
+);
 import { FaPlus, FaMinus } from "react-icons/fa";
-
-type StyledTextField = {
-  text: YextEntityField<TranslatableString>;
-  styles: StyledTextValue;
-  fontColor?: ThemeColor;
-};
-
-type StyledTextStyles = {
-  styles: StyledTextValue;
-  fontColor?: ThemeColor;
-};
 
 type FaqItem = {
   question: YextEntityField<TranslatableString | TranslatableRichText>;
@@ -142,62 +57,6 @@ export type BusinessFinancialServicesFaqSectionProps = {
     backgroundColor: ThemeColor;
     visibleOnLivePage: boolean;
   };
-};
-
-const resolveThemeColorCssValue = (
-  value?: string | ThemeColor,
-): string | undefined => {
-  if (!value) return undefined;
-  const color = typeof value === "string" ? value : value.selectedColor;
-  if (color.startsWith("[") && color.endsWith("]")) {
-    return color.slice(1, -1);
-  }
-  if (color === "white") return "#ffffff";
-  if (color.endsWith("-light")) {
-    const base = color.replace(/-light$/, "");
-    return `hsl(from var(--colors-${base}) h s 98)`;
-  }
-  if (color.endsWith("-dark")) {
-    const base = color.replace(/-dark$/, "");
-    return `hsl(from var(--colors-${base}) h s 20)`;
-  }
-  if (color.startsWith("palette-")) return `var(--colors-${color})`;
-  return color;
-};
-
-const getTextStyles = (
-  styles: StyledTextValue,
-  color?: string | ThemeColor,
-): React.CSSProperties => ({
-  color: resolveThemeColorCssValue(color),
-  fontFamily: styles.fontFamily === "default" ? undefined : styles.fontFamily,
-  fontSize: styles.fontSize === "default" ? undefined : styles.fontSize,
-  fontStyle: styles.fontStyle === "default" ? undefined : styles.fontStyle,
-  fontWeight: styles.fontWeight === "default" ? undefined : styles.fontWeight,
-  textTransform:
-    styles.textTransform === "default" ? undefined : styles.textTransform,
-});
-
-type RichTextStyleOverrides = Omit<Partial<StyledTextValue>, "color"> & {
-  color?: ThemeColor | string;
-};
-
-const renderRichText = (
-  value: unknown,
-  richTextStyleOverrides: RichTextStyleOverrides,
-) => {
-  if (React.isValidElement(value)) return value;
-  if (typeof value === "string") {
-    return (
-      <MaybeRTF data={value} richTextStyleOverrides={richTextStyleOverrides} />
-    );
-  }
-  return (
-    <MaybeRTF
-      data={value as RichText | undefined}
-      richTextStyleOverrides={richTextStyleOverrides}
-    />
-  );
 };
 
 const faqItemDefault = (question: string, answer: string): FaqItem => ({
@@ -347,7 +206,6 @@ export const BusinessFinancialServicesFaqSectionComponent: PuckComponent<
   const scopeName = `YextBusinessFinancialServicesFaqSection${getAnalyticsScopeHash(
     props.id,
   )}`;
-  const sectionForeground = props.section.backgroundColor.contrastingColor;
   const itemForeground = props.itemSurface.backgroundColor.contrastingColor;
   const answerRichTextStyleOverrides: RichTextStyleOverrides = {
     ...props.faqStyles.answer.styles,
@@ -387,14 +245,14 @@ export const BusinessFinancialServicesFaqSectionComponent: PuckComponent<
       isEditing={props.puck.isEditing}
     >
       <AnalyticsScopeProvider name={scopeName}>
-        <section
+        <Background
+          as="section"
+          background={props.section.backgroundColor}
           className={`${faqTypographyScopeClass} px-0 py-[60px]`}
-          style={{
-            backgroundColor: resolveThemeColorCssValue(
-              props.section.backgroundColor,
-            ),
-            color: `var(--colors-${sectionForeground})`,
-          }}
+          style={getSurfaceColorStyle(
+            props.section.backgroundColor,
+            streamDocument,
+          )}
         >
           <style>{faqTypographyStyles}</style>
           <div className="mx-auto w-full max-w-[1440px] px-[22px]">
@@ -435,10 +293,6 @@ export const BusinessFinancialServicesFaqSectionComponent: PuckComponent<
                             item.answer,
                             locale,
                             streamDocument,
-                            {
-                              richTextStyleOverrides:
-                                answerRichTextStyleOverrides,
-                            },
                           )
                         : undefined;
                       const isOpen = openIndexes.has(index);
@@ -447,12 +301,10 @@ export const BusinessFinancialServicesFaqSectionComponent: PuckComponent<
                         <div
                           key={`${question}-${index}`}
                           className="rounded-md"
-                          style={{
-                            backgroundColor: resolveThemeColorCssValue(
-                              props.itemSurface.backgroundColor,
-                            ),
-                            color: `var(--colors-${itemForeground})`,
-                          }}
+                          style={getSurfaceColorStyle(
+                            props.itemSurface.backgroundColor,
+                            streamDocument,
+                          )}
                         >
                           <button
                             type="button"
@@ -492,7 +344,7 @@ export const BusinessFinancialServicesFaqSectionComponent: PuckComponent<
               </div>
             </EntityField>
           </div>
-        </section>
+        </Background>
       </AnalyticsScopeProvider>
     </VisibilityWrapper>
   );

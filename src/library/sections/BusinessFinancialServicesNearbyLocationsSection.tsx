@@ -1,4 +1,5 @@
 import type { SectionConfig } from "@yext/visual-editor";
+import { createScopedTypographyStyles } from "../shared/typography";
 
 import * as React from "react";
 import type { PuckComponent } from "@puckeditor/core";
@@ -8,15 +9,15 @@ import {
   Link,
 } from "@yext/pages-components";
 import {
+  Background,
   EntityField,
   getAnalyticsScopeHash,
+  getSurfaceColorStyle,
   mergeMeta,
   resolveUrlTemplate,
   type StyledTextValue,
   type ThemeColor,
-  type TranslatableString,
   type YextComponentConfig,
-  type YextEntityField,
   type YextFields,
   getPreferredDistanceUnit,
   resolveComponentData,
@@ -24,95 +25,16 @@ import {
   useNearbyLocations,
   useTemplateProps,
   VisibilityWrapper,
+  getThemeColorCssValue as resolveThemeColorCssValue,
 } from "@yext/visual-editor";
 import type { StreamDocument } from "@yext/visual-editor";
+import { getTextStyles } from "../shared/sectionStyles";
+import type { StyledTextField } from "../shared/sectionFields";
 
 const nearbyLocationsTypographyScopeClass = "bfs-nearby-locations-typography";
-const nearbyLocationsTypographyStyles = `
-  .${nearbyLocationsTypographyScopeClass} p {
-    font-family: var(--fontFamily-body-fontFamily);
-    font-size: var(--fontSize-body-fontSize);
-    line-height: 1.5;
-    font-weight: var(--fontWeight-body-fontWeight);
-    font-style: var(--fontStyle-body-fontStyle);
-    text-transform: var(--textTransform-body-textTransform);
-  }
-  .${nearbyLocationsTypographyScopeClass} li {
-    font-family: var(--fontFamily-body-fontFamily);
-    font-size: var(--fontSize-body-fontSize);
-    line-height: 1.5;
-    font-weight: var(--fontWeight-body-fontWeight);
-    font-style: var(--fontStyle-body-fontStyle);
-    text-transform: var(--textTransform-body-textTransform);
-  }
-  .${nearbyLocationsTypographyScopeClass} h1 {
-    font-family: var(--fontFamily-h1-fontFamily);
-    font-size: var(--fontSize-h1-fontSize);
-    line-height: 1.2;
-    font-weight: var(--fontWeight-h1-fontWeight);
-    font-style: var(--fontStyle-h1-fontStyle);
-    text-transform: var(--textTransform-h1-textTransform);
-  }
-  .${nearbyLocationsTypographyScopeClass} h2 {
-    font-family: var(--fontFamily-h2-fontFamily);
-    font-size: var(--fontSize-h2-fontSize);
-    line-height: 1.2;
-    font-weight: var(--fontWeight-h2-fontWeight);
-    font-style: var(--fontStyle-h2-fontStyle);
-    text-transform: var(--textTransform-h2-textTransform);
-  }
-  .${nearbyLocationsTypographyScopeClass} h3 {
-    font-family: var(--fontFamily-h3-fontFamily);
-    font-size: var(--fontSize-h3-fontSize);
-    line-height: 1.2;
-    font-weight: var(--fontWeight-h3-fontWeight);
-    font-style: var(--fontStyle-h3-fontStyle);
-    text-transform: var(--textTransform-h3-textTransform);
-  }
-  .${nearbyLocationsTypographyScopeClass} h4 {
-    font-family: var(--fontFamily-h4-fontFamily);
-    font-size: var(--fontSize-h4-fontSize);
-    line-height: 1.2;
-    font-weight: var(--fontWeight-h4-fontWeight);
-    font-style: var(--fontStyle-h4-fontStyle);
-    text-transform: var(--textTransform-h4-textTransform);
-  }
-  .${nearbyLocationsTypographyScopeClass} h5 {
-    font-family: var(--fontFamily-h5-fontFamily);
-    font-size: var(--fontSize-h5-fontSize);
-    line-height: 1.2;
-    font-weight: var(--fontWeight-h5-fontWeight);
-    font-style: var(--fontStyle-h5-fontStyle);
-    text-transform: var(--textTransform-h5-textTransform);
-  }
-  .${nearbyLocationsTypographyScopeClass} h6 {
-    font-family: var(--fontFamily-h6-fontFamily);
-    font-size: var(--fontSize-h6-fontSize);
-    line-height: 1.2;
-    font-weight: var(--fontWeight-h6-fontWeight);
-    font-style: var(--fontStyle-h6-fontStyle);
-    text-transform: var(--textTransform-h6-textTransform);
-  }
-  .${nearbyLocationsTypographyScopeClass} a:not(.font-button-fontFamily) {
-    font-family: var(--fontFamily-link-fontFamily);
-    font-size: var(--fontSize-link-fontSize);
-    font-weight: var(--fontWeight-link-fontWeight);
-    font-style: var(--fontStyle-link-fontStyle);
-    line-height: 1.5;
-    text-decoration: none;
-    text-transform: var(--textTransform-link-textTransform);
-    letter-spacing: var(--letterSpacing-link-letterSpacing);
-  }
-  .${nearbyLocationsTypographyScopeClass} a:not(.font-button-fontFamily):hover {
-    text-decoration: underline;
-  }
-`;
-
-type StyledTextField = {
-  text: YextEntityField<TranslatableString>;
-  styles: StyledTextValue;
-  fontColor?: ThemeColor;
-};
+const nearbyLocationsTypographyStyles = createScopedTypographyStyles(
+  nearbyLocationsTypographyScopeClass,
+);
 
 type CardCtaStyle = "solid" | "outline" | "link";
 
@@ -133,41 +55,9 @@ export type BusinessFinancialServicesNearbyLocationsSectionProps = {
   };
 };
 
-const resolveThemeColorCssValue = (value?: ThemeColor): string | undefined => {
-  if (!value) return undefined;
-  const color = value.selectedColor;
-  if (color.startsWith("[") && color.endsWith("]")) {
-    return color.slice(1, -1);
-  }
-  if (color === "white") return "#ffffff";
-  if (color.endsWith("-light")) {
-    const base = color.replace(/-light$/, "");
-    return `hsl(from var(--colors-${base}) h s 98)`;
-  }
-  if (color.endsWith("-dark")) {
-    const base = color.replace(/-dark$/, "");
-    return `hsl(from var(--colors-${base}) h s 20)`;
-  }
-  if (color.startsWith("palette-")) return `var(--colors-${color})`;
-  return color;
-};
-
 const getContrastingThemeColor = (backgroundColor: ThemeColor): ThemeColor => ({
   selectedColor: backgroundColor.contrastingColor,
   contrastingColor: backgroundColor.selectedColor,
-});
-
-const getTextStyles = (
-  styles: StyledTextValue,
-  color?: ThemeColor,
-): React.CSSProperties => ({
-  color: resolveThemeColorCssValue(color),
-  fontFamily: styles.fontFamily === "default" ? undefined : styles.fontFamily,
-  fontSize: styles.fontSize === "default" ? undefined : styles.fontSize,
-  fontStyle: styles.fontStyle === "default" ? undefined : styles.fontStyle,
-  fontWeight: styles.fontWeight === "default" ? undefined : styles.fontWeight,
-  textTransform:
-    styles.textTransform === "default" ? undefined : styles.textTransform,
 });
 
 const getCtaStyles = (
@@ -440,14 +330,14 @@ export const BusinessFinancialServicesNearbyLocationsSectionComponent: PuckCompo
       isEditing={props.puck.isEditing}
     >
       <AnalyticsScopeProvider name={scopeName}>
-        <section
+        <Background
+          as="section"
+          background={props.section.backgroundColor}
           className={`${nearbyLocationsTypographyScopeClass} px-0 py-[60px]`}
-          style={{
-            backgroundColor: resolveThemeColorCssValue(
-              props.section.backgroundColor,
-            ),
-            color: `var(--colors-${props.section.backgroundColor.contrastingColor})`,
-          }}
+          style={getSurfaceColorStyle(
+            props.section.backgroundColor,
+            streamDocument,
+          )}
         >
           <style>{nearbyLocationsTypographyStyles}</style>
           <div className="mx-auto w-full max-w-[1440px] px-[22px]">
@@ -479,10 +369,11 @@ export const BusinessFinancialServicesNearbyLocationsSectionComponent: PuckCompo
                       key={locationData.id ?? name}
                       className="flex min-h-[184px] flex-col border border-current/10 p-[10px]"
                       style={{
-                        ...cardTextStyles,
-                        backgroundColor: resolveThemeColorCssValue(
+                        ...getSurfaceColorStyle(
                           props.cardSurface.backgroundColor,
+                          streamDocument,
                         ),
+                        ...cardTextStyles,
                       }}
                     >
                       <Link
@@ -533,7 +424,7 @@ export const BusinessFinancialServicesNearbyLocationsSectionComponent: PuckCompo
               )}
             </div>
           </div>
-        </section>
+        </Background>
       </AnalyticsScopeProvider>
     </VisibilityWrapper>
   );

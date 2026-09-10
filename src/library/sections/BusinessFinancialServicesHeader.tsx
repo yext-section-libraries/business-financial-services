@@ -11,6 +11,7 @@ import {
   useAnalytics,
 } from "@yext/pages-components";
 import {
+  Background,
   BackgroundProvider,
   ComprehensiveCTA,
   EntityField,
@@ -21,7 +22,6 @@ import {
   type StyledImageValue,
   type StyledLinkValue,
   type ThemeColor,
-  ThemeOptions,
   type TranslatableAssetImage,
   type TranslatableString,
   VisibilityWrapper,
@@ -29,12 +29,14 @@ import {
   type YextEntityField,
   type YextFields,
   getAnalyticsScopeHash,
+  getSurfaceColorStyle,
   i18nComponentsInstance,
   isDarkColor,
   normalizeLink,
   resolveComponentData,
   useDocument,
 } from "@yext/visual-editor";
+import { imageAspectRatioOptions } from "../shared/sectionFields";
 
 type SharedHeaderVariant =
   | "centerLogoSplitNav"
@@ -515,7 +517,7 @@ const BusinessFinancialServicesHeaderFields: YextFields<BusinessFinancialService
                 aspectRatio: {
                   label: "Aspect Ratio",
                   type: "select",
-                  options: ThemeOptions.ASPECT_RATIO,
+                  options: imageAspectRatioOptions,
                 },
                 imageConstrain: {
                   label: "Image Constrain",
@@ -665,7 +667,7 @@ const BusinessFinancialServicesHeaderFields: YextFields<BusinessFinancialService
         aspectRatio: {
           label: "Aspect Ratio",
           type: "select",
-          options: ThemeOptions.ASPECT_RATIO,
+          options: imageAspectRatioOptions,
         },
         imageConstrain: {
           label: "Image Constrain",
@@ -1054,14 +1056,14 @@ const BusinessFinancialServicesHeaderComponent: PuckComponent<
       liveVisibility={props.section.visibleOnLivePage}
       isEditing={props.puck.isEditing}
     >
-      <header
+      <Background
+        as="header"
+        background={props.section.backgroundColor}
         className="relative"
-        style={{
-          backgroundColor: resolveThemeColorCssValue(
-            props.section.backgroundColor,
-          ),
-          color: resolveThemeColorCssValue(navigationColor),
-        }}
+        style={getSurfaceColorStyle(
+          props.section.backgroundColor,
+          streamDocument,
+        )}
       >
         <div className="hidden lg:block">{desktopVariantContent}</div>
 
@@ -1135,11 +1137,10 @@ const BusinessFinancialServicesHeaderComponent: PuckComponent<
         {menuOpen ? (
           <div
             className="border-t border-current/10 px-6 py-6 md:px-8 lg:hidden"
-            style={{
-              backgroundColor: resolveThemeColorCssValue(
-                props.section.backgroundColor,
-              ),
-            }}
+            style={getSurfaceColorStyle(
+              props.section.backgroundColor,
+              streamDocument,
+            )}
           >
             <div className="space-y-6">
               {navigationLinks.length > 0
@@ -1204,7 +1205,7 @@ const BusinessFinancialServicesHeaderComponent: PuckComponent<
             </div>
           </div>
         ) : null}
-      </header>
+      </Background>
     </VisibilityWrapper>
   );
 };

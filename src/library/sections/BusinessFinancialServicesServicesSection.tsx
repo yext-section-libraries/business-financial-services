@@ -1,19 +1,19 @@
 import type { SectionConfig } from "@yext/visual-editor";
+import { createScopedTypographyStyles } from "../shared/typography";
 
 import * as React from "react";
 import type { PuckComponent } from "@puckeditor/core";
 import { AnalyticsScopeProvider } from "@yext/pages-components";
 import {
+  Background,
   ComprehensiveCTA,
   createItemSource,
   EntityField,
   getAnalyticsScopeHash,
   getDefaultRTF,
-  MaybeRTF,
+  getSurfaceColorStyle,
   type ComprehensiveCTAValue,
   type EnhancedTranslatableCTA,
-  type RichText,
-  type StyledTextValue,
   type ThemeColor,
   type TranslatableRichText,
   type TranslatableString,
@@ -24,98 +24,20 @@ import {
   useDocument,
   VisibilityWrapper,
 } from "@yext/visual-editor";
+import {
+  getTextStyles,
+  renderRichText,
+  type RichTextStyleOverrides,
+} from "../shared/sectionStyles";
+import type {
+  StyledTextField,
+  StyledTextStyles,
+} from "../shared/sectionFields";
 
 const servicesTypographyScopeClass = "bfs-services-typography";
-const servicesTypographyStyles = `
-  .${servicesTypographyScopeClass} p {
-    font-family: var(--fontFamily-body-fontFamily);
-    font-size: var(--fontSize-body-fontSize);
-    line-height: 1.5;
-    font-weight: var(--fontWeight-body-fontWeight);
-    font-style: var(--fontStyle-body-fontStyle);
-    text-transform: var(--textTransform-body-textTransform);
-  }
-  .${servicesTypographyScopeClass} li {
-    font-family: var(--fontFamily-body-fontFamily);
-    font-size: var(--fontSize-body-fontSize);
-    line-height: 1.5;
-    font-weight: var(--fontWeight-body-fontWeight);
-    font-style: var(--fontStyle-body-fontStyle);
-    text-transform: var(--textTransform-body-textTransform);
-  }
-  .${servicesTypographyScopeClass} h1 {
-    font-family: var(--fontFamily-h1-fontFamily);
-    font-size: var(--fontSize-h1-fontSize);
-    line-height: 1.2;
-    font-weight: var(--fontWeight-h1-fontWeight);
-    font-style: var(--fontStyle-h1-fontStyle);
-    text-transform: var(--textTransform-h1-textTransform);
-  }
-  .${servicesTypographyScopeClass} h2 {
-    font-family: var(--fontFamily-h2-fontFamily);
-    font-size: var(--fontSize-h2-fontSize);
-    line-height: 1.2;
-    font-weight: var(--fontWeight-h2-fontWeight);
-    font-style: var(--fontStyle-h2-fontStyle);
-    text-transform: var(--textTransform-h2-textTransform);
-  }
-  .${servicesTypographyScopeClass} h3 {
-    font-family: var(--fontFamily-h3-fontFamily);
-    font-size: var(--fontSize-h3-fontSize);
-    line-height: 1.2;
-    font-weight: var(--fontWeight-h3-fontWeight);
-    font-style: var(--fontStyle-h3-fontStyle);
-    text-transform: var(--textTransform-h3-textTransform);
-  }
-  .${servicesTypographyScopeClass} h4 {
-    font-family: var(--fontFamily-h4-fontFamily);
-    font-size: var(--fontSize-h4-fontSize);
-    line-height: 1.2;
-    font-weight: var(--fontWeight-h4-fontWeight);
-    font-style: var(--fontStyle-h4-fontStyle);
-    text-transform: var(--textTransform-h4-textTransform);
-  }
-  .${servicesTypographyScopeClass} h5 {
-    font-family: var(--fontFamily-h5-fontFamily);
-    font-size: var(--fontSize-h5-fontSize);
-    line-height: 1.2;
-    font-weight: var(--fontWeight-h5-fontWeight);
-    font-style: var(--fontStyle-h5-fontStyle);
-    text-transform: var(--textTransform-h5-textTransform);
-  }
-  .${servicesTypographyScopeClass} h6 {
-    font-family: var(--fontFamily-h6-fontFamily);
-    font-size: var(--fontSize-h6-fontSize);
-    line-height: 1.2;
-    font-weight: var(--fontWeight-h6-fontWeight);
-    font-style: var(--fontStyle-h6-fontStyle);
-    text-transform: var(--textTransform-h6-textTransform);
-  }
-  .${servicesTypographyScopeClass} a:not(.font-button-fontFamily) {
-    font-family: var(--fontFamily-link-fontFamily);
-    font-size: var(--fontSize-link-fontSize);
-    font-weight: var(--fontWeight-link-fontWeight);
-    font-style: var(--fontStyle-link-fontStyle);
-    line-height: 1.5;
-    text-decoration: none;
-    text-transform: var(--textTransform-link-textTransform);
-    letter-spacing: var(--letterSpacing-link-letterSpacing);
-  }
-  .${servicesTypographyScopeClass} a:not(.font-button-fontFamily):hover {
-    text-decoration: underline;
-  }
-`;
-
-type StyledTextField = {
-  text: YextEntityField<TranslatableString>;
-  styles: StyledTextValue;
-  fontColor?: ThemeColor;
-};
-
-type StyledTextStyles = {
-  styles: StyledTextValue;
-  fontColor?: ThemeColor;
-};
+const servicesTypographyStyles = createScopedTypographyStyles(
+  servicesTypographyScopeClass,
+);
 
 type ServiceItem = {
   title: YextEntityField<TranslatableString>;
@@ -226,74 +148,6 @@ export type BusinessFinancialServicesServicesSectionProps = {
     backgroundColor: ThemeColor;
     visibleOnLivePage: boolean;
   };
-};
-
-const resolveThemeColorCssValue = (
-  value?: string | ThemeColor,
-): string | undefined => {
-  if (!value) return undefined;
-  const color = typeof value === "string" ? value : value.selectedColor;
-  if (color.startsWith("[") && color.endsWith("]")) {
-    return color.slice(1, -1);
-  }
-  if (color === "white") return "#ffffff";
-  if (color.endsWith("-light")) {
-    const base = color.replace(/-light$/, "");
-    return `hsl(from var(--colors-${base}) h s 98)`;
-  }
-  if (color.endsWith("-dark")) {
-    const base = color.replace(/-dark$/, "");
-    return `hsl(from var(--colors-${base}) h s 20)`;
-  }
-  if (color.startsWith("palette-")) {
-    return `var(--colors-${color})`;
-  }
-  return color;
-};
-
-const resolveSurfaceForegroundColor = (
-  surfaceColor?: ThemeColor,
-): string | undefined =>
-  surfaceColor?.contrastingColor
-    ? resolveThemeColorCssValue({
-        selectedColor: surfaceColor.contrastingColor,
-        contrastingColor: surfaceColor.selectedColor,
-      })
-    : undefined;
-
-const getTextStyles = (
-  styles: StyledTextValue,
-  color?: string | ThemeColor,
-): React.CSSProperties => ({
-  color: resolveThemeColorCssValue(color),
-  fontFamily: styles.fontFamily === "default" ? undefined : styles.fontFamily,
-  fontSize: styles.fontSize === "default" ? undefined : styles.fontSize,
-  fontStyle: styles.fontStyle === "default" ? undefined : styles.fontStyle,
-  fontWeight: styles.fontWeight === "default" ? undefined : styles.fontWeight,
-  textTransform:
-    styles.textTransform === "default" ? undefined : styles.textTransform,
-});
-
-type RichTextStyleOverrides = Omit<Partial<StyledTextValue>, "color"> & {
-  color?: ThemeColor | string;
-};
-
-const renderRichText = (
-  value: unknown,
-  richTextStyleOverrides: RichTextStyleOverrides,
-) => {
-  if (React.isValidElement(value)) return value;
-  if (typeof value === "string") {
-    return (
-      <MaybeRTF data={value} richTextStyleOverrides={richTextStyleOverrides} />
-    );
-  }
-  return (
-    <MaybeRTF
-      data={value as RichText | undefined}
-      richTextStyleOverrides={richTextStyleOverrides}
-    />
-  );
 };
 
 const BusinessFinancialServicesServicesSectionFields: YextFields<BusinessFinancialServicesServicesSectionProps> =
@@ -411,12 +265,6 @@ export const BusinessFinancialServicesServicesSectionComponent: PuckComponent<
     resolveComponentData(props.headingBrow.text, locale, streamDocument) || "";
   const heading =
     resolveComponentData(props.heading.text, locale, streamDocument) || "";
-  const sectionForeground = resolveSurfaceForegroundColor(
-    props.section.backgroundColor,
-  );
-  const cardForeground = resolveSurfaceForegroundColor(
-    props.cardSurface.backgroundColor,
-  );
   const cardBodyRichTextStyleOverrides: RichTextStyleOverrides = {
     ...props.cardStyles.body.styles,
     color:
@@ -431,14 +279,14 @@ export const BusinessFinancialServicesServicesSectionComponent: PuckComponent<
       isEditing={props.puck.isEditing}
     >
       <AnalyticsScopeProvider name={scopeName}>
-        <section
+        <Background
+          as="section"
+          background={props.section.backgroundColor}
           className={`${servicesTypographyScopeClass} px-0 pb-[60px] pt-10`}
-          style={{
-            backgroundColor: resolveThemeColorCssValue(
-              props.section.backgroundColor,
-            ),
-            color: sectionForeground,
-          }}
+          style={getSurfaceColorStyle(
+            props.section.backgroundColor,
+            streamDocument,
+          )}
         >
           <style>{servicesTypographyStyles}</style>
           <div className="mx-auto w-full max-w-[1440px] px-[22px]">
@@ -483,20 +331,16 @@ export const BusinessFinancialServicesServicesSectionComponent: PuckComponent<
                     ? resolveComponentData(item.title, locale, streamDocument)
                     : "";
                   const body = item.body
-                    ? resolveComponentData(item.body, locale, streamDocument, {
-                        richTextStyleOverrides: cardBodyRichTextStyleOverrides,
-                      })
+                    ? resolveComponentData(item.body, locale, streamDocument)
                     : undefined;
                   return (
                     <article
                       key={`${title}-${index}`}
                       className="flex min-h-[192px] min-w-0 flex-col items-center justify-center px-5 py-8 text-center sm:px-8"
-                      style={{
-                        backgroundColor: resolveThemeColorCssValue(
-                          props.cardSurface.backgroundColor,
-                        ),
-                        color: cardForeground,
-                      }}
+                      style={getSurfaceColorStyle(
+                        props.cardSurface.backgroundColor,
+                        streamDocument,
+                      )}
                     >
                       <h3
                         className="font-[family:var(--fontFamily-h3-fontFamily)] text-2xl font-medium leading-[1.3]"
@@ -550,7 +394,7 @@ export const BusinessFinancialServicesServicesSectionComponent: PuckComponent<
               </EntityField>
             </div>
           </div>
-        </section>
+        </Background>
       </AnalyticsScopeProvider>
     </VisibilityWrapper>
   );

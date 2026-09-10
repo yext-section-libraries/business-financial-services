@@ -1,12 +1,15 @@
 import type { SectionConfig } from "@yext/visual-editor";
+import { createScopedTypographyStyles } from "../shared/typography";
 
 import * as React from "react";
 import type { PuckComponent } from "@puckeditor/core";
 import { AnalyticsScopeProvider, Address, Link } from "@yext/pages-components";
-import { parsePhoneNumber } from "awesome-phonenumber";
+import { formatPhoneNumber } from "@yext/visual-editor/section-library-support";
 import {
+  Background,
   EntityField,
   getAnalyticsScopeHash,
+  getSurfaceColorStyle,
   Image,
   type StyledTextValue,
   type ThemeColor,
@@ -18,97 +21,16 @@ import {
   resolveComponentData,
   useDocument,
   VisibilityWrapper,
-  ThemeOptions,
+  getThemeColorCssValue as resolveThemeColorCssValue,
 } from "@yext/visual-editor";
+import { imageAspectRatioOptions } from "../shared/sectionFields";
+import { getTextStyles as getTextStyle } from "../shared/sectionStyles";
 
 const footerTypographyScopeClass = "bfs-footer-typography";
-const footerTypographyStyles = `
-  .${footerTypographyScopeClass} p {
-    font-family: var(--fontFamily-body-fontFamily);
-    font-size: var(--fontSize-body-fontSize);
-    line-height: 1.5;
-    font-weight: var(--fontWeight-body-fontWeight);
-    font-style: var(--fontStyle-body-fontStyle);
-    text-transform: var(--textTransform-body-textTransform);
-  }
-  .${footerTypographyScopeClass} li {
-    font-family: var(--fontFamily-body-fontFamily);
-    font-size: var(--fontSize-body-fontSize);
-    line-height: 1.5;
-    font-weight: var(--fontWeight-body-fontWeight);
-    font-style: var(--fontStyle-body-fontStyle);
-    text-transform: var(--textTransform-body-textTransform);
-  }
-  .${footerTypographyScopeClass} .bfs-footer-address {
-    font-family: var(--fontFamily-body-fontFamily);
-    font-size: var(--fontSize-body-fontSize);
-    line-height: 1.5;
-    font-weight: var(--fontWeight-body-fontWeight);
-    font-style: var(--fontStyle-body-fontStyle);
-    text-transform: var(--textTransform-body-textTransform);
-  }
-  .${footerTypographyScopeClass} h1 {
-    font-family: var(--fontFamily-h1-fontFamily);
-    font-size: var(--fontSize-h1-fontSize);
-    line-height: 1.2;
-    font-weight: var(--fontWeight-h1-fontWeight);
-    font-style: var(--fontStyle-h1-fontStyle);
-    text-transform: var(--textTransform-h1-textTransform);
-  }
-  .${footerTypographyScopeClass} h2 {
-    font-family: var(--fontFamily-h2-fontFamily);
-    font-size: var(--fontSize-h2-fontSize);
-    line-height: 1.2;
-    font-weight: var(--fontWeight-h2-fontWeight);
-    font-style: var(--fontStyle-h2-fontStyle);
-    text-transform: var(--textTransform-h2-textTransform);
-  }
-  .${footerTypographyScopeClass} h3 {
-    font-family: var(--fontFamily-h3-fontFamily);
-    font-size: var(--fontSize-h3-fontSize);
-    line-height: 1.2;
-    font-weight: var(--fontWeight-h3-fontWeight);
-    font-style: var(--fontStyle-h3-fontStyle);
-    text-transform: var(--textTransform-h3-textTransform);
-  }
-  .${footerTypographyScopeClass} h4 {
-    font-family: var(--fontFamily-h4-fontFamily);
-    font-size: var(--fontSize-h4-fontSize);
-    line-height: 1.2;
-    font-weight: var(--fontWeight-h4-fontWeight);
-    font-style: var(--fontStyle-h4-fontStyle);
-    text-transform: var(--textTransform-h4-textTransform);
-  }
-  .${footerTypographyScopeClass} h5 {
-    font-family: var(--fontFamily-h5-fontFamily);
-    font-size: var(--fontSize-h5-fontSize);
-    line-height: 1.2;
-    font-weight: var(--fontWeight-h5-fontWeight);
-    font-style: var(--fontStyle-h5-fontStyle);
-    text-transform: var(--textTransform-h5-textTransform);
-  }
-  .${footerTypographyScopeClass} h6 {
-    font-family: var(--fontFamily-h6-fontFamily);
-    font-size: var(--fontSize-h6-fontSize);
-    line-height: 1.2;
-    font-weight: var(--fontWeight-h6-fontWeight);
-    font-style: var(--fontStyle-h6-fontStyle);
-    text-transform: var(--textTransform-h6-textTransform);
-  }
-  .${footerTypographyScopeClass} a:not(.font-button-fontFamily) {
-    font-family: var(--fontFamily-link-fontFamily);
-    font-size: var(--fontSize-link-fontSize);
-    font-weight: var(--fontWeight-link-fontWeight);
-    font-style: var(--fontStyle-link-fontStyle);
-    line-height: 1.5;
-    text-decoration: none;
-    text-transform: var(--textTransform-link-textTransform);
-    letter-spacing: var(--letterSpacing-link-letterSpacing);
-  }
-  .${footerTypographyScopeClass} a:not(.font-button-fontFamily):hover {
-    text-decoration: underline;
-  }
-`;
+const footerTypographyStyles = createScopedTypographyStyles(
+  footerTypographyScopeClass,
+  [".bfs-footer-address"],
+);
 import type { AddressType } from "@yext/pages-components";
 
 type ImageField = {
@@ -153,25 +75,6 @@ export type BusinessFinancialServicesFooterProps = {
   };
 };
 
-const resolveThemeColorCssValue = (value?: ThemeColor): string | undefined => {
-  if (!value) return undefined;
-  const color = value.selectedColor;
-  if (color.startsWith("[") && color.endsWith("]")) {
-    return color.slice(1, -1);
-  }
-  if (color === "white") return "#ffffff";
-  if (color.endsWith("-light")) {
-    const base = color.replace(/-light$/, "");
-    return `hsl(from var(--colors-${base}) h s 98)`;
-  }
-  if (color.endsWith("-dark")) {
-    const base = color.replace(/-dark$/, "");
-    return `hsl(from var(--colors-${base}) h s 20)`;
-  }
-  if (color.startsWith("palette-")) return `var(--colors-${color})`;
-  return color;
-};
-
 const resolveSurfaceForegroundColor = (
   surfaceColor?: ThemeColor,
 ): string | undefined =>
@@ -181,19 +84,6 @@ const resolveSurfaceForegroundColor = (
         contrastingColor: surfaceColor.selectedColor,
       })
     : undefined;
-
-const getTextStyle = (
-  styles: StyledTextValue,
-  color?: string,
-): React.CSSProperties => ({
-  color,
-  fontFamily: styles.fontFamily === "default" ? undefined : styles.fontFamily,
-  fontSize: styles.fontSize === "default" ? undefined : styles.fontSize,
-  fontStyle: styles.fontStyle === "default" ? undefined : styles.fontStyle,
-  fontWeight: styles.fontWeight === "default" ? undefined : styles.fontWeight,
-  textTransform:
-    styles.textTransform === "default" ? undefined : styles.textTransform,
-});
 
 const defaultFooterLinksStyles: StyledTextValue = {
   fontFamily: "default",
@@ -221,20 +111,6 @@ const footerLinkDefault = (label: string, link: string): FooterLink => ({
 
 const getTranslatableSummary = (value?: TranslatableString): string =>
   typeof value === "string" ? value : value?.defaultValue || "";
-
-const formatPhoneNumber = (
-  phoneNumberString: string,
-  format: "international" | "domestic",
-) => {
-  const cleaned = phoneNumberString.replace(/(?!^\+)\+|[^\d+]/g, "");
-  const parsed = parsePhoneNumber(cleaned);
-  if (!parsed.valid || !parsed.number) {
-    return phoneNumberString;
-  }
-  return format === "international"
-    ? parsed.number.international
-    : parsed.number.national;
-};
 
 const BusinessFinancialServicesFooterFields: YextFields<BusinessFinancialServicesFooterProps> =
   {
@@ -271,7 +147,7 @@ const BusinessFinancialServicesFooterFields: YextFields<BusinessFinancialService
         aspectRatio: {
           label: "Aspect Ratio",
           type: "select",
-          options: ThemeOptions.ASPECT_RATIO,
+          options: imageAspectRatioOptions,
         },
         imageConstrain: {
           label: "Image Constrain",
@@ -546,15 +422,15 @@ export const BusinessFinancialServicesFooterComponent: PuckComponent<
       isEditing={props.puck.isEditing}
     >
       <AnalyticsScopeProvider name={scopeName}>
-        <footer
+        <Background
+          as="footer"
+          background={props.section.backgroundColor}
           className={`${footerTypographyScopeClass} px-0 pb-[18px] pt-6`}
           id="footer"
-          style={{
-            backgroundColor: resolveThemeColorCssValue(
-              props.section.backgroundColor,
-            ),
-            color: footerForegroundColor,
-          }}
+          style={getSurfaceColorStyle(
+            props.section.backgroundColor,
+            streamDocument,
+          )}
         >
           <style>{footerTypographyStyles}</style>
           <div className="mx-auto grid w-full max-w-[1440px] gap-10 px-[22px] md:grid-cols-[1.15fr_0.85fr]">
@@ -736,7 +612,7 @@ export const BusinessFinancialServicesFooterComponent: PuckComponent<
               </div>
             </div>
           </div>
-        </footer>
+        </Background>
       </AnalyticsScopeProvider>
     </VisibilityWrapper>
   );

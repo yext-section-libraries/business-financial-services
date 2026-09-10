@@ -1,21 +1,21 @@
 import type { SectionConfig } from "@yext/visual-editor";
+import { createScopedTypographyStyles } from "../shared/typography";
 
 import * as React from "react";
 import type { PuckComponent } from "@puckeditor/core";
 import { AnalyticsScopeProvider } from "@yext/pages-components";
 import {
+  Background,
   ComprehensiveCTA,
   createItemSource,
   EntityField,
   getAnalyticsScopeHash,
   getDefaultRTF,
+  getSurfaceColorStyle,
   Image,
-  MaybeRTF,
   type ComprehensiveCTAValue,
   type EnhancedTranslatableCTA,
-  type RichText,
   type StyledImageValue,
-  type StyledTextValue,
   type ThemeColor,
   type TranslatableAssetImage,
   type TranslatableRichText,
@@ -26,108 +26,23 @@ import {
   resolveComponentData,
   useDocument,
   VisibilityWrapper,
-  ThemeOptions,
 } from "@yext/visual-editor";
+import {
+  imageAspectRatioOptions,
+  type StyledTextField,
+  type StyledTextStyles,
+} from "../shared/sectionFields";
+import {
+  getTextStyles,
+  renderRichText,
+  type RichTextStyleOverrides,
+} from "../shared/sectionStyles";
 
 const teamTypographyScopeClass = "bfs-team-typography";
-const teamTypographyStyles = `
-  .${teamTypographyScopeClass} p {
-    font-family: var(--fontFamily-body-fontFamily);
-    font-size: var(--fontSize-body-fontSize);
-    line-height: 1.5;
-    font-weight: var(--fontWeight-body-fontWeight);
-    font-style: var(--fontStyle-body-fontStyle);
-    text-transform: var(--textTransform-body-textTransform);
-  }
-  .${teamTypographyScopeClass} li {
-    font-family: var(--fontFamily-body-fontFamily);
-    font-size: var(--fontSize-body-fontSize);
-    line-height: 1.5;
-    font-weight: var(--fontWeight-body-fontWeight);
-    font-style: var(--fontStyle-body-fontStyle);
-    text-transform: var(--textTransform-body-textTransform);
-  }
-  .${teamTypographyScopeClass} .bfs-team-card-details {
-    font-family: var(--fontFamily-body-fontFamily);
-    font-size: var(--fontSize-body-fontSize);
-    line-height: 1.5;
-    font-weight: var(--fontWeight-body-fontWeight);
-    font-style: var(--fontStyle-body-fontStyle);
-    text-transform: var(--textTransform-body-textTransform);
-  }
-  .${teamTypographyScopeClass} h1 {
-    font-family: var(--fontFamily-h1-fontFamily);
-    font-size: var(--fontSize-h1-fontSize);
-    line-height: 1.2;
-    font-weight: var(--fontWeight-h1-fontWeight);
-    font-style: var(--fontStyle-h1-fontStyle);
-    text-transform: var(--textTransform-h1-textTransform);
-  }
-  .${teamTypographyScopeClass} h2 {
-    font-family: var(--fontFamily-h2-fontFamily);
-    font-size: var(--fontSize-h2-fontSize);
-    line-height: 1.2;
-    font-weight: var(--fontWeight-h2-fontWeight);
-    font-style: var(--fontStyle-h2-fontStyle);
-    text-transform: var(--textTransform-h2-textTransform);
-  }
-  .${teamTypographyScopeClass} h3 {
-    font-family: var(--fontFamily-h3-fontFamily);
-    font-size: var(--fontSize-h3-fontSize);
-    line-height: 1.2;
-    font-weight: var(--fontWeight-h3-fontWeight);
-    font-style: var(--fontStyle-h3-fontStyle);
-    text-transform: var(--textTransform-h3-textTransform);
-  }
-  .${teamTypographyScopeClass} h4 {
-    font-family: var(--fontFamily-h4-fontFamily);
-    font-size: var(--fontSize-h4-fontSize);
-    line-height: 1.2;
-    font-weight: var(--fontWeight-h4-fontWeight);
-    font-style: var(--fontStyle-h4-fontStyle);
-    text-transform: var(--textTransform-h4-textTransform);
-  }
-  .${teamTypographyScopeClass} h5 {
-    font-family: var(--fontFamily-h5-fontFamily);
-    font-size: var(--fontSize-h5-fontSize);
-    line-height: 1.2;
-    font-weight: var(--fontWeight-h5-fontWeight);
-    font-style: var(--fontStyle-h5-fontStyle);
-    text-transform: var(--textTransform-h5-textTransform);
-  }
-  .${teamTypographyScopeClass} h6 {
-    font-family: var(--fontFamily-h6-fontFamily);
-    font-size: var(--fontSize-h6-fontSize);
-    line-height: 1.2;
-    font-weight: var(--fontWeight-h6-fontWeight);
-    font-style: var(--fontStyle-h6-fontStyle);
-    text-transform: var(--textTransform-h6-textTransform);
-  }
-  .${teamTypographyScopeClass} a:not(.font-button-fontFamily) {
-    font-family: var(--fontFamily-link-fontFamily);
-    font-size: var(--fontSize-link-fontSize);
-    font-weight: var(--fontWeight-link-fontWeight);
-    font-style: var(--fontStyle-link-fontStyle);
-    line-height: 1.5;
-    text-decoration: none;
-    text-transform: var(--textTransform-link-textTransform);
-    letter-spacing: var(--letterSpacing-link-letterSpacing);
-  }
-  .${teamTypographyScopeClass} a:not(.font-button-fontFamily):hover {
-    text-decoration: underline;
-  }
-`;
-
-type StyledTextField = {
-  text: YextEntityField<TranslatableString>;
-  styles: StyledTextValue;
-  fontColor?: ThemeColor;
-};
-
-type StyledTextStyles = {
-  styles: StyledTextValue;
-  fontColor?: ThemeColor;
-};
+const teamTypographyStyles = createScopedTypographyStyles(
+  teamTypographyScopeClass,
+  [".bfs-team-card-details"],
+);
 
 type TeamMember = {
   image: YextEntityField<TranslatableAssetImage>;
@@ -341,63 +256,6 @@ export type BusinessFinancialServicesTeamSectionProps = {
   };
 };
 
-const resolveThemeColorCssValue = (
-  value?: ThemeColor | string,
-): string | undefined => {
-  if (!value) return undefined;
-  const color = typeof value === "string" ? value : value.selectedColor;
-  if (color.startsWith("[") && color.endsWith("]")) {
-    return color.slice(1, -1);
-  }
-  if (color === "white") return "#ffffff";
-  if (color.endsWith("-light")) {
-    const base = color.replace(/-light$/, "");
-    return `hsl(from var(--colors-${base}) h s 98)`;
-  }
-  if (color.endsWith("-dark")) {
-    const base = color.replace(/-dark$/, "");
-    return `hsl(from var(--colors-${base}) h s 20)`;
-  }
-  if (color.startsWith("palette-")) return `var(--colors-${color})`;
-  return color;
-};
-
-const getTextStyles = (
-  styles: StyledTextValue,
-  color?: ThemeColor,
-  fallbackColor?: string,
-): React.CSSProperties => ({
-  color: resolveThemeColorCssValue(color ?? fallbackColor),
-  fontFamily: styles.fontFamily === "default" ? undefined : styles.fontFamily,
-  fontSize: styles.fontSize === "default" ? undefined : styles.fontSize,
-  fontStyle: styles.fontStyle === "default" ? undefined : styles.fontStyle,
-  fontWeight: styles.fontWeight === "default" ? undefined : styles.fontWeight,
-  textTransform:
-    styles.textTransform === "default" ? undefined : styles.textTransform,
-});
-
-type RichTextStyleOverrides = Partial<StyledTextValue> & {
-  color?: ThemeColor | string;
-};
-
-const renderRichText = (
-  value: unknown,
-  richTextStyleOverrides: RichTextStyleOverrides,
-) => {
-  if (React.isValidElement(value)) return value;
-  if (typeof value === "string") {
-    return (
-      <MaybeRTF data={value} richTextStyleOverrides={richTextStyleOverrides} />
-    );
-  }
-  return (
-    <MaybeRTF
-      data={value as RichText | undefined}
-      richTextStyleOverrides={richTextStyleOverrides}
-    />
-  );
-};
-
 const BusinessFinancialServicesTeamSectionFields: YextFields<BusinessFinancialServicesTeamSectionProps> =
   {
     section: {
@@ -452,7 +310,7 @@ const BusinessFinancialServicesTeamSectionFields: YextFields<BusinessFinancialSe
             aspectRatio: {
               label: "Aspect Ratio",
               type: "select",
-              options: ThemeOptions.ASPECT_RATIO,
+              options: imageAspectRatioOptions,
             },
             imageConstrain: {
               label: "Image Constrain",
@@ -553,14 +411,14 @@ export const BusinessFinancialServicesTeamSectionComponent: PuckComponent<
       isEditing={props.puck.isEditing}
     >
       <AnalyticsScopeProvider name={scopeName}>
-        <section
+        <Background
+          as="section"
+          background={props.section.backgroundColor}
           className={`${teamTypographyScopeClass} px-0 py-[60px]`}
-          style={{
-            backgroundColor: resolveThemeColorCssValue(
-              props.section.backgroundColor,
-            ),
-            color: `var(--colors-${props.section.backgroundColor.contrastingColor})`,
-          }}
+          style={getSurfaceColorStyle(
+            props.section.backgroundColor,
+            streamDocument,
+          )}
         >
           <style>{teamTypographyStyles}</style>
           <div className="mx-auto w-full max-w-[1440px] px-[22px]">
@@ -633,9 +491,6 @@ export const BusinessFinancialServicesTeamSectionComponent: PuckComponent<
                         item.specialties,
                         locale,
                         streamDocument,
-                        {
-                          richTextStyleOverrides: valueRichTextStyleOverrides,
-                        },
                       )
                     : "";
                   const itemFields = props.teamMembers.constantValueEnabled
@@ -646,12 +501,10 @@ export const BusinessFinancialServicesTeamSectionComponent: PuckComponent<
                     <article
                       key={`${name}-${index}`}
                       className="font-[family:var(--fontFamily-body-fontFamily)] border border-current/10 px-[18px] pb-[18px] pt-4 text-center"
-                      style={{
-                        backgroundColor: resolveThemeColorCssValue(
-                          props.cardSurface.backgroundColor,
-                        ),
-                        color: resolveThemeColorCssValue(cardForeground),
-                      }}
+                      style={getSurfaceColorStyle(
+                        props.cardSurface.backgroundColor,
+                        streamDocument,
+                      )}
                     >
                       {image ? (
                         <EntityField
@@ -881,7 +734,7 @@ export const BusinessFinancialServicesTeamSectionComponent: PuckComponent<
               </div>
             </EntityField>
           </div>
-        </section>
+        </Background>
       </AnalyticsScopeProvider>
     </VisibilityWrapper>
   );

@@ -1,18 +1,19 @@
 import type { SectionConfig } from "@yext/visual-editor";
+import { createScopedTypographyStyles } from "../shared/typography";
 
 import * as React from "react";
 import type { PuckComponent } from "@puckeditor/core";
 import { FaAddressCard, FaHeadset, FaShieldAlt } from "react-icons/fa";
 import { AnalyticsScopeProvider, Address, Link } from "@yext/pages-components";
-import { parsePhoneNumber } from "awesome-phonenumber";
+import { formatPhoneNumber } from "@yext/visual-editor/section-library-support";
 import {
+  Background,
   ComprehensiveCTA,
   EntityField,
   getAnalyticsScopeHash,
   getDefaultRTF,
-  MaybeRTF,
+  getSurfaceColorStyle,
   type ComprehensiveCTAValue,
-  type RichText,
   type StyledTextValue,
   type ThemeColor,
   type TranslatableRichText,
@@ -26,95 +27,18 @@ import {
   BackgroundProvider,
   isDarkColor,
 } from "@yext/visual-editor";
+import { getLocalizedString } from "../shared/sectionFields";
+import {
+  getTextStyles,
+  renderRichText,
+  type RichTextStyleOverrides,
+} from "../shared/sectionStyles";
 
 const branchInfoTypographyScopeClass = "bfs-branch-info-typography";
-const branchInfoTypographyStyles = `
-  .${branchInfoTypographyScopeClass} p {
-    font-family: var(--fontFamily-body-fontFamily);
-    font-size: var(--fontSize-body-fontSize);
-    line-height: 1.5;
-    font-weight: var(--fontWeight-body-fontWeight);
-    font-style: var(--fontStyle-body-fontStyle);
-    text-transform: var(--textTransform-body-textTransform);
-  }
-  .${branchInfoTypographyScopeClass} li {
-    font-family: var(--fontFamily-body-fontFamily);
-    font-size: var(--fontSize-body-fontSize);
-    line-height: 1.5;
-    font-weight: var(--fontWeight-body-fontWeight);
-    font-style: var(--fontStyle-body-fontStyle);
-    text-transform: var(--textTransform-body-textTransform);
-  }
-  .${branchInfoTypographyScopeClass} .bfs-branch-info-address {
-    font-family: var(--fontFamily-body-fontFamily);
-    font-size: var(--fontSize-body-fontSize);
-    line-height: 1.5;
-    font-weight: var(--fontWeight-body-fontWeight);
-    font-style: var(--fontStyle-body-fontStyle);
-    text-transform: var(--textTransform-body-textTransform);
-  }
-  .${branchInfoTypographyScopeClass} h1 {
-    font-family: var(--fontFamily-h1-fontFamily);
-    font-size: var(--fontSize-h1-fontSize);
-    line-height: 1.2;
-    font-weight: var(--fontWeight-h1-fontWeight);
-    font-style: var(--fontStyle-h1-fontStyle);
-    text-transform: var(--textTransform-h1-textTransform);
-  }
-  .${branchInfoTypographyScopeClass} h2 {
-    font-family: var(--fontFamily-h2-fontFamily);
-    font-size: var(--fontSize-h2-fontSize);
-    line-height: 1.2;
-    font-weight: var(--fontWeight-h2-fontWeight);
-    font-style: var(--fontStyle-h2-fontStyle);
-    text-transform: var(--textTransform-h2-textTransform);
-  }
-  .${branchInfoTypographyScopeClass} h3 {
-    font-family: var(--fontFamily-h3-fontFamily);
-    font-size: var(--fontSize-h3-fontSize);
-    line-height: 1.2;
-    font-weight: var(--fontWeight-h3-fontWeight);
-    font-style: var(--fontStyle-h3-fontStyle);
-    text-transform: var(--textTransform-h3-textTransform);
-  }
-  .${branchInfoTypographyScopeClass} h4 {
-    font-family: var(--fontFamily-h4-fontFamily);
-    font-size: var(--fontSize-h4-fontSize);
-    line-height: 1.2;
-    font-weight: var(--fontWeight-h4-fontWeight);
-    font-style: var(--fontStyle-h4-fontStyle);
-    text-transform: var(--textTransform-h4-textTransform);
-  }
-  .${branchInfoTypographyScopeClass} h5 {
-    font-family: var(--fontFamily-h5-fontFamily);
-    font-size: var(--fontSize-h5-fontSize);
-    line-height: 1.2;
-    font-weight: var(--fontWeight-h5-fontWeight);
-    font-style: var(--fontStyle-h5-fontStyle);
-    text-transform: var(--textTransform-h5-textTransform);
-  }
-  .${branchInfoTypographyScopeClass} h6 {
-    font-family: var(--fontFamily-h6-fontFamily);
-    font-size: var(--fontSize-h6-fontSize);
-    line-height: 1.2;
-    font-weight: var(--fontWeight-h6-fontWeight);
-    font-style: var(--fontStyle-h6-fontStyle);
-    text-transform: var(--textTransform-h6-textTransform);
-  }
-  .${branchInfoTypographyScopeClass} a:not(.font-button-fontFamily) {
-    font-family: var(--fontFamily-link-fontFamily);
-    font-size: var(--fontSize-link-fontSize);
-    font-weight: var(--fontWeight-link-fontWeight);
-    font-style: var(--fontStyle-link-fontStyle);
-    line-height: 1.5;
-    text-decoration: none;
-    text-transform: var(--textTransform-link-textTransform);
-    letter-spacing: var(--letterSpacing-link-letterSpacing);
-  }
-  .${branchInfoTypographyScopeClass} a:not(.font-button-fontFamily):hover {
-    text-decoration: underline;
-  }
-`;
+const branchInfoTypographyStyles = createScopedTypographyStyles(
+  branchInfoTypographyScopeClass,
+  [".bfs-branch-info-address"],
+);
 import type { AddressType } from "@yext/pages-components";
 
 type StyledTextField = {
@@ -184,77 +108,6 @@ type BusinessFinancialServicesBranchInfoSectionProps = {
   };
 };
 
-const resolveThemeColorCssValue = (value?: ThemeColor): string | undefined => {
-  if (!value) {
-    return undefined;
-  }
-
-  const color = value.selectedColor;
-  if (color.startsWith("[") && color.endsWith("]")) {
-    return color.slice(1, -1);
-  }
-  if (color === "white") {
-    return "#ffffff";
-  }
-
-  if (color.endsWith("-light")) {
-    const base = color.replace(/-light$/, "");
-    return `hsl(from var(--colors-${base}) h s 98)`;
-  }
-
-  if (color.endsWith("-dark")) {
-    const base = color.replace(/-dark$/, "");
-    return `hsl(from var(--colors-${base}) h s 20)`;
-  }
-
-  if (color.startsWith("palette-")) {
-    return `var(--colors-${color})`;
-  }
-
-  return color;
-};
-
-const getTextStyles = (
-  styles: StyledTextValue,
-  color?: ThemeColor,
-  defaultColor?: ThemeColor,
-): React.CSSProperties => ({
-  color: resolveThemeColorCssValue(color ?? defaultColor),
-  fontFamily: styles.fontFamily === "default" ? undefined : styles.fontFamily,
-  fontSize: styles.fontSize === "default" ? undefined : styles.fontSize,
-  fontStyle: styles.fontStyle === "default" ? undefined : styles.fontStyle,
-  fontWeight: styles.fontWeight === "default" ? undefined : styles.fontWeight,
-  textTransform:
-    styles.textTransform === "default" ? undefined : styles.textTransform,
-});
-
-type RichTextStyleOverrides = Omit<Partial<StyledTextValue>, "color"> & {
-  color?: ThemeColor | string;
-};
-
-const renderRichText = (
-  value: unknown,
-  richTextStyleOverrides: RichTextStyleOverrides,
-) => {
-  if (React.isValidElement(value)) {
-    return value;
-  }
-  if (typeof value === "string") {
-    return (
-      <MaybeRTF data={value} richTextStyleOverrides={richTextStyleOverrides} />
-    );
-  }
-  return (
-    <MaybeRTF
-      data={value as RichText | undefined}
-      richTextStyleOverrides={richTextStyleOverrides}
-    />
-  );
-};
-
-const getLocalizedString = (value?: TranslatableString): string =>
-  typeof value === "string" ? value : (value?.defaultValue ?? "");
-
 const normalizeStringList = (value: unknown): string[] =>
   Array.isArray(value)
     ? value
@@ -265,21 +118,6 @@ const normalizeStringList = (value: unknown): string[] =>
         )
         .filter((item) => item.length > 0)
     : [];
-
-const formatPhoneNumber = (
-  phoneNumberString: string,
-  format: "international" | "domestic",
-): string => {
-  const cleaned = phoneNumberString.replace(/(?!^\+)\+|[^\d+]/g, "");
-  const parsed = parsePhoneNumber(cleaned);
-  if (!parsed.valid || !parsed.number) {
-    return phoneNumberString;
-  }
-
-  return format === "international"
-    ? parsed.number.international
-    : parsed.number.national;
-};
 
 const BusinessFinancialServicesBranchInfoSectionFields: YextFields<BusinessFinancialServicesBranchInfoSectionProps> =
   {
@@ -629,13 +467,11 @@ export const BusinessFinancialServicesBranchInfoSectionComponent: PuckComponent<
     props.visitCard.body.text,
     locale,
     streamDocument,
-    { richTextStyleOverrides: contentRichTextStyleOverrides },
   );
   const aboutBody = resolveComponentData(
     props.aboutCard.body.text,
     locale,
     streamDocument,
-    { richTextStyleOverrides: contentRichTextStyleOverrides },
   );
   const resolvedAddress = resolveComponentData(
     props.visitCard.address.address,
@@ -696,22 +532,20 @@ export const BusinessFinancialServicesBranchInfoSectionComponent: PuckComponent<
   );
   const resolvedAmenities = normalizeStringList(resolvedAmenitiesValue);
 
-  const cardBg = resolveThemeColorCssValue(props.cardSurface.backgroundColor);
-
   return (
     <VisibilityWrapper
       liveVisibility={props.section.visibleOnLivePage}
       isEditing={props.puck.isEditing}
     >
       <AnalyticsScopeProvider name={scopeName}>
-        <section
+        <Background
+          as="section"
+          background={props.section.backgroundColor}
           className={`${branchInfoTypographyScopeClass} px-0 py-[60px]`}
-          style={{
-            backgroundColor: resolveThemeColorCssValue(
-              props.section.backgroundColor,
-            ),
-            color: resolveThemeColorCssValue(sectionForeground),
-          }}
+          style={getSurfaceColorStyle(
+            props.section.backgroundColor,
+            streamDocument,
+          )}
         >
           <style>{branchInfoTypographyStyles}</style>
           <div className="mx-auto w-full max-w-[1440px] px-[22px]">
@@ -736,10 +570,10 @@ export const BusinessFinancialServicesBranchInfoSectionComponent: PuckComponent<
             <div className="mt-12 grid gap-5 md:grid-cols-3">
               <article
                 className="border border-current/10 px-8 pb-8 pt-8"
-                style={{
-                  backgroundColor: cardBg,
-                  color: resolveThemeColorCssValue(cardForeground),
-                }}
+                style={getSurfaceColorStyle(
+                  props.cardSurface.backgroundColor,
+                  streamDocument,
+                )}
               >
                 <FaHeadset className="mb-7 h-10 w-10" />
                 <EntityField
@@ -909,10 +743,10 @@ export const BusinessFinancialServicesBranchInfoSectionComponent: PuckComponent<
               </article>
               <article
                 className="border border-current/10 px-8 pb-8 pt-8"
-                style={{
-                  backgroundColor: cardBg,
-                  color: resolveThemeColorCssValue(cardForeground),
-                }}
+                style={getSurfaceColorStyle(
+                  props.cardSurface.backgroundColor,
+                  streamDocument,
+                )}
               >
                 <FaShieldAlt className="mb-7 h-10 w-10" />
                 <EntityField
@@ -1015,10 +849,10 @@ export const BusinessFinancialServicesBranchInfoSectionComponent: PuckComponent<
               </article>
               <article
                 className="border border-current/10 px-8 pb-8 pt-8"
-                style={{
-                  backgroundColor: cardBg,
-                  color: resolveThemeColorCssValue(cardForeground),
-                }}
+                style={getSurfaceColorStyle(
+                  props.cardSurface.backgroundColor,
+                  streamDocument,
+                )}
               >
                 <FaAddressCard className="mb-7 h-10 w-10" />
                 <EntityField
@@ -1053,7 +887,7 @@ export const BusinessFinancialServicesBranchInfoSectionComponent: PuckComponent<
               </article>
             </div>
           </div>
-        </section>
+        </Background>
       </AnalyticsScopeProvider>
     </VisibilityWrapper>
   );
