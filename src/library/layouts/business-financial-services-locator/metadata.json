@@ -1,5 +1,5 @@
 {
   "id": "business-financial-services-locator",
   "displayName": "Locator",
-  "pageGroupType": "LOCATOR"
+  "pageSetType": "LOCATOR"
 }
