@@ -4,7 +4,9 @@ import { createScopedTypographyStyles } from "../shared/typography";
 import * as React from "react";
 import type { PuckComponent } from "@puckeditor/core";
 import { AnalyticsScopeProvider } from "@yext/pages-components";
+import { useTranslation } from "react-i18next";
 import {
+  msg,
   ComprehensiveCTA,
   EntityField,
   getAnalyticsScopeHash,
@@ -53,37 +55,37 @@ export type BusinessFinancialServicesHeroSectionProps = {
 const BusinessFinancialServicesHeroSectionFields: YextFields<BusinessFinancialServicesHeroSectionProps> =
   {
     section: {
-      label: "Section",
+      label: msg("fields.section", "Section"),
       type: "object",
       objectFields: {
         visibleOnLivePage: {
-          label: "Visible on Live Page",
+          label: msg("fields.visibleOnLivePage", "Visible on Live Page"),
           type: "radio",
           options: [
-            { label: "Yes", value: true },
-            { label: "No", value: false },
+            { label: msg("fields.options.yes", "Yes"), value: true },
+            { label: msg("fields.options.no", "No"), value: false },
           ],
         },
       },
     },
     overlay: {
-      label: "Overlay",
+      label: msg("fields.overlay", "Overlay"),
       type: "object",
       objectFields: {
         backgroundColor: {
-          label: "Background Color",
+          label: msg("fields.backgroundColor", "Background Color"),
           type: "basicSelector",
           options: "BACKGROUND_COLOR",
         },
       },
     },
     backgroundImage: {
-      label: "Background Image",
+      label: msg("fields.backgroundImage", "Background Image"),
       type: "object",
       objectFields: {
         image: {
           type: "entityField",
-          label: "Image",
+          label: msg("fields.image", "Image"),
           filter: {
             types: ["type.image"],
           },
@@ -91,68 +93,68 @@ const BusinessFinancialServicesHeroSectionFields: YextFields<BusinessFinancialSe
       },
     },
     geomodifier: {
-      label: "Geomodifier",
+      label: msg("fields.geomodifier", "Geomodifier"),
       type: "object",
       objectFields: {
         text: {
           type: "entityField",
-          label: "Text",
+          label: msg("fields.text", "Text"),
           filter: {
             types: ["type.string"],
           },
         },
-        styles: { label: "Text Styles", type: "styledText" },
+        styles: { label: msg("fields.textStyles", "Text Styles"), type: "styledText" },
         fontColor: {
-          label: "Font Color",
+          label: msg("fields.fontColor", "Font Color"),
           type: "basicSelector",
           options: "SITE_COLOR",
         },
       },
     },
     heading: {
-      label: "Heading",
+      label: msg("fields.heading", "Heading"),
       type: "object",
       objectFields: {
         text: {
           type: "entityField",
-          label: "Text",
+          label: msg("fields.text", "Text"),
           filter: {
             types: ["type.string"],
           },
         },
-        styles: { label: "Text Styles", type: "styledText" },
+        styles: { label: msg("fields.textStyles", "Text Styles"), type: "styledText" },
         fontColor: {
-          label: "Font Color",
+          label: msg("fields.fontColor", "Font Color"),
           type: "basicSelector",
           options: "SITE_COLOR",
         },
       },
     },
     body: {
-      label: "Body",
+      label: msg("fields.body", "Body"),
       type: "object",
       objectFields: {
         text: {
           type: "entityField",
-          label: "Text",
+          label: msg("fields.text", "Text"),
           filter: {
             types: ["type.rich_text_v2"],
           },
         },
-        styles: { label: "Text Styles", type: "styledText" },
+        styles: { label: msg("fields.textStyles", "Text Styles"), type: "styledText" },
         fontColor: {
-          label: "Font Color",
+          label: msg("fields.fontColor", "Font Color"),
           type: "basicSelector",
           options: "SITE_COLOR",
         },
       },
     },
     primaryCta: {
-      label: "Primary Call to Action",
+      label: msg("fields.primaryCallToAction", "Primary Call to Action"),
       type: "comprehensiveCTA",
     },
     secondaryCta: {
-      label: "Secondary Call to Action",
+      label: msg("fields.secondaryCallToAction", "Secondary Call to Action"),
       type: "comprehensiveCTA",
     },
   };
@@ -160,6 +162,7 @@ const BusinessFinancialServicesHeroSectionFields: YextFields<BusinessFinancialSe
 export const BusinessFinancialServicesHeroSectionComponent: PuckComponent<
   BusinessFinancialServicesHeroSectionProps
 > = (props) => {
+  const { t } = useTranslation();
   const streamDocument = useDocument();
   const locale = streamDocument.locale ?? "en";
 
@@ -187,7 +190,14 @@ export const BusinessFinancialServicesHeroSectionComponent: PuckComponent<
   );
   const aggregateRating = getAggregateRating(streamDocument);
   const reviewInfo = aggregateRating
-    ? `${aggregateRating.averageRating} stars from ${aggregateRating.reviewCount} client reviews`
+    ? t(
+        "starsFromClientReviews",
+        "{{averageRating}} stars from {{reviewCount}} client reviews",
+        {
+          averageRating: aggregateRating.averageRating,
+          reviewCount: aggregateRating.reviewCount,
+        },
+      )
     : "";
 
   return (

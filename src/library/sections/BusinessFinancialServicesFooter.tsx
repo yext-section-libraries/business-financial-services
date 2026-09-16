@@ -6,6 +6,7 @@ import type { PuckComponent } from "@puckeditor/core";
 import { AnalyticsScopeProvider, Address, Link } from "@yext/pages-components";
 import { formatPhoneNumber } from "@yext/visual-editor/section-library-support";
 import {
+  msg,
   Background,
   EntityField,
   getAnalyticsScopeHash,
@@ -115,62 +116,62 @@ const getTranslatableSummary = (value?: TranslatableString): string =>
 const BusinessFinancialServicesFooterFields: YextFields<BusinessFinancialServicesFooterProps> =
   {
     section: {
-      label: "Section",
+      label: msg("fields.section", "Section"),
       type: "object",
       objectFields: {
         backgroundColor: {
-          label: "Background Color",
+          label: msg("fields.backgroundColor", "Background Color"),
           type: "basicSelector",
           options: "BACKGROUND_COLOR",
         },
         visibleOnLivePage: {
-          label: "Visible on Live Page",
+          label: msg("fields.visibleOnLivePage", "Visible on Live Page"),
           type: "radio",
           options: [
-            { label: "Yes", value: true },
-            { label: "No", value: false },
+            { label: msg("fields.options.yes", "Yes"), value: true },
+            { label: msg("fields.options.no", "No"), value: false },
           ],
         },
       },
     },
     logoImage: {
-      label: "Logo Image",
+      label: msg("fields.logoImage", "Logo Image"),
       type: "object",
       objectFields: {
         image: {
           type: "entityField",
-          label: "Image",
+          label: msg("fields.image", "Image"),
           filter: {
             types: ["type.image"],
           },
         },
         aspectRatio: {
-          label: "Aspect Ratio",
+          label: msg("fields.aspectRatio", "Aspect Ratio"),
           type: "select",
           options: imageAspectRatioOptions,
         },
         imageConstrain: {
-          label: "Image Constrain",
+          label: msg("fields.imageConstrain", "Image Constrain"),
           type: "select",
           options: [
-            { label: "Fixed", value: "fixed" },
-            { label: "Filled", value: "filled" },
+            { label: msg("fields.options.fixed", "Fixed"), value: "fixed" },
+            { label: msg("fields.options.filled", "Filled"), value: "filled" },
           ],
         },
       },
     },
     emails: {
-      label: "Emails",
+      label: msg("fields.emails", "Emails"),
       type: "object",
       objectFields: {
         label: {
           type: "entityField",
-          label: "Label",
+          label: msg("fields.label", "Label"),
           filter: { types: ["type.string"] },
         },
         list: {
           type: "entityField",
-          label: "Emails",
+          label: msg("fields.emails", "Emails"),
           filter: {
             types: ["type.string"],
             includeListsOnly: true,
@@ -181,22 +182,22 @@ const BusinessFinancialServicesFooterFields: YextFields<BusinessFinancialService
       },
     },
     phones: {
-      label: "Phones",
+      label: msg("fields.phones", "Phones"),
       type: "object",
       objectFields: {
         items: {
-          label: "Items",
+          label: msg("fields.items", "Items"),
           type: "array",
           arrayFields: {
             number: {
               type: "entityField",
-              label: "Number",
+              label: msg("fields.number", "Number"),
               filter: {
                 types: ["type.phone"],
               },
             },
             label: {
-              label: "Label",
+              label: msg("fields.label", "Label"),
               type: "text",
             },
           },
@@ -206,7 +207,7 @@ const BusinessFinancialServicesFooterFields: YextFields<BusinessFinancialService
               constantValue: "",
               constantValueEnabled: true,
             },
-            label: "Phone",
+            label: msg("fields.phone", "Phone"),
           },
           getItemSummary: (item) =>
             item.label ||
@@ -215,72 +216,72 @@ const BusinessFinancialServicesFooterFields: YextFields<BusinessFinancialService
             "Phone",
         },
         phoneFormat: {
-          label: "Phone Format",
+          label: msg("fields.phoneFormat", "Phone Format"),
           type: "radio",
           options: [
-            { label: "Domestic", value: "domestic" },
-            { label: "International", value: "international" },
+            { label: msg("fields.options.domestic", "Domestic"), value: "domestic" },
+            { label: msg("fields.options.international", "International"), value: "international" },
           ],
         },
         includeHyperlink: {
-          label: "Include Hyperlink",
+          label: msg("fields.includeHyperlink", "Include Hyperlink"),
           type: "radio",
           options: [
-            { label: "Yes", value: true },
-            { label: "No", value: false },
+            { label: msg("fields.options.yes", "Yes"), value: true },
+            { label: msg("fields.options.no", "No"), value: false },
           ],
         },
       },
     },
     address: {
-      label: "Address",
+      label: msg("fields.address", "Address"),
       type: "object",
       objectFields: {
         label: {
           type: "entityField",
-          label: "Label",
+          label: msg("fields.label", "Label"),
           filter: { types: ["type.string"] },
         },
         address: {
           type: "entityField",
-          label: "Address",
+          label: msg("fields.address", "Address"),
           filter: {
             types: ["type.address"],
           },
         },
         showRegion: {
-          label: "Show Region",
+          label: msg("fields.showRegion", "Show Region"),
           type: "radio",
           options: [
-            { label: "Yes", value: true },
-            { label: "No", value: false },
+            { label: msg("fields.options.yes", "Yes"), value: true },
+            { label: msg("fields.options.no", "No"), value: false },
           ],
         },
         showCountry: {
-          label: "Show Country",
+          label: msg("fields.showCountry", "Show Country"),
           type: "radio",
           options: [
-            { label: "Yes", value: true },
-            { label: "No", value: false },
+            { label: msg("fields.options.yes", "Yes"), value: true },
+            { label: msg("fields.options.no", "No"), value: false },
           ],
         },
       },
     },
     footerLinksStyles: {
-      label: "Link Styling",
+      label: msg("fields.linkStyling", "Link Styling"),
       type: "styledText",
     },
     primaryLinks: {
-      label: "Primary Links",
+      label: msg("fields.primaryLinks", "Primary Links"),
       type: "array",
       arrayFields: {
         label: {
-          label: "Label",
+          label: msg("fields.label", "Label"),
           type: "entityField",
           filter: { types: ["type.string"] },
         },
         link: {
-          label: "Link",
+          label: msg("fields.link", "Link"),
           type: "entityField",
           filter: { types: ["type.string"] },
         },
@@ -292,16 +293,16 @@ const BusinessFinancialServicesFooterFields: YextFields<BusinessFinancialService
         "Link",
     },
     secondaryLinks: {
-      label: "Secondary Links",
+      label: msg("fields.secondaryLinks", "Secondary Links"),
       type: "array",
       arrayFields: {
         label: {
-          label: "Label",
+          label: msg("fields.label", "Label"),
           type: "entityField",
           filter: { types: ["type.string"] },
         },
         link: {
-          label: "Link",
+          label: msg("fields.link", "Link"),
           type: "entityField",
           filter: { types: ["type.string"] },
         },

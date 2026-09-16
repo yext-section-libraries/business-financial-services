@@ -5,6 +5,7 @@ import * as React from "react";
 import type { PuckComponent } from "@puckeditor/core";
 import { AnalyticsScopeProvider } from "@yext/pages-components";
 import {
+  msg,
   Background,
   ComprehensiveCTA,
   EntityField,
@@ -70,41 +71,41 @@ const imageDefault = (path: string): ImageField => ({
 const BusinessFinancialServicesResourcesGallerySectionFields: YextFields<BusinessFinancialServicesResourcesGallerySectionProps> =
   {
     section: {
-      label: "Section",
+      label: msg("fields.section", "Section"),
       type: "object",
       objectFields: {
         backgroundColor: {
-          label: "Background Color",
+          label: msg("fields.backgroundColor", "Background Color"),
           type: "basicSelector",
           options: "BACKGROUND_COLOR",
         },
         visibleOnLivePage: {
-          label: "Visible on Live Page",
+          label: msg("fields.visibleOnLivePage", "Visible on Live Page"),
           type: "radio",
           options: [
-            { label: "Yes", value: true },
-            { label: "No", value: false },
+            { label: msg("fields.options.yes", "Yes"), value: true },
+            { label: msg("fields.options.no", "No"), value: false },
           ],
         },
       },
     },
     galleryImages: {
-      label: "Gallery Images",
+      label: msg("fields.galleryImages", "Gallery Images"),
       type: "array",
       arrayFields: {
         image: {
-          label: "Image",
+          label: msg("fields.image", "Image"),
           type: "entityField",
           filter: {
             types: ["type.image"],
           },
         },
         imageConstrain: {
-          label: "Image Constrain",
+          label: msg("fields.imageConstrain", "Image Constrain"),
           type: "select",
           options: [
-            { label: "Fixed", value: "fixed" },
-            { label: "Filled", value: "filled" },
+            { label: msg("fields.options.fixed", "Fixed"), value: "fixed" },
+            { label: msg("fields.options.filled", "Filled"), value: "filled" },
           ],
         },
       },
@@ -114,49 +115,49 @@ const BusinessFinancialServicesResourcesGallerySectionFields: YextFields<Busines
       getItemSummary: (_, index = 0) => `Image ${index + 1}`,
     },
     featureHeading: {
-      label: "Feature Heading",
+      label: msg("fields.featureHeading", "Feature Heading"),
       type: "object",
       objectFields: {
         text: {
           type: "entityField",
-          label: "Text",
+          label: msg("fields.text", "Text"),
           filter: { types: ["type.string"] },
         },
-        styles: { label: "Text Styles", type: "styledText" },
+        styles: { label: msg("fields.textStyles", "Text Styles"), type: "styledText" },
         fontColor: {
-          label: "Font Color",
+          label: msg("fields.fontColor", "Font Color"),
           type: "basicSelector",
           options: "SITE_COLOR",
         },
       },
     },
     featureBody: {
-      label: "Feature Body",
+      label: msg("fields.featureBody", "Feature Body"),
       type: "object",
       objectFields: {
         text: {
           type: "entityField",
-          label: "Text",
+          label: msg("fields.text", "Text"),
           filter: { types: ["type.rich_text_v2"] },
         },
-        styles: { label: "Text Styles", type: "styledText" },
+        styles: { label: msg("fields.textStyles", "Text Styles"), type: "styledText" },
         fontColor: {
-          label: "Font Color",
+          label: msg("fields.fontColor", "Font Color"),
           type: "basicSelector",
           options: "SITE_COLOR",
         },
       },
     },
     featureCta: {
-      label: "Feature Call to Action",
+      label: msg("fields.featureCallToAction", "Feature Call to Action"),
       type: "comprehensiveCTA",
     },
     featureSurface: {
-      label: "Feature Surface",
+      label: msg("fields.featureSurface", "Feature Surface"),
       type: "object",
       objectFields: {
         backgroundColor: {
-          label: "Background Color",
+          label: msg("fields.backgroundColor", "Background Color"),
           type: "basicSelector",
           options: "BACKGROUND_COLOR",
         },

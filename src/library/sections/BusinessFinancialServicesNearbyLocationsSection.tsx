@@ -3,12 +3,14 @@ import { createScopedTypographyStyles } from "../shared/typography";
 
 import * as React from "react";
 import type { PuckComponent } from "@puckeditor/core";
+import { useTranslation } from "react-i18next";
 import {
   AnalyticsScopeProvider,
   getDirections,
   Link,
 } from "@yext/pages-components";
 import {
+  msg,
   Background,
   EntityField,
   getAnalyticsScopeHash,
@@ -26,6 +28,7 @@ import {
   useTemplateProps,
   VisibilityWrapper,
   getThemeColorCssValue as resolveThemeColorCssValue,
+  pt,
 } from "@yext/visual-editor";
 import type { StreamDocument } from "@yext/visual-editor";
 import { getTextStyles } from "../shared/sectionStyles";
@@ -126,81 +129,87 @@ const getDistanceLabel = (
 const BusinessFinancialServicesNearbyLocationsSectionFields: YextFields<BusinessFinancialServicesNearbyLocationsSectionProps> =
   {
     section: {
-      label: "Section",
+      label: msg("fields.section", "Section"),
       type: "object",
       objectFields: {
         backgroundColor: {
-          label: "Background Color",
+          label: msg("fields.backgroundColor", "Background Color"),
           type: "basicSelector",
           options: "BACKGROUND_COLOR",
         },
         visibleOnLivePage: {
-          label: "Visible on Live Page",
+          label: msg("fields.visibleOnLivePage", "Visible on Live Page"),
           type: "radio",
           options: [
-            { label: "Yes", value: true },
-            { label: "No", value: false },
+            { label: msg("fields.options.yes", "Yes"), value: true },
+            { label: msg("fields.options.no", "No"), value: false },
           ],
         },
       },
     },
     cardSurface: {
-      label: "Card Surface",
+      label: msg("fields.cardSurface", "Card Surface"),
       type: "object",
       objectFields: {
         backgroundColor: {
-          label: "Background Color",
+          label: msg("fields.backgroundColor", "Background Color"),
           type: "basicSelector",
           options: "BACKGROUND_COLOR",
         },
         textStyles: {
-          label: "Text Styles",
+          label: msg("fields.textStyles", "Text Styles"),
           type: "styledText",
         },
         fontColor: {
-          label: "Font Color",
+          label: msg("fields.fontColor", "Font Color"),
           type: "basicSelector",
           options: "SITE_COLOR",
         },
         ctaStyle: {
-          label: "CTA Style",
+          label: msg("fields.ctaStyle", "CTA Style"),
           type: "radio",
           options: [
-            { label: "Solid", value: "solid" },
-            { label: "Outline", value: "outline" },
-            { label: "Link", value: "link" },
+            { label: msg("fields.options.solid", "Solid"), value: "solid" },
+            {
+              label: msg("fields.options.outline", "Outline"),
+              value: "outline",
+            },
+            { label: msg("fields.options.link", "Link"), value: "link" },
           ],
         },
         ctaColor: {
-          label: "CTA Color",
+          label: msg("fields.ctaColor", "CTA Color"),
           type: "basicSelector",
           options: "SITE_COLOR",
         },
       },
     },
     heading: {
-      label: "Heading",
+      label: msg("fields.heading", "Heading"),
       type: "object",
       objectFields: {
         text: {
           type: "entityField",
-          label: "Text",
+          label: msg("fields.text", "Text"),
           filter: { types: ["type.string"] },
         },
-        styles: { label: "Text Styles", type: "styledText" },
+        styles: {
+          label: msg("fields.textStyles", "Text Styles"),
+          type: "styledText",
+        },
         fontColor: {
-          label: "Font Color",
+          label: msg("fields.fontColor", "Font Color"),
           type: "basicSelector",
           options: "SITE_COLOR",
         },
       },
     },
     radius: {
-      label: "Radius",
+      label: msg("fields.radius", "Radius"),
       type: "number",
     },
     limit: {
-      label: "Limit",
+      label: msg("fields.limit", "Limit"),
       type: "number",
     },
   };
@@ -208,6 +217,7 @@ const BusinessFinancialServicesNearbyLocationsSectionFields: YextFields<Business
 export const BusinessFinancialServicesNearbyLocationsSectionComponent: PuckComponent<
   BusinessFinancialServicesNearbyLocationsSectionProps
 > = (props) => {
+  const { t } = useTranslation();
   const streamDocument = useDocument<StreamDocument>();
   const locale = streamDocument.locale ?? "en";
   const { relativePrefixToRoot } = useTemplateProps<{
@@ -289,7 +299,7 @@ export const BusinessFinancialServicesNearbyLocationsSectionComponent: PuckCompo
             </h2>
           </EntityField>
           <p className="font-[family:var(--fontFamily-body-fontFamily)] mt-4 text-center">
-            Loading nearby locations
+            {t("loadingNearbyLocations", "Loading nearby locations")}
           </p>
         </div>
       </section>
@@ -317,7 +327,10 @@ export const BusinessFinancialServicesNearbyLocationsSectionComponent: PuckCompo
             </h2>
           </EntityField>
           <p className="font-[family:var(--fontFamily-body-fontFamily)] mt-4 text-center">
-            No nearby locations found for this location
+            {pt(
+              "noNearbyLocationsFoundForThisLocation",
+              "No nearby locations found for this location",
+            )}
           </p>
         </div>
       </section>
@@ -480,9 +493,7 @@ export const BusinessFinancialServicesNearbyLocationsSection: YextComponentConfi
       },
     },
     render: (props) => (
-      <BusinessFinancialServicesNearbyLocationsSectionComponent
-        {...props}
-      />
+      <BusinessFinancialServicesNearbyLocationsSectionComponent {...props} />
     ),
   };
 

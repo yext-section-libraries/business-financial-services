@@ -3,8 +3,14 @@ import { createScopedTypographyStyles } from "../shared/typography";
 
 import * as React from "react";
 import type { PuckComponent } from "@puckeditor/core";
-import { AnalyticsScopeProvider, HoursTable } from "@yext/pages-components";
 import {
+  AnalyticsScopeProvider,
+  HoursTable,
+  type HoursTableIntervalTranslations,
+} from "@yext/pages-components";
+import { useTranslation } from "react-i18next";
+import {
+  msg,
   Background,
   EntityField,
   getAnalyticsScopeHash,
@@ -53,81 +59,81 @@ export type BusinessFinancialServicesHoursSectionProps = {
 const BusinessFinancialServicesHoursSectionFields: YextFields<BusinessFinancialServicesHoursSectionProps> =
   {
     section: {
-      label: "Section",
+      label: msg("fields.section", "Section"),
       type: "object",
       objectFields: {
         backgroundColor: {
-          label: "Background Color",
+          label: msg("fields.backgroundColor", "Background Color"),
           type: "basicSelector",
           options: "BACKGROUND_COLOR",
         },
         visibleOnLivePage: {
-          label: "Visible on Live Page",
+          label: msg("fields.visibleOnLivePage", "Visible on Live Page"),
           type: "radio",
           options: [
-            { label: "Yes", value: true },
-            { label: "No", value: false },
+            { label: msg("fields.options.yes", "Yes"), value: true },
+            { label: msg("fields.options.no", "No"), value: false },
           ],
         },
       },
     },
     cardSurface: {
-      label: "Card Surface",
+      label: msg("fields.cardSurface", "Card Surface"),
       type: "object",
       objectFields: {
         backgroundColor: {
-          label: "Background Color",
+          label: msg("fields.backgroundColor", "Background Color"),
           type: "basicSelector",
           options: "BACKGROUND_COLOR",
         },
       },
     },
     heading: {
-      label: "Heading",
+      label: msg("fields.heading", "Heading"),
       type: "object",
       objectFields: {
         text: {
           type: "entityField",
-          label: "Text",
+          label: msg("fields.text", "Text"),
           filter: { types: ["type.string"] },
         },
-        styles: { label: "Text Styles", type: "styledText" },
+        styles: { label: msg("fields.textStyles", "Text Styles"), type: "styledText" },
         fontColor: {
-          label: "Font Color",
+          label: msg("fields.fontColor", "Font Color"),
           type: "basicSelector",
           options: "SITE_COLOR",
         },
       },
     },
     lobbyHeading: {
-      label: "Lobby Heading",
+      label: msg("fields.lobbyHeading", "Lobby Heading"),
       type: "object",
       objectFields: {
         text: {
           type: "entityField",
-          label: "Text",
+          label: msg("fields.text", "Text"),
           filter: { types: ["type.string"] },
         },
-        styles: { label: "Text Styles", type: "styledText" },
+        styles: { label: msg("fields.textStyles", "Text Styles"), type: "styledText" },
         fontColor: {
-          label: "Font Color",
+          label: msg("fields.fontColor", "Font Color"),
           type: "basicSelector",
           options: "SITE_COLOR",
         },
       },
     },
     secondHoursHeading: {
-      label: "Second Hours Heading",
+      label: msg("fields.secondHoursHeading", "Second Hours Heading"),
       type: "object",
       objectFields: {
         text: {
           type: "entityField",
-          label: "Text",
+          label: msg("fields.text", "Text"),
           filter: { types: ["type.string"] },
         },
-        styles: { label: "Text Styles", type: "styledText" },
+        styles: { label: msg("fields.textStyles", "Text Styles"), type: "styledText" },
         fontColor: {
-          label: "Font Color",
+          label: msg("fields.fontColor", "Font Color"),
           type: "basicSelector",
           options: "SITE_COLOR",
         },
@@ -135,7 +141,7 @@ const BusinessFinancialServicesHoursSectionFields: YextFields<BusinessFinancialS
     },
     hours: {
       type: "entityField",
-      label: "Hours",
+      label: msg("fields.hours", "Hours"),
       filter: {
         types: ["type.hours"],
       },
@@ -143,53 +149,53 @@ const BusinessFinancialServicesHoursSectionFields: YextFields<BusinessFinancialS
     },
     secondHours: {
       type: "entityField",
-      label: "Second Hours",
+      label: msg("fields.secondHours", "Second Hours"),
       filter: {
         types: ["type.hours"],
       },
       disableConstantValueToggle: true,
     },
     hoursStyles: {
-      label: "Hours Styles",
+      label: msg("fields.hoursStyles", "Hours Styles"),
       type: "object",
       objectFields: {
         startOfWeek: {
-          label: "Start Of Week",
+          label: msg("fields.startOfWeek", "Start Of Week"),
           type: "select",
           options: [
-            { label: "Monday", value: "monday" },
-            { label: "Tuesday", value: "tuesday" },
-            { label: "Wednesday", value: "wednesday" },
-            { label: "Thursday", value: "thursday" },
-            { label: "Friday", value: "friday" },
-            { label: "Saturday", value: "saturday" },
-            { label: "Sunday", value: "sunday" },
-            { label: "Today", value: "today" },
+            { label: msg("fields.options.monday", "Monday"), value: "monday" },
+            { label: msg("fields.options.tuesday", "Tuesday"), value: "tuesday" },
+            { label: msg("fields.options.wednesday", "Wednesday"), value: "wednesday" },
+            { label: msg("fields.options.thursday", "Thursday"), value: "thursday" },
+            { label: msg("fields.options.friday", "Friday"), value: "friday" },
+            { label: msg("fields.options.saturday", "Saturday"), value: "saturday" },
+            { label: msg("fields.options.sunday", "Sunday"), value: "sunday" },
+            { label: msg("fields.options.today", "Today"), value: "today" },
           ],
         },
         collapseDays: {
-          label: "Collapse Days",
+          label: msg("fields.collapseDays", "Collapse Days"),
           type: "radio",
           options: [
-            { label: "Yes", value: true },
-            { label: "No", value: false },
+            { label: msg("fields.options.yes", "Yes"), value: true },
+            { label: msg("fields.options.no", "No"), value: false },
           ],
         },
         showAdditionalHoursText: {
-          label: "Show Additional Hours Text",
+          label: msg("fields.showAdditionalHoursText", "Show Additional Hours Text"),
           type: "radio",
           options: [
-            { label: "Yes", value: true },
-            { label: "No", value: false },
+            { label: msg("fields.options.yes", "Yes"), value: true },
+            { label: msg("fields.options.no", "No"), value: false },
           ],
         },
         alignment: {
-          label: "Alignment",
+          label: msg("fields.alignment", "Alignment"),
           type: "select",
           options: [
-            { label: "Start", value: "items-start" },
-            { label: "Center", value: "items-center" },
-            { label: "End", value: "items-end" },
+            { label: msg("fields.options.start", "Start"), value: "items-start" },
+            { label: msg("fields.options.center", "Center"), value: "items-center" },
+            { label: msg("fields.options.end", "End"), value: "items-end" },
           ],
         },
       },
@@ -199,6 +205,7 @@ const BusinessFinancialServicesHoursSectionFields: YextFields<BusinessFinancialS
 export const BusinessFinancialServicesHoursSectionComponent: PuckComponent<
   BusinessFinancialServicesHoursSectionProps
 > = (props) => {
+  const { t, i18n } = useTranslation();
   const streamDocument = useDocument();
   const locale = streamDocument.locale ?? "en";
   const scopeName = `YextBusinessFinancialServicesHoursSection${getAnalyticsScopeHash(
@@ -224,6 +231,12 @@ export const BusinessFinancialServicesHoursSectionComponent: PuckComponent<
     locale,
     streamDocument,
   );
+  const intervalTranslations: HoursTableIntervalTranslations = {
+    isClosed: t("closed", "Closed"),
+    open24Hours: t("open24Hours", "Open 24 Hours"),
+    reopenDate: t("reopenDate", "Reopen Date"),
+    timeFormatLocale: i18n.language,
+  };
   const additionalHoursText =
     typeof streamDocument.additionalHoursText === "string"
       ? streamDocument.additionalHoursText.trim()
@@ -309,6 +322,7 @@ export const BusinessFinancialServicesHoursSectionComponent: PuckComponent<
                         comingSoon={streamDocument.comingSoon}
                         startOfWeek={props.hoursStyles.startOfWeek}
                         collapseDays={props.hoursStyles.collapseDays}
+                        intervalTranslations={intervalTranslations}
                       />
                     </EntityField>
                   ) : null}
@@ -359,6 +373,7 @@ export const BusinessFinancialServicesHoursSectionComponent: PuckComponent<
                         comingSoon={streamDocument.comingSoon}
                         startOfWeek={props.hoursStyles.startOfWeek}
                         collapseDays={props.hoursStyles.collapseDays}
+                        intervalTranslations={intervalTranslations}
                       />
                     </EntityField>
                   ) : null}
