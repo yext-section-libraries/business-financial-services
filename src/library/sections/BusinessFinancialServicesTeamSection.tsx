@@ -5,6 +5,7 @@ import * as React from "react";
 import type { PuckComponent } from "@puckeditor/core";
 import { AnalyticsScopeProvider } from "@yext/pages-components";
 import {
+  msg,
   Background,
   ComprehensiveCTA,
   createItemSource,
@@ -141,57 +142,57 @@ function teamMemberDefaultItem(
 }
 
 const teamMembersSource = createItemSource<TeamMember>({
-  label: "Team Members",
+  label: msg("fields.teamMembers", "Team Members"),
   mappingFields: {
     image: {
-      label: "Image",
+      label: msg("fields.image", "Image"),
       type: "entityField",
       filter: {
         types: ["type.image"],
       },
     },
     name: {
-      label: "Name",
+      label: msg("fields.name", "Name"),
       type: "entityField",
       filter: { types: ["type.string"] },
     },
     role: {
-      label: "Role",
+      label: msg("fields.role", "Role"),
       type: "entityField",
       filter: { types: ["type.string"] },
     },
     credentialsLabel: {
-      label: "Credentials Label",
+      label: msg("fields.credentialsLabel", "Credentials Label"),
       type: "entityField",
       filter: { types: ["type.string"] },
     },
     credentials: {
-      label: "Credentials",
+      label: msg("fields.credentials", "Credentials"),
       type: "entityField",
       filter: { types: ["type.string"] },
     },
     licensesLabel: {
-      label: "Licenses Label",
+      label: msg("fields.licensesLabel", "Licenses Label"),
       type: "entityField",
       filter: { types: ["type.string"] },
     },
     licenses: {
-      label: "Licenses",
+      label: msg("fields.licenses", "Licenses"),
       type: "entityField",
       filter: { types: ["type.string"], includeListsOnly: true },
     },
     specialtiesLabel: {
-      label: "Specialties Label",
+      label: msg("fields.specialtiesLabel", "Specialties Label"),
       type: "entityField",
       filter: { types: ["type.string"] },
     },
     specialties: {
-      label: "Specialties",
+      label: msg("fields.specialties", "Specialties"),
       type: "entityField",
       filter: { types: ["type.rich_text_v2"] },
     },
     cta: {
-      label: "Call to Action",
+      label: msg("fields.callToAction", "Call to Action"),
       type: "entityField",
       filter: { types: ["type.cta"] },
     },
@@ -259,36 +260,36 @@ export type BusinessFinancialServicesTeamSectionProps = {
 const BusinessFinancialServicesTeamSectionFields: YextFields<BusinessFinancialServicesTeamSectionProps> =
   {
     section: {
-      label: "Section",
+      label: msg("fields.section", "Section"),
       type: "object",
       objectFields: {
         backgroundColor: {
-          label: "Background Color",
+          label: msg("fields.backgroundColor", "Background Color"),
           type: "basicSelector",
           options: "BACKGROUND_COLOR",
         },
         visibleOnLivePage: {
-          label: "Visible on Live Page",
+          label: msg("fields.visibleOnLivePage", "Visible on Live Page"),
           type: "radio",
           options: [
-            { label: "Yes", value: true },
-            { label: "No", value: false },
+            { label: msg("fields.options.yes", "Yes"), value: true },
+            { label: msg("fields.options.no", "No"), value: false },
           ],
         },
       },
     },
     heading: {
-      label: "Heading",
+      label: msg("fields.heading", "Heading"),
       type: "object",
       objectFields: {
         text: {
           type: "entityField",
-          label: "Text",
+          label: msg("fields.text", "Text"),
           filter: { types: ["type.string"] },
         },
-        styles: { label: "Text Styles", type: "styledText" },
+        styles: { label: msg("fields.textStyles", "Text Styles"), type: "styledText" },
         fontColor: {
-          label: "Font Color",
+          label: msg("fields.fontColor", "Font Color"),
           type: "basicSelector",
           options: "SITE_COLOR",
         },
@@ -296,75 +297,75 @@ const BusinessFinancialServicesTeamSectionFields: YextFields<BusinessFinancialSe
     },
     teamMembers: teamMembersSource.field,
     cardStyles: {
-      label: "Card Styles",
+      label: msg("fields.cardStyles", "Card Styles"),
       type: "object",
       objectFields: {
         image: {
-          label: "Image",
+          label: msg("fields.image", "Image"),
           type: "object",
           objectFields: {
             styles: {
-              label: "Image Styles",
+              label: msg("fields.imageStyles", "Image Styles"),
               type: "styledImage",
             },
             aspectRatio: {
-              label: "Aspect Ratio",
+              label: msg("fields.aspectRatio", "Aspect Ratio"),
               type: "select",
               options: imageAspectRatioOptions,
             },
             imageConstrain: {
-              label: "Image Constrain",
+              label: msg("fields.imageConstrain", "Image Constrain"),
               type: "select",
               options: [
-                { label: "Fixed", value: "fixed" },
-                { label: "Filled", value: "filled" },
+                { label: msg("fields.options.fixed", "Fixed"), value: "fixed" },
+                { label: msg("fields.options.filled", "Filled"), value: "filled" },
               ],
             },
           },
         },
         name: {
-          label: "Name",
+          label: msg("fields.name", "Name"),
           type: "object",
           objectFields: {
-            styles: { label: "Text Styles", type: "styledText" },
+            styles: { label: msg("fields.textStyles", "Text Styles"), type: "styledText" },
             fontColor: {
-              label: "Font Color",
+              label: msg("fields.fontColor", "Font Color"),
               type: "basicSelector",
               options: "SITE_COLOR",
             },
           },
         },
         role: {
-          label: "Role",
+          label: msg("fields.role", "Role"),
           type: "object",
           objectFields: {
-            styles: { label: "Text Styles", type: "styledText" },
+            styles: { label: msg("fields.textStyles", "Text Styles"), type: "styledText" },
             fontColor: {
-              label: "Font Color",
+              label: msg("fields.fontColor", "Font Color"),
               type: "basicSelector",
               options: "SITE_COLOR",
             },
           },
         },
         label: {
-          label: "Labels",
+          label: msg("fields.labels", "Labels"),
           type: "object",
           objectFields: {
-            styles: { label: "Text Styles", type: "styledText" },
+            styles: { label: msg("fields.textStyles", "Text Styles"), type: "styledText" },
             fontColor: {
-              label: "Font Color",
+              label: msg("fields.fontColor", "Font Color"),
               type: "basicSelector",
               options: "SITE_COLOR",
             },
           },
         },
         value: {
-          label: "Values",
+          label: msg("fields.values", "Values"),
           type: "object",
           objectFields: {
-            styles: { label: "Text Styles", type: "styledText" },
+            styles: { label: msg("fields.textStyles", "Text Styles"), type: "styledText" },
             fontColor: {
-              label: "Font Color",
+              label: msg("fields.fontColor", "Font Color"),
               type: "basicSelector",
               options: "SITE_COLOR",
             },
@@ -373,11 +374,11 @@ const BusinessFinancialServicesTeamSectionFields: YextFields<BusinessFinancialSe
       },
     },
     cardSurface: {
-      label: "Card Surface",
+      label: msg("fields.cardSurface", "Card Surface"),
       type: "object",
       objectFields: {
         backgroundColor: {
-          label: "Background Color",
+          label: msg("fields.backgroundColor", "Background Color"),
           type: "basicSelector",
           options: "BACKGROUND_COLOR",
         },

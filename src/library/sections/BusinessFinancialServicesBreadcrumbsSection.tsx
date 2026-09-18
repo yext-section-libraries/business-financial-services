@@ -4,6 +4,7 @@ import * as React from "react";
 import type { PuckComponent } from "@puckeditor/core";
 import { AnalyticsScopeProvider, Link } from "@yext/pages-components";
 import {
+  msg,
   Background,
   EntityField,
   getAnalyticsScopeHash,
@@ -21,6 +22,7 @@ import {
   useDocument,
   useTemplateProps,
   VisibilityWrapper,
+  pt,
 } from "@yext/visual-editor";
 
 export type BusinessFinancialServicesBreadcrumbsSectionProps = {
@@ -34,47 +36,49 @@ export type BusinessFinancialServicesBreadcrumbsSectionProps = {
   includeCurrentLocation: boolean;
 };
 
-const fields: YextFields<BusinessFinancialServicesBreadcrumbsSectionProps> =
-  {
-    section: {
-      label: "Section",
-      type: "object",
-      objectFields: {
-        backgroundColor: {
-          label: "Background Color",
-          type: "basicSelector",
-          options: "BACKGROUND_COLOR",
-        },
-        visibleOnLivePage: {
-          label: "Visible on Live Page",
-          type: "radio",
-          options: [
-            { label: "Yes", value: true },
-            { label: "No", value: false },
-          ],
-        },
+const fields: YextFields<BusinessFinancialServicesBreadcrumbsSectionProps> = {
+  section: {
+    label: msg("fields.section", "Section"),
+    type: "object",
+    objectFields: {
+      backgroundColor: {
+        label: msg("fields.backgroundColor", "Background Color"),
+        type: "basicSelector",
+        options: "BACKGROUND_COLOR",
+      },
+      visibleOnLivePage: {
+        label: msg("fields.visibleOnLivePage", "Visible on Live Page"),
+        type: "radio",
+        options: [
+          { label: msg("fields.options.yes", "Yes"), value: true },
+          { label: msg("fields.options.no", "No"), value: false },
+        ],
       },
     },
-    rootLabel: {
-      label: "Root Label",
-      type: "entityField",
-      filter: { types: ["type.string"] },
-    },
-    textStyles: { label: "Text Styles", type: "styledText" },
-    fontColor: {
-      label: "Font Color",
-      type: "basicSelector",
-      options: "SITE_COLOR",
-    },
-    includeCurrentLocation: {
-      label: "Include Current Location",
-      type: "radio",
-      options: [
-        { label: "Yes", value: true },
-        { label: "No", value: false },
-      ],
-    },
-  };
+  },
+  rootLabel: {
+    label: msg("fields.rootLabel", "Root Label"),
+    type: "entityField",
+    filter: { types: ["type.string"] },
+  },
+  textStyles: {
+    label: msg("fields.textStyles", "Text Styles"),
+    type: "styledText",
+  },
+  fontColor: {
+    label: msg("fields.fontColor", "Font Color"),
+    type: "basicSelector",
+    options: "SITE_COLOR",
+  },
+  includeCurrentLocation: {
+    label: msg("fields.includeCurrentLocation", "Include Current Location"),
+    type: "radio",
+    options: [
+      { label: msg("fields.options.yes", "Yes"), value: true },
+      { label: msg("fields.options.no", "No"), value: false },
+    ],
+  },
+};
 
 const styles = String.raw`
 .business-financial-services-breadcrumbs {
@@ -168,8 +172,10 @@ const BusinessFinancialServicesBreadcrumbsSectionComponent: PuckComponent<
           padding: "18px 24px",
         }}
       >
-        No breadcrumbs available (section will be hidden on live page). Create a
-        directory to enable breadcrumbs.
+        {pt(
+          "noBreadcrumbsAvailable",
+          "No breadcrumbs available (section will be hidden on live page). Create a directory to enable breadcrumbs.",
+        )}
       </p>
     ) : (
       <></>

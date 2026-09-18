@@ -5,6 +5,7 @@ import * as React from "react";
 import type { PuckComponent } from "@puckeditor/core";
 import { AnalyticsScopeProvider, useAnalytics } from "@yext/pages-components";
 import {
+  msg,
   Background,
   createItemSource,
   EntityField,
@@ -76,15 +77,15 @@ const faqItemDefault = (question: string, answer: string): FaqItem => ({
 });
 
 const faqsSource = createItemSource<FaqItem>({
-  label: "FAQs",
+  label: msg("fields.faqs", "FAQs"),
   mappingFields: {
     question: {
-      label: "Question",
+      label: msg("fields.question", "Question"),
       type: "entityField",
       filter: { types: ["type.string", "type.rich_text_v2"] },
     },
     answer: {
-      label: "Answer",
+      label: msg("fields.answer", "Answer"),
       type: "entityField",
       filter: { types: ["type.rich_text_v2"] },
     },
@@ -116,64 +117,64 @@ const faqsSource = createItemSource<FaqItem>({
 const BusinessFinancialServicesFaqSectionFields: YextFields<BusinessFinancialServicesFaqSectionProps> =
   {
     section: {
-      label: "Section",
+      label: msg("fields.section", "Section"),
       type: "object",
       objectFields: {
         backgroundColor: {
-          label: "Background Color",
+          label: msg("fields.backgroundColor", "Background Color"),
           type: "basicSelector",
           options: "BACKGROUND_COLOR",
         },
         visibleOnLivePage: {
-          label: "Visible on Live Page",
+          label: msg("fields.visibleOnLivePage", "Visible on Live Page"),
           type: "radio",
           options: [
-            { label: "Yes", value: true },
-            { label: "No", value: false },
+            { label: msg("fields.options.yes", "Yes"), value: true },
+            { label: msg("fields.options.no", "No"), value: false },
           ],
         },
       },
     },
     heading: {
-      label: "Heading",
+      label: msg("fields.heading", "Heading"),
       type: "object",
       objectFields: {
         text: {
           type: "entityField",
-          label: "Text",
+          label: msg("fields.text", "Text"),
           filter: { types: ["type.string"] },
         },
-        styles: { label: "Text Styles", type: "styledText" },
+        styles: { label: msg("fields.textStyles", "Text Styles"), type: "styledText" },
         fontColor: {
-          label: "Font Color",
+          label: msg("fields.fontColor", "Font Color"),
           type: "basicSelector",
           options: "SITE_COLOR",
         },
       },
     },
     faqStyles: {
-      label: "FAQ Styles",
+      label: msg("fields.faqStyles", "FAQ Styles"),
       type: "object",
       objectFields: {
         question: {
-          label: "Question",
+          label: msg("fields.question", "Question"),
           type: "object",
           objectFields: {
-            styles: { label: "Text Styles", type: "styledText" },
+            styles: { label: msg("fields.textStyles", "Text Styles"), type: "styledText" },
             fontColor: {
-              label: "Font Color",
+              label: msg("fields.fontColor", "Font Color"),
               type: "basicSelector",
               options: "SITE_COLOR",
             },
           },
         },
         answer: {
-          label: "Answer",
+          label: msg("fields.answer", "Answer"),
           type: "object",
           objectFields: {
-            styles: { label: "Text Styles", type: "styledText" },
+            styles: { label: msg("fields.textStyles", "Text Styles"), type: "styledText" },
             fontColor: {
-              label: "Font Color",
+              label: msg("fields.fontColor", "Font Color"),
               type: "basicSelector",
               options: "SITE_COLOR",
             },
@@ -183,11 +184,11 @@ const BusinessFinancialServicesFaqSectionFields: YextFields<BusinessFinancialSer
     },
     faqs: faqsSource.field,
     itemSurface: {
-      label: "Item Surface",
+      label: msg("fields.itemSurface", "Item Surface"),
       type: "object",
       objectFields: {
         backgroundColor: {
-          label: "Background Color",
+          label: msg("fields.backgroundColor", "Background Color"),
           type: "basicSelector",
           options: "BACKGROUND_COLOR",
         },

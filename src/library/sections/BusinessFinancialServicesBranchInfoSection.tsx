@@ -7,6 +7,7 @@ import { FaAddressCard, FaHeadset, FaShieldAlt } from "react-icons/fa";
 import { AnalyticsScopeProvider, Address, Link } from "@yext/pages-components";
 import { formatPhoneNumber } from "@yext/visual-editor/section-library-support";
 import {
+  msg,
   Background,
   ComprehensiveCTA,
   EntityField,
@@ -122,83 +123,83 @@ const normalizeStringList = (value: unknown): string[] =>
 const BusinessFinancialServicesBranchInfoSectionFields: YextFields<BusinessFinancialServicesBranchInfoSectionProps> =
   {
     section: {
-      label: "Section",
+      label: msg("fields.section", "Section"),
       type: "object",
       objectFields: {
         backgroundColor: {
-          label: "Background Color",
+          label: msg("fields.backgroundColor", "Background Color"),
           type: "basicSelector",
           options: "BACKGROUND_COLOR",
         },
         visibleOnLivePage: {
-          label: "Visible on Live Page",
+          label: msg("fields.visibleOnLivePage", "Visible on Live Page"),
           type: "radio",
           options: [
-            { label: "Yes", value: true },
-            { label: "No", value: false },
+            { label: msg("fields.options.yes", "Yes"), value: true },
+            { label: msg("fields.options.no", "No"), value: false },
           ],
         },
       },
     },
     sectionHeading: {
-      label: "Section Heading",
+      label: msg("fields.sectionHeading", "Section Heading"),
       type: "object",
       objectFields: {
         text: {
           type: "entityField",
-          label: "Text",
+          label: msg("fields.text", "Text"),
           filter: { types: ["type.string"] },
         },
-        styles: { label: "Text Styles", type: "styledText" },
+        styles: { label: msg("fields.textStyles", "Text Styles"), type: "styledText" },
         fontColor: {
-          label: "Font Color",
+          label: msg("fields.fontColor", "Font Color"),
           type: "basicSelector",
           options: "SITE_COLOR",
         },
       },
     },
     contactCard: {
-      label: "Contact Card",
+      label: msg("fields.contactCard", "Contact Card"),
       type: "object",
       objectFields: {
         title: {
-          label: "Title",
+          label: msg("fields.title", "Title"),
           type: "object",
           objectFields: {
             text: {
               type: "entityField",
-              label: "Text",
+              label: msg("fields.text", "Text"),
               filter: { types: ["type.string"] },
             },
           },
         },
         phoneSubheader: {
           type: "entityField",
-          label: "Phone Subheader",
+          label: msg("fields.phoneSubheader", "Phone Subheader"),
           filter: { types: ["type.string"] },
         },
         emailSubheader: {
           type: "entityField",
-          label: "Email Subheader",
+          label: msg("fields.emailSubheader", "Email Subheader"),
           filter: { types: ["type.string"] },
         },
         phoneDetails: {
-          label: "Phones",
+          label: msg("fields.phones", "Phones"),
           type: "object",
           objectFields: {
             items: {
-              label: "Items",
+              label: msg("fields.items", "Items"),
               type: "array",
               arrayFields: {
                 number: {
                   type: "entityField",
-                  label: "Number",
+                  label: msg("fields.number", "Number"),
                   filter: {
                     types: ["type.phone"],
                   },
                 },
                 label: {
-                  label: "Label",
+                  label: msg("fields.label", "Label"),
                   type: "text",
                 },
               },
@@ -214,30 +215,30 @@ const BusinessFinancialServicesBranchInfoSectionFields: YextFields<BusinessFinan
                 item.label || item.number?.field || "Phone",
             },
             phoneFormat: {
-              label: "Phone Format",
+              label: msg("fields.phoneFormat", "Phone Format"),
               type: "radio",
               options: [
-                { label: "Domestic", value: "domestic" },
-                { label: "International", value: "international" },
+                { label: msg("fields.options.domestic", "Domestic"), value: "domestic" },
+                { label: msg("fields.options.international", "International"), value: "international" },
               ],
             },
             includeHyperlink: {
-              label: "Include Hyperlink",
+              label: msg("fields.includeHyperlink", "Include Hyperlink"),
               type: "radio",
               options: [
-                { label: "Yes", value: true },
-                { label: "No", value: false },
+                { label: msg("fields.options.yes", "Yes"), value: true },
+                { label: msg("fields.options.no", "No"), value: false },
               ],
             },
           },
         },
         languageSupport: {
-          label: "Language Support",
+          label: msg("fields.languageSupport", "Language Support"),
           type: "object",
           objectFields: {
             text: {
               type: "entityField",
-              label: "Text List",
+              label: msg("fields.textList", "Text List"),
               filter: {
                 types: ["type.string"],
                 includeListsOnly: true,
@@ -246,12 +247,12 @@ const BusinessFinancialServicesBranchInfoSectionFields: YextFields<BusinessFinan
           },
         },
         emails: {
-          label: "Emails",
+          label: msg("fields.emails", "Emails"),
           type: "object",
           objectFields: {
             list: {
               type: "entityField",
-              label: "Emails",
+              label: msg("fields.emails", "Emails"),
               filter: {
                 types: ["type.string"],
                 includeListsOnly: true,
@@ -264,71 +265,71 @@ const BusinessFinancialServicesBranchInfoSectionFields: YextFields<BusinessFinan
       },
     },
     visitCard: {
-      label: "Visit Card",
+      label: msg("fields.visitCard", "Visit Card"),
       type: "object",
       objectFields: {
         title: {
-          label: "Title",
+          label: msg("fields.title", "Title"),
           type: "object",
           objectFields: {
             text: {
               type: "entityField",
-              label: "Text",
+              label: msg("fields.text", "Text"),
               filter: { types: ["type.string"] },
             },
           },
         },
         body: {
-          label: "Body",
+          label: msg("fields.body", "Body"),
           type: "object",
           objectFields: {
             text: {
               type: "entityField",
-              label: "Text",
+              label: msg("fields.text", "Text"),
               filter: { types: ["type.rich_text_v2"] },
             },
           },
         },
         address: {
-          label: "Address",
+          label: msg("fields.address", "Address"),
           type: "object",
           objectFields: {
             address: {
               type: "entityField",
-              label: "Address",
+              label: msg("fields.address", "Address"),
               filter: {
                 types: ["type.address"],
               },
             },
             showRegion: {
-              label: "Show Region",
+              label: msg("fields.showRegion", "Show Region"),
               type: "radio",
               options: [
-                { label: "Yes", value: true },
-                { label: "No", value: false },
+                { label: msg("fields.options.yes", "Yes"), value: true },
+                { label: msg("fields.options.no", "No"), value: false },
               ],
             },
             showCountry: {
-              label: "Show Country",
+              label: msg("fields.showCountry", "Show Country"),
               type: "radio",
               options: [
-                { label: "Yes", value: true },
-                { label: "No", value: false },
+                { label: msg("fields.options.yes", "Yes"), value: true },
+                { label: msg("fields.options.no", "No"), value: false },
               ],
             },
           },
         },
         cta: {
-          label: "Call to Action",
+          label: msg("fields.callToAction", "Call to Action"),
           type: "comprehensiveCTA",
         },
         amenities: {
-          label: "Amenities",
+          label: msg("fields.amenities", "Amenities"),
           type: "object",
           objectFields: {
             text: {
               type: "entityField",
-              label: "Text List",
+              label: msg("fields.textList", "Text List"),
               filter: {
                 types: ["type.string"],
                 includeListsOnly: true,
@@ -339,27 +340,27 @@ const BusinessFinancialServicesBranchInfoSectionFields: YextFields<BusinessFinan
       },
     },
     aboutCard: {
-      label: "About Card",
+      label: msg("fields.aboutCard", "About Card"),
       type: "object",
       objectFields: {
         title: {
-          label: "Title",
+          label: msg("fields.title", "Title"),
           type: "object",
           objectFields: {
             text: {
               type: "entityField",
-              label: "Text",
+              label: msg("fields.text", "Text"),
               filter: { types: ["type.string"] },
             },
           },
         },
         body: {
-          label: "Body",
+          label: msg("fields.body", "Body"),
           type: "object",
           objectFields: {
             text: {
               type: "entityField",
-              label: "Text",
+              label: msg("fields.text", "Text"),
               filter: { types: ["type.rich_text_v2"] },
             },
           },
@@ -367,45 +368,45 @@ const BusinessFinancialServicesBranchInfoSectionFields: YextFields<BusinessFinan
       },
     },
     cardSurface: {
-      label: "Card Surface",
+      label: msg("fields.cardSurface", "Card Surface"),
       type: "object",
       objectFields: {
         backgroundColor: {
-          label: "Background Color",
+          label: msg("fields.backgroundColor", "Background Color"),
           type: "basicSelector",
           options: "BACKGROUND_COLOR",
         },
         header: {
-          label: "Header",
+          label: msg("fields.header", "Header"),
           type: "object",
           objectFields: {
-            textStyles: { label: "Text Styles", type: "styledText" },
+            textStyles: { label: msg("fields.textStyles", "Text Styles"), type: "styledText" },
             fontColor: {
-              label: "Font Color",
+              label: msg("fields.fontColor", "Font Color"),
               type: "basicSelector",
               options: "SITE_COLOR",
             },
           },
         },
         subheader: {
-          label: "Subheader",
+          label: msg("fields.subheader", "Subheader"),
           type: "object",
           objectFields: {
-            textStyles: { label: "Text Styles", type: "styledText" },
+            textStyles: { label: msg("fields.textStyles", "Text Styles"), type: "styledText" },
             fontColor: {
-              label: "Font Color",
+              label: msg("fields.fontColor", "Font Color"),
               type: "basicSelector",
               options: "SITE_COLOR",
             },
           },
         },
         content: {
-          label: "Content",
+          label: msg("fields.content", "Content"),
           type: "object",
           objectFields: {
-            textStyles: { label: "Text Styles", type: "styledText" },
+            textStyles: { label: msg("fields.textStyles", "Text Styles"), type: "styledText" },
             fontColor: {
-              label: "Font Color",
+              label: msg("fields.fontColor", "Font Color"),
               type: "basicSelector",
               options: "SITE_COLOR",
             },
