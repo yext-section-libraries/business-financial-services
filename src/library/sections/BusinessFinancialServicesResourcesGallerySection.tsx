@@ -197,7 +197,7 @@ export const BusinessFinancialServicesResourcesGallerySectionComponent: PuckComp
       >
         <Image
           image={image}
-          className={className}
+          className={`${className} rounded-image-borderRadius`}
           style={{
             objectFit: item.imageConstrain === "filled" ? "cover" : "contain",
             width: "100%",

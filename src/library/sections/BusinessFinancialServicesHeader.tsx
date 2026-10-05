@@ -850,11 +850,7 @@ const BusinessFinancialServicesHeaderComponent: PuckComponent<
       aspectRatio:
         iconImageProps.aspectRatio > 0 ? iconImageProps.aspectRatio : undefined,
       borderRadius: resolveBorderRadius(iconImageProps.styles?.borderRadius),
-      overflow:
-        iconImageProps.imageConstrain === "filled" ||
-        iconImageProps.styles?.borderRadius !== "default"
-          ? "hidden"
-          : undefined,
+      overflow: "hidden",
     };
 
     const imageStyle: React.CSSProperties = {
@@ -871,7 +867,7 @@ const BusinessFinancialServicesHeaderComponent: PuckComponent<
         fieldId={iconImageProps.image.field}
         constantValueEnabled={iconImageProps.image.constantValueEnabled}
       >
-        <div style={wrapperStyle}>
+        <div className="rounded-image-borderRadius" style={wrapperStyle}>
           <Image
             image={iconImage}
             className="h-full w-full"
@@ -986,7 +982,7 @@ const BusinessFinancialServicesHeaderComponent: PuckComponent<
       >
         {!resolvedLogoImage ? (
           <div
-            className="flex items-center justify-center rounded border border-dashed border-current/30 font-medium text-center"
+            className="flex items-center justify-center rounded border border-dashed border-current/30 text-center"
             style={{
               height: "50px",
               width:
@@ -999,7 +995,7 @@ const BusinessFinancialServicesHeaderComponent: PuckComponent<
             {t("logo", "Logo")}
           </div>
         ) : (
-          <div style={logoWrapperStyle}>
+          <div className="rounded-image-borderRadius" style={logoWrapperStyle}>
             <Image
               image={resolvedLogoImage}
               className="h-full w-full"

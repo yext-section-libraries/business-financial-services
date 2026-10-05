@@ -509,7 +509,7 @@ export const BusinessFinancialServicesTeamSectionComponent: PuckComponent<
                           }
                         >
                           <div
-                            className="mb-[18px] w-full overflow-hidden border-2 border-current/10"
+                            className="mb-[18px] w-full overflow-hidden rounded-image-borderRadius border-2 border-current/10"
                             style={{
                               aspectRatio:
                                 props.cardStyles.image.aspectRatio > 0
@@ -592,7 +592,6 @@ export const BusinessFinancialServicesTeamSectionComponent: PuckComponent<
                           }
                         >
                           <span
-                            className="font-semibold"
                             style={getTextStyles(
                               props.cardStyles.label.styles,
                               props.cardStyles.label.fontColor,
@@ -627,7 +626,6 @@ export const BusinessFinancialServicesTeamSectionComponent: PuckComponent<
                           }
                         >
                           <span
-                            className="font-semibold"
                             style={getTextStyles(
                               props.cardStyles.label.styles,
                               props.cardStyles.label.fontColor,
@@ -669,7 +667,6 @@ export const BusinessFinancialServicesTeamSectionComponent: PuckComponent<
                           }
                         >
                           <span
-                            className="font-semibold"
                             style={getTextStyles(
                               props.cardStyles.label.styles,
                               props.cardStyles.label.fontColor,

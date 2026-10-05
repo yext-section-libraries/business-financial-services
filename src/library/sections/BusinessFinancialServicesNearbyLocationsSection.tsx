@@ -395,7 +395,7 @@ export const BusinessFinancialServicesNearbyLocationsSectionComponent: PuckCompo
                       <Link
                         cta={{ link: resolvedUrl, linkType: "URL" }}
                         eventName={`nearbyLocation${index}`}
-                        className="font-semibold leading-[1.4] no-underline"
+                        className="leading-[1.4] no-underline"
                         style={cardTextStyles}
                       >
                         {name}

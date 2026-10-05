@@ -598,7 +598,7 @@ export const BusinessFinancialServicesBranchInfoSectionComponent: PuckComponent<
                     }
                   >
                     <p
-                      className="m-0 font-semibold tracking-[0.08em]"
+                      className="m-0 tracking-[0.08em]"
                       style={getTextStyles(
                         props.cardSurface.subheader.textStyles,
                         props.cardSurface.subheader.fontColor,
@@ -699,7 +699,7 @@ export const BusinessFinancialServicesBranchInfoSectionComponent: PuckComponent<
                     }
                   >
                     <p
-                      className="m-0 font-semibold tracking-[0.08em]"
+                      className="m-0 tracking-[0.08em]"
                       style={getTextStyles(
                         props.cardSurface.subheader.textStyles,
                         props.cardSurface.subheader.fontColor,

@@ -266,7 +266,7 @@ export const BusinessFinancialServicesHeroSectionComponent: PuckComponent<
               constantValueEnabled={props.geomodifier.text.constantValueEnabled}
             >
               <p
-                className="mt-2 font-normal leading-[1.2] md:leading-[45px]"
+                className="mt-2 leading-[1.2] md:leading-[45px]"
                 style={getTextStyles(
                   props.geomodifier.styles,
                   props.geomodifier.fontColor,
