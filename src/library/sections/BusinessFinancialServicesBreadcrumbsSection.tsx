@@ -1,7 +1,9 @@
+import "../shared/typography.css";
 import type { SectionConfig } from "@yext/visual-editor";
 
 import * as React from "react";
 import type { PuckComponent } from "@puckeditor/core";
+import { useTranslation } from "react-i18next";
 import { AnalyticsScopeProvider, Link } from "@yext/pages-components";
 import {
   msg,
@@ -93,8 +95,9 @@ const styles = String.raw`
   margin: 0;
   padding: 0;
   list-style: none;
-  font-size: 14px;
-  font-weight: 500;
+  font-family: var(--fontFamily-link-fontFamily);
+  font-size: var(--fontSize-link-fontSize);
+  font-weight: var(--fontWeight-link-fontWeight);
   letter-spacing: 0.02em;
 }
 .business-financial-services-breadcrumbs-link {
@@ -118,6 +121,7 @@ const styles = String.raw`
 const BusinessFinancialServicesBreadcrumbsSectionComponent: PuckComponent<
   BusinessFinancialServicesBreadcrumbsSectionProps
 > = (props) => {
+  const { t } = useTranslation();
   const streamDocument = useDocument<StreamDocument>();
   const { relativePrefixToRoot } = useTemplateProps<{
     relativePrefixToRoot?: string;
@@ -168,7 +172,6 @@ const BusinessFinancialServicesBreadcrumbsSectionComponent: PuckComponent<
     return props.puck.isEditing ? (
       <p
         style={{
-          fontFamily: "Arial, Helvetica, sans-serif",
           padding: "18px 24px",
         }}
       >
@@ -191,7 +194,7 @@ const BusinessFinancialServicesBreadcrumbsSectionComponent: PuckComponent<
         <style>{styles}</style>
         <Background
           as="nav"
-          aria-label="Breadcrumbs"
+          aria-label={t("breadcrumb", "Breadcrumb")}
           background={props.section.backgroundColor}
           className="business-financial-services-breadcrumbs"
           style={sectionSurfaceStyle}
@@ -270,7 +273,7 @@ const BusinessFinancialServicesBreadcrumbsSectionComponent: PuckComponent<
 
 export const BusinessFinancialServicesBreadcrumbsSection: YextComponentConfig<BusinessFinancialServicesBreadcrumbsSectionProps> =
   {
-    label: "Breadcrumbs Section",
+    label: msg("components.breadcrumbsSection", "Breadcrumbs Section"),
     fields,
     defaultProps: {
       section: {

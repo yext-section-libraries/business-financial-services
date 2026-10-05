@@ -1,5 +1,5 @@
+import "../shared/typography.css";
 import type { SectionConfig } from "@yext/visual-editor";
-import { createScopedTypographyStyles } from "../shared/typography";
 
 import * as React from "react";
 import type { PuckComponent } from "@puckeditor/core";
@@ -31,11 +31,6 @@ import {
   renderRichText,
   type RichTextStyleOverrides,
 } from "../shared/sectionStyles";
-
-const beforeMeetTypographyScopeClass = "bfs-before-meet-typography";
-const beforeMeetTypographyStyles = createScopedTypographyStyles(
-  beforeMeetTypographyScopeClass,
-);
 
 type PillAction = {
   cta: Partial<ComprehensiveCTAValue>;
@@ -186,13 +181,12 @@ export const BusinessFinancialServicesBeforeMeetSectionComponent: PuckComponent<
         <Background
           as="section"
           background={props.section.backgroundColor}
-          className={`${beforeMeetTypographyScopeClass} px-0 py-[34px]`}
+          className="px-0 py-[34px]"
           style={getSurfaceColorStyle(
             props.section.backgroundColor,
             streamDocument,
           )}
         >
-          <style>{beforeMeetTypographyStyles}</style>
           <div className="mx-auto max-w-[902px] px-[22px] text-center">
             <EntityField
               displayName="Heading"
@@ -200,7 +194,7 @@ export const BusinessFinancialServicesBeforeMeetSectionComponent: PuckComponent<
               constantValueEnabled={props.heading.text.constantValueEnabled}
             >
               <h2
-                className="font-[family:var(--fontFamily-h2-fontFamily)] text-[28px] font-normal leading-[1.3] md:text-[36px]"
+                className="leading-[1.3]"
                 style={getTextStyles(
                   props.heading.styles,
                   props.heading.fontColor,
@@ -215,7 +209,7 @@ export const BusinessFinancialServicesBeforeMeetSectionComponent: PuckComponent<
               constantValueEnabled={props.body.text.constantValueEnabled}
             >
               <div
-                className="font-[family:var(--fontFamily-body-fontFamily)] mx-auto mt-2 max-w-[690px] text-base leading-[1.6]"
+                className="mx-auto mt-2 max-w-[690px] leading-[1.6]"
                 style={getTextStyles(props.body.styles, props.body.fontColor)}
               >
                 {renderRichText(body, bodyRichTextStyleOverrides)}
@@ -247,7 +241,7 @@ export const BusinessFinancialServicesBeforeMeetSectionComponent: PuckComponent<
 
 export const BusinessFinancialServicesBeforeMeetSection: YextComponentConfig<BusinessFinancialServicesBeforeMeetSectionProps> =
   {
-    label: "Disclosures Section",
+    label: msg("components.disclosuresSection", "Disclosures Section"),
     fields: BusinessFinancialServicesBeforeMeetSectionFields,
     defaultProps: {
       heading: {

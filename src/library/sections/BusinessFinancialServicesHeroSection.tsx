@@ -1,5 +1,5 @@
+import "../shared/typography.css";
 import type { SectionConfig } from "@yext/visual-editor";
-import { createScopedTypographyStyles } from "../shared/typography";
 
 import * as React from "react";
 import type { PuckComponent } from "@puckeditor/core";
@@ -31,11 +31,6 @@ import type {
   StyledRichTextField,
   StyledTextField,
 } from "../shared/sectionFields";
-
-const heroTypographyScopeClass = "bfs-hero-typography";
-const heroTypographyStyles = createScopedTypographyStyles(
-  heroTypographyScopeClass,
-);
 
 export type BusinessFinancialServicesHeroSectionProps = {
   backgroundImage: ImageField;
@@ -207,7 +202,7 @@ export const BusinessFinancialServicesHeroSectionComponent: PuckComponent<
     >
       <AnalyticsScopeProvider name={scopeName}>
         <section
-          className={`${heroTypographyScopeClass} relative overflow-hidden`}
+          className="components relative overflow-hidden"
           style={{
             color: resolveThemeColorCssValue({
               selectedColor: props.overlay.backgroundColor.contrastingColor,
@@ -215,7 +210,6 @@ export const BusinessFinancialServicesHeroSectionComponent: PuckComponent<
             }),
           }}
         >
-          <style>{heroTypographyStyles}</style>
           {resolvedImage ? (
             <div className="absolute inset-0">
               <EntityField
@@ -261,7 +255,7 @@ export const BusinessFinancialServicesHeroSectionComponent: PuckComponent<
                         }
                   }
                 />
-                <span className="font-[family:var(--fontFamily-body-fontFamily)] basis-full text-sm leading-6 md:basis-auto md:text-base">
+                <span className="basis-full leading-6 md:basis-auto">
                   {reviewInfo}
                 </span>
               </div>
@@ -272,7 +266,7 @@ export const BusinessFinancialServicesHeroSectionComponent: PuckComponent<
               constantValueEnabled={props.geomodifier.text.constantValueEnabled}
             >
               <p
-                className="font-[family:var(--fontFamily-body-fontFamily)] mt-2 text-[28px] font-normal leading-[1.2] md:text-[36px] md:leading-[45px]"
+                className="mt-2 font-normal leading-[1.2] md:leading-[45px]"
                 style={getTextStyles(
                   props.geomodifier.styles,
                   props.geomodifier.fontColor,
@@ -287,7 +281,7 @@ export const BusinessFinancialServicesHeroSectionComponent: PuckComponent<
               constantValueEnabled={props.heading.text.constantValueEnabled}
             >
               <h1
-                className="font-[family:var(--fontFamily-h1-fontFamily)] max-w-[620px] text-[40px] font-bold leading-[1.1] md:text-[50px]"
+                className="max-w-[620px] leading-[1.1]"
                 style={getTextStyles(
                   props.heading.styles,
                   props.heading.fontColor,
@@ -303,7 +297,7 @@ export const BusinessFinancialServicesHeroSectionComponent: PuckComponent<
               constantValueEnabled={props.body.text.constantValueEnabled}
             >
               <div
-                className="font-[family:var(--fontFamily-body-fontFamily)] mt-5 max-w-[620px] text-base leading-[1.7]"
+                className="mt-5 max-w-[620px] leading-[1.7]"
                 style={getTextStyles(props.body.styles, props.body.fontColor)}
               >
                 {renderRichText(resolvedBody, bodyRichTextStyleOverrides)}
@@ -351,7 +345,7 @@ export const BusinessFinancialServicesHeroSectionComponent: PuckComponent<
 
 export const BusinessFinancialServicesHeroSection: YextComponentConfig<BusinessFinancialServicesHeroSectionProps> =
   {
-    label: "Hero Section",
+    label: msg("components.heroSection", "Hero Section"),
     fields: BusinessFinancialServicesHeroSectionFields,
     defaultProps: {
       backgroundImage: {

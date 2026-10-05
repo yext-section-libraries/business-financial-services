@@ -1,5 +1,5 @@
+import "../shared/typography.css";
 import type { SectionConfig } from "@yext/visual-editor";
-import { createScopedTypographyStyles } from "../shared/typography";
 
 import * as React from "react";
 import type { PuckComponent } from "@puckeditor/core";
@@ -38,12 +38,6 @@ import {
   renderRichText,
   type RichTextStyleOverrides,
 } from "../shared/sectionStyles";
-
-const teamTypographyScopeClass = "bfs-team-typography";
-const teamTypographyStyles = createScopedTypographyStyles(
-  teamTypographyScopeClass,
-  [".bfs-team-card-details"],
-);
 
 type TeamMember = {
   image: YextEntityField<TranslatableAssetImage>;
@@ -415,13 +409,12 @@ export const BusinessFinancialServicesTeamSectionComponent: PuckComponent<
         <Background
           as="section"
           background={props.section.backgroundColor}
-          className={`${teamTypographyScopeClass} px-0 py-[60px]`}
+          className="px-0 py-[60px]"
           style={getSurfaceColorStyle(
             props.section.backgroundColor,
             streamDocument,
           )}
         >
-          <style>{teamTypographyStyles}</style>
           <div className="mx-auto w-full max-w-[1440px] px-[22px]">
             <EntityField
               displayName="Heading"
@@ -429,7 +422,7 @@ export const BusinessFinancialServicesTeamSectionComponent: PuckComponent<
               constantValueEnabled={props.heading.text.constantValueEnabled}
             >
               <h2
-                className="font-[family:var(--fontFamily-h2-fontFamily)] text-center text-[28px] font-normal leading-[1.3] md:text-[36px]"
+                className="text-center leading-[1.3]"
                 style={getTextStyles(
                   props.heading.styles,
                   props.heading.fontColor,
@@ -501,7 +494,7 @@ export const BusinessFinancialServicesTeamSectionComponent: PuckComponent<
                   return (
                     <article
                       key={`${name}-${index}`}
-                      className="font-[family:var(--fontFamily-body-fontFamily)] border border-current/10 px-[18px] pb-[18px] pt-4 text-center"
+                      className="border border-current/10 px-[18px] pb-[18px] pt-4 text-center"
                       style={getSurfaceColorStyle(
                         props.cardSurface.backgroundColor,
                         streamDocument,
@@ -562,7 +555,7 @@ export const BusinessFinancialServicesTeamSectionComponent: PuckComponent<
                         }
                       >
                         <h3
-                          className="font-[family:var(--fontFamily-h3-fontFamily)] text-2xl font-medium leading-[1.3]"
+                          className="leading-[1.3]"
                           style={getTextStyles(
                             props.cardStyles.name.styles,
                             props.cardStyles.name.fontColor,
@@ -580,7 +573,7 @@ export const BusinessFinancialServicesTeamSectionComponent: PuckComponent<
                         }
                       >
                         <p
-                          className="font-[family:var(--fontFamily-body-fontFamily)] mb-[14px] mt-0.5 text-base leading-6"
+                          className="mb-[14px] mt-0.5 leading-6"
                           style={getTextStyles(
                             props.cardStyles.role.styles,
                             props.cardStyles.role.fontColor,
@@ -590,7 +583,7 @@ export const BusinessFinancialServicesTeamSectionComponent: PuckComponent<
                           {role}
                         </p>
                       </EntityField>
-                      <div className="bfs-team-card-details font-[family:var(--fontFamily-body-fontFamily)] grid grid-cols-[110px_1fr] gap-x-2 gap-y-1 text-left text-base leading-6">
+                      <div className="bfs-team-card-details grid grid-cols-[110px_1fr] gap-x-2 gap-y-1 text-left leading-6">
                         <EntityField
                           displayName={`Team Member ${index + 1} Credentials Label`}
                           fieldId={itemFields?.credentialsLabel.field}
@@ -743,7 +736,7 @@ export const BusinessFinancialServicesTeamSectionComponent: PuckComponent<
 
 export const BusinessFinancialServicesTeamSection: YextComponentConfig<BusinessFinancialServicesTeamSectionProps> =
   {
-    label: "Team Section",
+    label: msg("components.teamSection", "Team Section"),
     fields: BusinessFinancialServicesTeamSectionFields,
     defaultProps: {
       heading: {

@@ -1,3 +1,4 @@
+import "../shared/typography.css";
 import type { SectionConfig } from "@yext/visual-editor";
 
 import * as React from "react";
@@ -985,7 +986,7 @@ const BusinessFinancialServicesHeaderComponent: PuckComponent<
       >
         {!resolvedLogoImage ? (
           <div
-            className="flex items-center justify-center rounded border border-dashed border-current/30 text-[10px] font-medium text-center"
+            className="flex items-center justify-center rounded border border-dashed border-current/30 font-medium text-center"
             style={{
               height: "50px",
               width:
@@ -1026,7 +1027,7 @@ const BusinessFinancialServicesHeaderComponent: PuckComponent<
           }}
           eventName="headerLogo"
           className="inline-flex transition-opacity hover:opacity-80"
-          aria-label="Logo"
+          aria-label={t("logo", "Logo")}
         >
           {logoContent}
         </Link>
@@ -1143,7 +1144,9 @@ const BusinessFinancialServicesHeaderComponent: PuckComponent<
             }}
             aria-expanded={menuOpen}
             aria-label={
-              menuOpen ? "Close navigation menu" : "Open navigation menu"
+              menuOpen
+                ? t("closeMenu", "Close menu")
+                : t("openMenu", "Open menu")
             }
             className="inline-flex h-10 w-10 items-center justify-center rounded-full"
             style={{
@@ -1248,7 +1251,7 @@ const BusinessFinancialServicesHeaderComponent: PuckComponent<
 
 export const BusinessFinancialServicesHeader: YextComponentConfig<BusinessFinancialServicesHeaderProps> =
   {
-    label: "Header",
+    label: msg("components.header", "Header"),
     fields: BusinessFinancialServicesHeaderFields,
     defaultProps: {
       variant: "utilityTopRow",

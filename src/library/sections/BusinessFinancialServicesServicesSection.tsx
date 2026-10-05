@@ -1,5 +1,5 @@
+import "../shared/typography.css";
 import type { SectionConfig } from "@yext/visual-editor";
-import { createScopedTypographyStyles } from "../shared/typography";
 
 import * as React from "react";
 import type { PuckComponent } from "@puckeditor/core";
@@ -34,11 +34,6 @@ import type {
   StyledTextField,
   StyledTextStyles,
 } from "../shared/sectionFields";
-
-const servicesTypographyScopeClass = "bfs-services-typography";
-const servicesTypographyStyles = createScopedTypographyStyles(
-  servicesTypographyScopeClass,
-);
 
 type ServiceItem = {
   title: YextEntityField<TranslatableString>;
@@ -283,13 +278,12 @@ export const BusinessFinancialServicesServicesSectionComponent: PuckComponent<
         <Background
           as="section"
           background={props.section.backgroundColor}
-          className={`${servicesTypographyScopeClass} px-0 pb-[60px] pt-10`}
+          className="px-0 pb-[60px] pt-10"
           style={getSurfaceColorStyle(
             props.section.backgroundColor,
             streamDocument,
           )}
         >
-          <style>{servicesTypographyStyles}</style>
           <div className="mx-auto w-full max-w-[1440px] px-[22px]">
             <EntityField
               displayName="Heading Brow"
@@ -297,7 +291,7 @@ export const BusinessFinancialServicesServicesSectionComponent: PuckComponent<
               constantValueEnabled={props.headingBrow.text.constantValueEnabled}
             >
               <p
-                className="font-[family:var(--fontFamily-body-fontFamily)] m-0 text-center text-base leading-6"
+                className="m-0 text-center leading-6"
                 style={getTextStyles(
                   props.headingBrow.styles,
                   props.headingBrow.fontColor,
@@ -312,7 +306,7 @@ export const BusinessFinancialServicesServicesSectionComponent: PuckComponent<
               constantValueEnabled={props.heading.text.constantValueEnabled}
             >
               <h2
-                className="font-[family:var(--fontFamily-h2-fontFamily)] mt-2 text-center text-[28px] font-normal leading-[1.3] md:text-[36px]"
+                className="mt-2 text-center leading-[1.3]"
                 style={getTextStyles(
                   props.heading.styles,
                   props.heading.fontColor,
@@ -344,7 +338,7 @@ export const BusinessFinancialServicesServicesSectionComponent: PuckComponent<
                       )}
                     >
                       <h3
-                        className="font-[family:var(--fontFamily-h3-fontFamily)] text-2xl font-medium leading-[1.3]"
+                        className="leading-[1.3]"
                         style={getTextStyles(
                           props.cardStyles.title.styles,
                           props.cardStyles.title.fontColor,
@@ -352,7 +346,7 @@ export const BusinessFinancialServicesServicesSectionComponent: PuckComponent<
                       >
                         {title}
                       </h3>
-                      <div className="font-[family:var(--fontFamily-body-fontFamily)] mt-[18px] max-w-full text-base leading-[1.6]">
+                      <div className="mt-[18px] max-w-full leading-[1.6]">
                         {renderRichText(body, cardBodyRichTextStyleOverrides)}
                       </div>
                       {item.cta ? (
@@ -403,7 +397,7 @@ export const BusinessFinancialServicesServicesSectionComponent: PuckComponent<
 
 export const BusinessFinancialServicesServicesSection: YextComponentConfig<BusinessFinancialServicesServicesSectionProps> =
   {
-    label: "Services Section",
+    label: msg("components.servicesSection", "Services Section"),
     fields: BusinessFinancialServicesServicesSectionFields,
     defaultProps: {
       headingBrow: {

@@ -1,5 +1,5 @@
+import "../shared/typography.css";
 import type { SectionConfig } from "@yext/visual-editor";
-import { createScopedTypographyStyles } from "../shared/typography";
 
 import * as React from "react";
 import type { PuckComponent } from "@puckeditor/core";
@@ -35,11 +35,6 @@ import {
   type RichTextStyleOverrides,
 } from "../shared/sectionStyles";
 
-const branchInfoTypographyScopeClass = "bfs-branch-info-typography";
-const branchInfoTypographyStyles = createScopedTypographyStyles(
-  branchInfoTypographyScopeClass,
-  [".bfs-branch-info-address"],
-);
 import type { AddressType } from "@yext/pages-components";
 
 type StyledTextField = {
@@ -542,13 +537,12 @@ export const BusinessFinancialServicesBranchInfoSectionComponent: PuckComponent<
         <Background
           as="section"
           background={props.section.backgroundColor}
-          className={`${branchInfoTypographyScopeClass} px-0 py-[60px]`}
+          className="px-0 py-[60px]"
           style={getSurfaceColorStyle(
             props.section.backgroundColor,
             streamDocument,
           )}
         >
-          <style>{branchInfoTypographyStyles}</style>
           <div className="mx-auto w-full max-w-[1440px] px-[22px]">
             <EntityField
               displayName="Section Heading"
@@ -558,7 +552,7 @@ export const BusinessFinancialServicesBranchInfoSectionComponent: PuckComponent<
               }
             >
               <h2
-                className="font-[family:var(--fontFamily-h2-fontFamily)] text-center text-[28px] font-normal leading-[1.3] md:text-[36px]"
+                className="text-center leading-[1.3]"
                 style={getTextStyles(
                   props.sectionHeading.styles,
                   props.sectionHeading.fontColor,
@@ -585,7 +579,7 @@ export const BusinessFinancialServicesBranchInfoSectionComponent: PuckComponent<
                   }
                 >
                   <h3
-                    className="font-[family:var(--fontFamily-h3-fontFamily)] text-2xl font-medium leading-[1.3]"
+                    className="leading-[1.3]"
                     style={getTextStyles(
                       props.cardSurface.header.textStyles,
                       props.cardSurface.header.fontColor,
@@ -604,7 +598,7 @@ export const BusinessFinancialServicesBranchInfoSectionComponent: PuckComponent<
                     }
                   >
                     <p
-                      className="font-[family:var(--fontFamily-body-fontFamily)] m-0 text-base font-semibold tracking-[0.08em]"
+                      className="m-0 font-semibold tracking-[0.08em]"
                       style={getTextStyles(
                         props.cardSurface.subheader.textStyles,
                         props.cardSurface.subheader.fontColor,
@@ -627,7 +621,7 @@ export const BusinessFinancialServicesBranchInfoSectionComponent: PuckComponent<
                           }
                         >
                           <p
-                            className="font-[family:var(--fontFamily-body-fontFamily)] m-0 text-base"
+                            className="m-0"
                             style={getTextStyles(
                               props.cardSurface.content.textStyles,
                               props.cardSurface.content.fontColor,
@@ -638,7 +632,7 @@ export const BusinessFinancialServicesBranchInfoSectionComponent: PuckComponent<
                             <Link
                               cta={{ link: item.digits, linkType: "PHONE" }}
                               eventName={`phone${index}`}
-                              className="font-[family:var(--fontFamily-link-fontFamily)] underline hover:no-underline"
+                              className="underline hover:no-underline"
                               style={getTextStyles(
                                 props.cardSurface.content.textStyles,
                                 props.cardSurface.content.fontColor,
@@ -659,7 +653,7 @@ export const BusinessFinancialServicesBranchInfoSectionComponent: PuckComponent<
                           }
                         >
                           <p
-                            className="font-[family:var(--fontFamily-body-fontFamily)] m-0 text-base"
+                            className="m-0"
                             style={getTextStyles(
                               props.cardSurface.content.textStyles,
                               props.cardSurface.content.fontColor,
@@ -683,7 +677,7 @@ export const BusinessFinancialServicesBranchInfoSectionComponent: PuckComponent<
                         }
                       >
                         <p
-                          className="font-[family:var(--fontFamily-body-fontFamily)] m-0 text-base"
+                          className="m-0"
                           style={getTextStyles(
                             props.cardSurface.content.textStyles,
                             props.cardSurface.content.fontColor,
@@ -705,7 +699,7 @@ export const BusinessFinancialServicesBranchInfoSectionComponent: PuckComponent<
                     }
                   >
                     <p
-                      className="font-[family:var(--fontFamily-body-fontFamily)] m-0 text-base font-semibold tracking-[0.08em]"
+                      className="m-0 font-semibold tracking-[0.08em]"
                       style={getTextStyles(
                         props.cardSurface.subheader.textStyles,
                         props.cardSurface.subheader.fontColor,
@@ -728,7 +722,7 @@ export const BusinessFinancialServicesBranchInfoSectionComponent: PuckComponent<
                           key={`${email}-${index}`}
                           cta={{ link: email, linkType: "EMAIL" }}
                           eventName={`email${index}`}
-                          className="font-[family:var(--fontFamily-link-fontFamily)] text-base underline hover:no-underline"
+                          className="underline hover:no-underline"
                           style={getTextStyles(
                             props.cardSurface.content.textStyles,
                             props.cardSurface.content.fontColor,
@@ -758,7 +752,7 @@ export const BusinessFinancialServicesBranchInfoSectionComponent: PuckComponent<
                   }
                 >
                   <h3
-                    className="font-[family:var(--fontFamily-h3-fontFamily)] text-2xl font-medium leading-[1.3]"
+                    className="leading-[1.3]"
                     style={getTextStyles(
                       props.cardSurface.header.textStyles,
                       props.cardSurface.header.fontColor,
@@ -775,7 +769,7 @@ export const BusinessFinancialServicesBranchInfoSectionComponent: PuckComponent<
                     props.visitCard.body.text.constantValueEnabled
                   }
                 >
-                  <div className="font-[family:var(--fontFamily-body-fontFamily)] mt-3 text-base leading-7">
+                  <div className="mt-3 leading-7">
                     {renderRichText(visitBody, contentRichTextStyleOverrides)}
                   </div>
                 </EntityField>
@@ -788,7 +782,7 @@ export const BusinessFinancialServicesBranchInfoSectionComponent: PuckComponent<
                     }
                   >
                     <div
-                      className="bfs-branch-info-address font-[family:var(--fontFamily-body-fontFamily)] mt-3 text-base leading-7"
+                      className="bfs-branch-info-address mt-3 leading-7"
                       style={getTextStyles(
                         props.cardSurface.content.textStyles,
                         props.cardSurface.content.fontColor,
@@ -834,7 +828,7 @@ export const BusinessFinancialServicesBranchInfoSectionComponent: PuckComponent<
                     }
                   >
                     <ul
-                      className="font-[family:var(--fontFamily-body-fontFamily)] mt-3 list-disc pl-4 text-base leading-7"
+                      className="mt-3 list-disc pl-4 leading-7"
                       style={getTextStyles(
                         props.cardSurface.content.textStyles,
                         props.cardSurface.content.fontColor,
@@ -864,7 +858,7 @@ export const BusinessFinancialServicesBranchInfoSectionComponent: PuckComponent<
                   }
                 >
                   <h3
-                    className="font-[family:var(--fontFamily-h3-fontFamily)] text-2xl font-medium leading-[1.3]"
+                    className="leading-[1.3]"
                     style={getTextStyles(
                       props.cardSurface.header.textStyles,
                       props.cardSurface.header.fontColor,
@@ -881,7 +875,7 @@ export const BusinessFinancialServicesBranchInfoSectionComponent: PuckComponent<
                     props.aboutCard.body.text.constantValueEnabled
                   }
                 >
-                  <div className="font-[family:var(--fontFamily-body-fontFamily)] mt-3 text-base leading-7">
+                  <div className="mt-3 leading-7">
                     {renderRichText(aboutBody, contentRichTextStyleOverrides)}
                   </div>
                 </EntityField>
@@ -896,7 +890,7 @@ export const BusinessFinancialServicesBranchInfoSectionComponent: PuckComponent<
 
 export const BusinessFinancialServicesBranchInfoSection: YextComponentConfig<BusinessFinancialServicesBranchInfoSectionProps> =
   {
-    label: "Branch Info Section",
+    label: msg("components.branchInfoSection", "Branch Info Section"),
     fields: BusinessFinancialServicesBranchInfoSectionFields,
     defaultProps: {
       sectionHeading: {

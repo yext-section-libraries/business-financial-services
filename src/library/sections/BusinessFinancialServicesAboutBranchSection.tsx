@@ -1,5 +1,5 @@
+import "../shared/typography.css";
 import type { SectionConfig } from "@yext/visual-editor";
-import { createScopedTypographyStyles } from "../shared/typography";
 
 import * as React from "react";
 import type { PuckComponent } from "@puckeditor/core";
@@ -23,11 +23,6 @@ import type {
   StyledRichTextField,
   StyledTextField,
 } from "../shared/sectionFields";
-
-const aboutTypographyScopeClass = "bfs-about-typography";
-const aboutTypographyStyles = createScopedTypographyStyles(
-  aboutTypographyScopeClass,
-);
 
 export type BusinessFinancialServicesAboutBranchSectionProps = {
   backgroundImage: ImageField;
@@ -150,7 +145,7 @@ export const BusinessFinancialServicesAboutBranchSectionComponent: PuckComponent
     >
       <AnalyticsScopeProvider name={scopeName}>
         <section
-          className={`${aboutTypographyScopeClass} relative overflow-hidden`}
+          className="components relative overflow-hidden"
           style={{
             color: resolveThemeColorCssValue({
               selectedColor: props.overlay.backgroundColor.contrastingColor,
@@ -158,7 +153,6 @@ export const BusinessFinancialServicesAboutBranchSectionComponent: PuckComponent
             }),
           }}
         >
-          <style>{aboutTypographyStyles}</style>
           {image ? (
             <div className="absolute inset-0 h-full w-full">
               <EntityField
@@ -197,7 +191,7 @@ export const BusinessFinancialServicesAboutBranchSectionComponent: PuckComponent
               constantValueEnabled={props.heading.text.constantValueEnabled}
             >
               <h2
-                className="font-[family:var(--fontFamily-h2-fontFamily)] text-[28px] font-normal leading-[1.3] md:text-[36px]"
+                className="leading-[1.3]"
                 style={getTextStyles(
                   props.heading.styles,
                   props.heading.fontColor,
@@ -212,7 +206,7 @@ export const BusinessFinancialServicesAboutBranchSectionComponent: PuckComponent
               fieldId={props.body.text.field}
               constantValueEnabled={props.body.text.constantValueEnabled}
             >
-              <div className="font-[family:var(--fontFamily-body-fontFamily)] mt-4 space-y-4 text-base leading-[1.7]">
+              <div className="mt-4 space-y-4 leading-[1.7]">
                 {renderRichText(body, bodyRichTextStyleOverrides)}
               </div>
             </EntityField>
@@ -225,7 +219,7 @@ export const BusinessFinancialServicesAboutBranchSectionComponent: PuckComponent
 
 export const BusinessFinancialServicesAboutBranchSection: YextComponentConfig<BusinessFinancialServicesAboutBranchSectionProps> =
   {
-    label: "About Branch Section",
+    label: msg("components.aboutBranchSection", "About Branch Section"),
     fields: BusinessFinancialServicesAboutBranchSectionFields,
     defaultProps: {
       backgroundImage: {

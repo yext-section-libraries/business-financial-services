@@ -1,5 +1,5 @@
+import "../shared/typography.css";
 import type { SectionConfig } from "@yext/visual-editor";
-import { createScopedTypographyStyles } from "../shared/typography";
 
 import * as React from "react";
 import type { PuckComponent } from "@puckeditor/core";
@@ -30,11 +30,6 @@ import type {
   StyledRichTextField,
   StyledTextField,
 } from "../shared/sectionFields";
-
-const resourcesGalleryTypographyScopeClass = "bfs-resources-gallery-typography";
-const resourcesGalleryTypographyStyles = createScopedTypographyStyles(
-  resourcesGalleryTypographyScopeClass,
-);
 
 type ImageField = {
   image: YextEntityField<TranslatableAssetImage>;
@@ -221,13 +216,12 @@ export const BusinessFinancialServicesResourcesGallerySectionComponent: PuckComp
         <Background
           as="section"
           background={props.section.backgroundColor}
-          className={`${resourcesGalleryTypographyScopeClass} overflow-hidden px-0 pb-5`}
+          className="overflow-hidden px-0 pb-5"
           style={getSurfaceColorStyle(
             props.section.backgroundColor,
             streamDocument,
           )}
         >
-          <style>{resourcesGalleryTypographyStyles}</style>
           <div className="mx-auto grid w-full max-w-[1440px] gap-[10px] px-[22px] md:grid-cols-2 xl:grid-cols-[1fr_1fr_1.58fr_1fr_1fr]">
             <div className="contents xl:grid xl:grid-rows-[minmax(0,345fr)_minmax(0,144fr)] xl:gap-[10px] xl:overflow-hidden xl:[contain:size]">
               {renderGalleryImage(
@@ -258,7 +252,7 @@ export const BusinessFinancialServicesResourcesGallerySectionComponent: PuckComp
                 }
               >
                 <h3
-                  className="font-[family:var(--fontFamily-h3-fontFamily)] text-2xl font-medium leading-[1.3]"
+                  className="leading-[1.3]"
                   style={getTextStyles(
                     props.featureHeading.styles,
                     props.featureHeading.fontColor,
@@ -275,7 +269,7 @@ export const BusinessFinancialServicesResourcesGallerySectionComponent: PuckComp
                 }
               >
                 <div
-                  className="font-[family:var(--fontFamily-body-fontFamily)] my-8 text-base leading-[1.6]"
+                  className="my-8 leading-[1.6]"
                   style={getTextStyles(
                     props.featureBody.styles,
                     props.featureBody.fontColor,
@@ -326,7 +320,7 @@ export const BusinessFinancialServicesResourcesGallerySectionComponent: PuckComp
 
 export const BusinessFinancialServicesResourcesGallerySection: YextComponentConfig<BusinessFinancialServicesResourcesGallerySectionProps> =
   {
-    label: "Resources Gallery Section",
+    label: msg("components.resourcesGallerySection", "Resources Gallery Section"),
     fields: BusinessFinancialServicesResourcesGallerySectionFields,
     defaultProps: {
       galleryImages: [
