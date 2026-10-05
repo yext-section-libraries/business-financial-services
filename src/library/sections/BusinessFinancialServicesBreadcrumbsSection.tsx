@@ -1,7 +1,9 @@
+import "../shared/typography.css";
 import type { SectionConfig } from "@yext/visual-editor";
 
 import * as React from "react";
 import type { PuckComponent } from "@puckeditor/core";
+import { useTranslation } from "react-i18next";
 import { AnalyticsScopeProvider, Link } from "@yext/pages-components";
 import {
   msg,
@@ -81,43 +83,32 @@ const fields: YextFields<BusinessFinancialServicesBreadcrumbsSectionProps> = {
 };
 
 const styles = String.raw`
-.business-financial-services-breadcrumbs {
-  padding: 14px 48px;
-}
 .business-financial-services-breadcrumbs-list {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   gap: 7px;
   width: 100%;
-  margin: 0;
+  max-width: var(--maxWidth-pageSection-contentWidth);
+  margin-inline: auto;
   padding: 0;
   list-style: none;
-  font-size: 14px;
-  font-weight: 500;
-  letter-spacing: 0.02em;
+  font-family: var(--fontFamily-link-fontFamily);
+  font-size: var(--fontSize-link-fontSize);
+  font-weight: var(--fontWeight-link-fontWeight);
+  letter-spacing: var(--letterSpacing-link-letterSpacing);
 }
 .business-financial-services-breadcrumbs-link {
   color: inherit;
-  text-decoration: none;
-}
-.business-financial-services-breadcrumbs-link:hover,
-.business-financial-services-breadcrumbs-link:focus-visible {
-  text-decoration: underline;
 }
 .business-financial-services-breadcrumbs-separator { opacity: 0.65; }
 .business-financial-services-breadcrumbs-current { opacity: 0.82; }
-@media (max-width: 1023px) {
-  .business-financial-services-breadcrumbs { padding-inline: 32px; }
-}
-@media (max-width: 767px) {
-  .business-financial-services-breadcrumbs { padding: 12px 24px; }
-}
 `;
 
 const BusinessFinancialServicesBreadcrumbsSectionComponent: PuckComponent<
   BusinessFinancialServicesBreadcrumbsSectionProps
 > = (props) => {
+  const { t } = useTranslation();
   const streamDocument = useDocument<StreamDocument>();
   const { relativePrefixToRoot } = useTemplateProps<{
     relativePrefixToRoot?: string;
@@ -168,7 +159,6 @@ const BusinessFinancialServicesBreadcrumbsSectionComponent: PuckComponent<
     return props.puck.isEditing ? (
       <p
         style={{
-          fontFamily: "Arial, Helvetica, sans-serif",
           padding: "18px 24px",
         }}
       >
@@ -191,9 +181,9 @@ const BusinessFinancialServicesBreadcrumbsSectionComponent: PuckComponent<
         <style>{styles}</style>
         <Background
           as="nav"
-          aria-label="Breadcrumbs"
+          aria-label={t("breadcrumb", "Breadcrumb")}
           background={props.section.backgroundColor}
-          className="business-financial-services-breadcrumbs"
+          className="business-financial-services-breadcrumbs components px-4 py-pageSection-verticalPadding md:px-6"
           style={sectionSurfaceStyle}
         >
           <ol
@@ -270,7 +260,7 @@ const BusinessFinancialServicesBreadcrumbsSectionComponent: PuckComponent<
 
 export const BusinessFinancialServicesBreadcrumbsSection: YextComponentConfig<BusinessFinancialServicesBreadcrumbsSectionProps> =
   {
-    label: "Breadcrumbs Section",
+    label: msg("components.breadcrumbsSection", "Breadcrumbs Section"),
     fields,
     defaultProps: {
       section: {

@@ -1,5 +1,5 @@
+import "../shared/typography.css";
 import type { SectionConfig } from "@yext/visual-editor";
-import { createScopedTypographyStyles } from "../shared/typography";
 
 import * as React from "react";
 import type { PuckComponent } from "@puckeditor/core";
@@ -27,11 +27,6 @@ import {
 import { imageAspectRatioOptions } from "../shared/sectionFields";
 import { getTextStyles as getTextStyle } from "../shared/sectionStyles";
 
-const footerTypographyScopeClass = "bfs-footer-typography";
-const footerTypographyStyles = createScopedTypographyStyles(
-  footerTypographyScopeClass,
-  [".bfs-footer-address"],
-);
 import type { AddressType } from "@yext/pages-components";
 
 type ImageField = {
@@ -88,8 +83,8 @@ const resolveSurfaceForegroundColor = (
 
 const defaultFooterLinksStyles: StyledTextValue = {
   fontFamily: "default",
-  fontSize: "16px",
-  fontWeight: "500",
+  fontSize: "default",
+  fontWeight: "default",
   fontStyle: "default",
   textTransform: "default",
 };
@@ -426,15 +421,14 @@ export const BusinessFinancialServicesFooterComponent: PuckComponent<
         <Background
           as="footer"
           background={props.section.backgroundColor}
-          className={`${footerTypographyScopeClass} px-0 pb-[18px] pt-6`}
+          className="px-0 py-pageSection-verticalPadding"
           id="footer"
           style={getSurfaceColorStyle(
             props.section.backgroundColor,
             streamDocument,
           )}
         >
-          <style>{footerTypographyStyles}</style>
-          <div className="mx-auto grid w-full max-w-[1440px] gap-10 px-[22px] md:grid-cols-[1.15fr_0.85fr]">
+          <div className="mx-auto grid w-full max-w-pageSection-contentWidth gap-10 px-4 md:px-6 md:grid-cols-[1.15fr_0.85fr]">
             <div>
               {image ? (
                 <div className="mb-2">
@@ -463,7 +457,7 @@ export const BusinessFinancialServicesFooterComponent: PuckComponent<
               {resolvedEmails.map((email, index) => (
                 <p
                   key={`${email}-${index}`}
-                  className="m-0 mt-2 text-base leading-6"
+                  className="m-0 mt-2"
                 >
                   {index === 0 && resolvedEmailLabel ? (
                     <EntityField
@@ -512,7 +506,7 @@ export const BusinessFinancialServicesFooterComponent: PuckComponent<
                 return (
                   <p
                     key={`${phone.label}-${phone.original}-${index}`}
-                    className="m-0 mt-2 text-base leading-6"
+                    className="m-0 mt-2"
                   >
                     {phone.label ? `${phone.label}: ` : null}
                     <EntityField
@@ -528,7 +522,7 @@ export const BusinessFinancialServicesFooterComponent: PuckComponent<
                 );
               })}
               {resolvedAddress ? (
-                <div className="bfs-footer-address mt-2 text-base leading-6">
+                <div className="bfs-footer-address mt-2">
                   {resolvedAddressLabel ? (
                     <EntityField
                       displayName="Address Label"
@@ -568,7 +562,7 @@ export const BusinessFinancialServicesFooterComponent: PuckComponent<
                     <Link
                       cta={{ link: item.link, linkType: "URL" }}
                       eventName={`footerLink${item.index}`}
-                      className="mb-1.5 block no-underline"
+                      className="mb-1.5 block"
                       style={footerLinkStyle}
                     >
                       <EntityField
@@ -595,7 +589,7 @@ export const BusinessFinancialServicesFooterComponent: PuckComponent<
                     <Link
                       cta={{ link: item.link, linkType: "URL" }}
                       eventName={`footerSecondaryLink${item.index}`}
-                      className="mb-1.5 block no-underline"
+                      className="mb-1.5 block"
                       style={footerLinkStyle}
                     >
                       <EntityField
@@ -621,7 +615,7 @@ export const BusinessFinancialServicesFooterComponent: PuckComponent<
 
 export const BusinessFinancialServicesFooter: YextComponentConfig<BusinessFinancialServicesFooterProps> =
   {
-    label: "Footer",
+    label: msg("components.footer", "Footer"),
     fields: BusinessFinancialServicesFooterFields,
     defaultProps: {
       logoImage: {

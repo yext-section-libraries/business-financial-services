@@ -1,3 +1,4 @@
+import "../shared/typography.css";
 import type { SectionConfig } from "@yext/visual-editor";
 
 import type { PuckComponent } from "@puckeditor/core";
@@ -5,6 +6,7 @@ import { CircleSlash2 } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import {
   msg,
+  pt,
   Body,
   EntityField,
   PageSection,
@@ -118,10 +120,10 @@ const BusinessFinancialServicesBannerSectionComponent: PuckComponent<
           <CircleSlash2 className="h-10 w-10 flex-shrink-0 text-gray-400" />
           <div className="flex flex-col items-start">
             <Body className="font-medium text-gray-500" variant="sm">
-              Section hidden for this page
+              {pt("sectionHiddenForThisPage", "Section hidden for this page")}
             </Body>
             <Body className="font-normal text-gray-500" variant="sm">
-              The mapped banner field is empty
+              {pt("mappedBannerFieldEmpty", "The mapped banner field is empty")}
             </Body>
           </div>
         </div>
@@ -166,7 +168,7 @@ const BusinessFinancialServicesBannerSectionComponent: PuckComponent<
 
 export const BusinessFinancialServicesBannerSection: YextComponentConfig<BusinessFinancialServicesBannerSectionProps> =
   {
-    label: "Banner Section",
+    label: msg("components.bannerSection", "Banner Section"),
     fields,
     defaultProps: {
       data: {

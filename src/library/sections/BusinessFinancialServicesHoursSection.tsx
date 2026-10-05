@@ -1,5 +1,5 @@
+import "../shared/typography.css";
 import type { SectionConfig } from "@yext/visual-editor";
-import { createScopedTypographyStyles } from "../shared/typography";
 
 import * as React from "react";
 import type { PuckComponent } from "@puckeditor/core";
@@ -26,11 +26,6 @@ import {
 import { getTextStyles } from "../shared/sectionStyles";
 import type { StyledTextField } from "../shared/sectionFields";
 
-const hoursTypographyScopeClass = "bfs-hours-typography";
-const hoursTypographyStyles = createScopedTypographyStyles(
-  hoursTypographyScopeClass,
-  [".HoursTable"],
-);
 import type { DayOfWeekNames, HoursType } from "@yext/pages-components";
 
 type HoursTableStyles = {
@@ -259,21 +254,20 @@ export const BusinessFinancialServicesHoursSectionComponent: PuckComponent<
         <Background
           as="section"
           background={props.section.backgroundColor}
-          className={`${hoursTypographyScopeClass} px-0 py-[60px]`}
+          className="px-0 py-pageSection-verticalPadding"
           style={getSurfaceColorStyle(
             props.section.backgroundColor,
             streamDocument,
           )}
         >
-          <style>{hoursTypographyStyles}</style>
-          <div className="mx-auto w-full max-w-[1440px] px-[22px]">
+          <div className="mx-auto w-full max-w-pageSection-contentWidth px-4 md:px-6">
             <EntityField
               displayName="Heading"
               fieldId={props.heading.text.field}
               constantValueEnabled={props.heading.text.constantValueEnabled}
             >
               <h2
-                className="font-[family:var(--fontFamily-h2-fontFamily)] text-center text-[28px] font-normal leading-[1.3] md:text-[36px]"
+                className="text-center"
                 style={getTextStyles(
                   props.heading.styles,
                   props.heading.fontColor ?? sectionForeground,
@@ -298,7 +292,7 @@ export const BusinessFinancialServicesHoursSectionComponent: PuckComponent<
                   }
                 >
                   <h3
-                    className="font-[family:var(--fontFamily-h3-fontFamily)] text-center text-[26px] font-normal leading-[1.2]"
+                    className="text-center"
                     style={getTextStyles(
                       props.lobbyHeading.styles,
                       props.lobbyHeading.fontColor ?? cardForeground,
@@ -328,7 +322,7 @@ export const BusinessFinancialServicesHoursSectionComponent: PuckComponent<
                   ) : null}
                   {props.hoursStyles.showAdditionalHoursText &&
                   additionalHoursText ? (
-                    <span className="font-[family:var(--fontFamily-body-fontFamily)] mt-3 text-sm">
+                    <span className="mt-3">
                       {additionalHoursText}
                     </span>
                   ) : null}
@@ -349,7 +343,7 @@ export const BusinessFinancialServicesHoursSectionComponent: PuckComponent<
                   }
                 >
                   <h3
-                    className="font-[family:var(--fontFamily-h3-fontFamily)] text-center text-[26px] font-normal leading-[1.2]"
+                    className="text-center"
                     style={getTextStyles(
                       props.secondHoursHeading.styles,
                       props.secondHoursHeading.fontColor ?? cardForeground,
@@ -389,7 +383,7 @@ export const BusinessFinancialServicesHoursSectionComponent: PuckComponent<
 
 export const BusinessFinancialServicesHoursSection: YextComponentConfig<BusinessFinancialServicesHoursSectionProps> =
   {
-    label: "Hours Section",
+    label: msg("components.hoursSection", "Hours Section"),
     fields: BusinessFinancialServicesHoursSectionFields,
     defaultProps: {
       heading: {

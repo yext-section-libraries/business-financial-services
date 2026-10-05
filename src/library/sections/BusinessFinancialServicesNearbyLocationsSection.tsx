@@ -1,9 +1,10 @@
+import "../shared/typography.css";
 import type { SectionConfig } from "@yext/visual-editor";
-import { createScopedTypographyStyles } from "../shared/typography";
 
 import * as React from "react";
 import type { PuckComponent } from "@puckeditor/core";
 import { useTranslation } from "react-i18next";
+import type { TFunction } from "i18next";
 import {
   AnalyticsScopeProvider,
   getDirections,
@@ -34,11 +35,6 @@ import type { StreamDocument } from "@yext/visual-editor";
 import { getTextStyles } from "../shared/sectionStyles";
 import type { StyledTextField } from "../shared/sectionFields";
 
-const nearbyLocationsTypographyScopeClass = "bfs-nearby-locations-typography";
-const nearbyLocationsTypographyStyles = createScopedTypographyStyles(
-  nearbyLocationsTypographyScopeClass,
-);
-
 type CardCtaStyle = "solid" | "outline" | "link";
 
 export type BusinessFinancialServicesNearbyLocationsSectionProps = {
@@ -67,14 +63,12 @@ const getCtaStyles = (
   ctaStyle: CardCtaStyle,
   ctaColor: ThemeColor | undefined,
   defaultColor: ThemeColor,
-  textStyles: React.CSSProperties,
 ): React.CSSProperties => {
   const resolvedCtaColor = ctaColor ?? defaultColor;
   const color = resolveThemeColorCssValue(resolvedCtaColor);
 
   if (ctaStyle === "solid") {
     return {
-      ...textStyles,
       backgroundColor: color,
       borderColor: color,
       color: resolveThemeColorCssValue(
@@ -84,7 +78,6 @@ const getCtaStyles = (
   }
 
   return {
-    ...textStyles,
     backgroundColor: "transparent",
     borderColor: ctaStyle === "outline" ? color : "transparent",
     color,
@@ -94,9 +87,10 @@ const getCtaStyles = (
 const toRadians = (value: number) => (value * Math.PI) / 180;
 
 const getDistanceLabel = (
-  origin?: { latitude?: number; longitude?: number },
-  target?: { latitude?: number; longitude?: number },
-  locale?: string,
+  origin: { latitude?: number; longitude?: number } | undefined,
+  target: { latitude?: number; longitude?: number } | undefined,
+  locale: string,
+  t: TFunction,
 ) => {
   if (
     origin?.latitude === undefined ||
@@ -117,13 +111,21 @@ const getDistanceLabel = (
     Math.sin(dLon / 2) * Math.sin(dLon / 2) * Math.cos(lat1) * Math.cos(lat2);
   const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
   const miles = earthRadiusMi * c;
-  const preferredUnit = getPreferredDistanceUnit(locale ?? "en");
+  const preferredUnit = getPreferredDistanceUnit(locale);
 
   if (preferredUnit === "kilometer") {
-    return `${(miles * 1.60934).toFixed(1)} km away`;
+    return t(
+      "locatedKilometersFromLocation",
+      "Located {{distance}} kilometers from this location",
+      { distance: (miles * 1.60934).toFixed(1) },
+    );
   }
 
-  return `${miles.toFixed(1)} miles away`;
+  return t(
+    "locatedMilesFromLocation",
+    "Located {{distance}} miles from this location",
+    { distance: miles.toFixed(1) },
+  );
 };
 
 const BusinessFinancialServicesNearbyLocationsSectionFields: YextFields<BusinessFinancialServicesNearbyLocationsSectionProps> =
@@ -254,7 +256,7 @@ export const BusinessFinancialServicesNearbyLocationsSectionComponent: PuckCompo
       locationData,
       resolvedUrl,
       directionsUrl,
-      distanceLabel: getDistanceLabel(coordinate, resolvedCoordinate, locale),
+      distanceLabel: getDistanceLabel(coordinate, resolvedCoordinate, locale, t),
     };
   });
   const scopeName = `YextBusinessFinancialServicesNearbyLocationsSection${getAnalyticsScopeHash(
@@ -271,12 +273,11 @@ export const BusinessFinancialServicesNearbyLocationsSectionComponent: PuckCompo
     props.cardSurface.ctaStyle,
     props.cardSurface.ctaColor,
     cardForeground,
-    cardTextStyles,
   );
   const ctaClassName =
     props.cardSurface.ctaStyle === "link"
-      ? "inline-flex items-center justify-center no-underline hover:underline"
-      : "inline-flex min-h-[42px] items-center justify-center rounded-full border px-[18px] py-2.5 no-underline hover:underline";
+      ? "inline-flex items-center justify-center font-link-fontFamily text-link-fontSize font-link-fontWeight tracking-link-letterSpacing"
+      : "inline-flex min-h-[42px] items-center justify-center rounded-button-borderRadius border px-[18px] py-2.5 font-button-fontFamily text-button-fontSize font-button-fontWeight tracking-button-letterSpacing";
 
   if (!enableNearbyLocations) {
     return <></>;
@@ -285,20 +286,19 @@ export const BusinessFinancialServicesNearbyLocationsSectionComponent: PuckCompo
   if (status === "pending") {
     return (
       <section
-        className={`${nearbyLocationsTypographyScopeClass} px-0 py-[60px]`}
+        className="components px-0 py-pageSection-verticalPadding"
       >
-        <style>{nearbyLocationsTypographyStyles}</style>
-        <div className="mx-auto w-full max-w-[1440px] px-[22px]">
+        <div className="mx-auto w-full max-w-pageSection-contentWidth px-4 md:px-6">
           <EntityField
             displayName="Heading"
             fieldId={props.heading.text.field}
             constantValueEnabled={props.heading.text.constantValueEnabled}
           >
-            <h2 className="text-center text-[28px] font-normal leading-[1.3] md:text-[36px]">
+            <h2 className="text-center">
               {heading}
             </h2>
           </EntityField>
-          <p className="font-[family:var(--fontFamily-body-fontFamily)] mt-4 text-center">
+          <p className="mt-4 text-center">
             {t("loadingNearbyLocations", "Loading nearby locations")}
           </p>
         </div>
@@ -313,20 +313,19 @@ export const BusinessFinancialServicesNearbyLocationsSectionComponent: PuckCompo
 
     return (
       <section
-        className={`${nearbyLocationsTypographyScopeClass} px-0 py-[60px]`}
+        className="components px-0 py-pageSection-verticalPadding"
       >
-        <style>{nearbyLocationsTypographyStyles}</style>
-        <div className="mx-auto w-full max-w-[1440px] px-[22px]">
+        <div className="mx-auto w-full max-w-pageSection-contentWidth px-4 md:px-6">
           <EntityField
             displayName="Heading"
             fieldId={props.heading.text.field}
             constantValueEnabled={props.heading.text.constantValueEnabled}
           >
-            <h2 className="text-center text-[28px] font-normal leading-[1.3] md:text-[36px]">
+            <h2 className="text-center">
               {heading}
             </h2>
           </EntityField>
-          <p className="font-[family:var(--fontFamily-body-fontFamily)] mt-4 text-center">
+          <p className="mt-4 text-center">
             {pt(
               "noNearbyLocationsFoundForThisLocation",
               "No nearby locations found for this location",
@@ -346,21 +345,20 @@ export const BusinessFinancialServicesNearbyLocationsSectionComponent: PuckCompo
         <Background
           as="section"
           background={props.section.backgroundColor}
-          className={`${nearbyLocationsTypographyScopeClass} px-0 py-[60px]`}
+          className="px-0 py-pageSection-verticalPadding"
           style={getSurfaceColorStyle(
             props.section.backgroundColor,
             streamDocument,
           )}
         >
-          <style>{nearbyLocationsTypographyStyles}</style>
-          <div className="mx-auto w-full max-w-[1440px] px-[22px]">
+          <div className="mx-auto w-full max-w-pageSection-contentWidth px-4 md:px-6">
             <EntityField
               displayName="Heading"
               fieldId={props.heading.text.field}
               constantValueEnabled={props.heading.text.constantValueEnabled}
             >
               <h2
-                className="font-[family:var(--fontFamily-h2-fontFamily)] text-center text-[28px] font-normal leading-[1.3] md:text-[36px]"
+                className="text-center"
                 style={getTextStyles(
                   props.heading.styles,
                   props.heading.fontColor,
@@ -375,7 +373,8 @@ export const BusinessFinancialServicesNearbyLocationsSectionComponent: PuckCompo
                   { locationData, resolvedUrl, directionsUrl, distanceLabel },
                   index,
                 ) => {
-                  const name = locationData.name ?? "Nearby Location";
+                  const name =
+                    locationData.name ?? t("nearbyLocation", "Nearby Location");
 
                   return (
                     <article
@@ -392,21 +391,21 @@ export const BusinessFinancialServicesNearbyLocationsSectionComponent: PuckCompo
                       <Link
                         cta={{ link: resolvedUrl, linkType: "URL" }}
                         eventName={`nearbyLocation${index}`}
-                        className="font-[family:var(--fontFamily-link-fontFamily)] text-lg font-semibold leading-[1.4] no-underline"
+                        className=""
                         style={cardTextStyles}
                       >
                         {name}
                       </Link>
                       {distanceLabel ? (
                         <p
-                          className="font-[family:var(--fontFamily-body-fontFamily)] mb-1.5 mt-1 text-base leading-6"
+                          className="mb-1.5 mt-1"
                           style={cardTextStyles}
                         >
                           {distanceLabel}
                         </p>
                       ) : null}
                       <p
-                        className="font-[family:var(--fontFamily-body-fontFamily)] m-0 text-base leading-6"
+                        className="m-0"
                         style={cardTextStyles}
                       >
                         {locationData.address?.line1}
@@ -427,7 +426,7 @@ export const BusinessFinancialServicesNearbyLocationsSectionComponent: PuckCompo
                             className={ctaClassName}
                             style={ctaStyles}
                           >
-                            Get Directions
+                            {t("getDirections", "Get Directions")}
                           </Link>
                         </div>
                       ) : null}
@@ -445,7 +444,7 @@ export const BusinessFinancialServicesNearbyLocationsSectionComponent: PuckCompo
 
 export const BusinessFinancialServicesNearbyLocationsSection: YextComponentConfig<BusinessFinancialServicesNearbyLocationsSectionProps> =
   {
-    label: "Nearby Locations Section",
+    label: msg("components.nearbyLocationsSection", "Nearby Locations Section"),
     fields: BusinessFinancialServicesNearbyLocationsSectionFields,
     defaultProps: {
       heading: {

@@ -1,3 +1,4 @@
+import "../shared/typography.css";
 import type { SectionConfig } from "@yext/visual-editor";
 
 import * as React from "react";
@@ -849,11 +850,7 @@ const BusinessFinancialServicesHeaderComponent: PuckComponent<
       aspectRatio:
         iconImageProps.aspectRatio > 0 ? iconImageProps.aspectRatio : undefined,
       borderRadius: resolveBorderRadius(iconImageProps.styles?.borderRadius),
-      overflow:
-        iconImageProps.imageConstrain === "filled" ||
-        iconImageProps.styles?.borderRadius !== "default"
-          ? "hidden"
-          : undefined,
+      overflow: "hidden",
     };
 
     const imageStyle: React.CSSProperties = {
@@ -870,7 +867,7 @@ const BusinessFinancialServicesHeaderComponent: PuckComponent<
         fieldId={iconImageProps.image.field}
         constantValueEnabled={iconImageProps.image.constantValueEnabled}
       >
-        <div style={wrapperStyle}>
+        <div className="rounded-image-borderRadius" style={wrapperStyle}>
           <Image
             image={iconImage}
             className="h-full w-full"
@@ -900,7 +897,7 @@ const BusinessFinancialServicesHeaderComponent: PuckComponent<
               target={item.openInNewTab ? "_blank" : undefined}
               rel={item.openInNewTab ? "noopener noreferrer" : undefined}
               aria-label={item.label}
-              className="inline-flex h-8 w-8 items-center justify-center rounded-full transition-opacity hover:opacity-80"
+              className="inline-flex h-8 w-8 items-center justify-center transition-opacity hover:opacity-80"
               style={{
                 color: resolveThemeColorCssValue(navigationColor),
               }}
@@ -933,7 +930,7 @@ const BusinessFinancialServicesHeaderComponent: PuckComponent<
                 <ComprehensiveCTA
                   value={item.cta as Partial<ComprehensiveCTAValue>}
                   eventName={`headerCta${index}`}
-                  className="inline-flex h-10 items-center justify-center px-5 transition-opacity hover:opacity-90"
+                  className="inline-flex items-center justify-center transition-opacity hover:opacity-90"
                 />
               </EntityField>
             ))}
@@ -985,7 +982,7 @@ const BusinessFinancialServicesHeaderComponent: PuckComponent<
       >
         {!resolvedLogoImage ? (
           <div
-            className="flex items-center justify-center rounded border border-dashed border-current/30 text-[10px] font-medium text-center"
+            className="flex items-center justify-center rounded border border-dashed border-current/30 text-center"
             style={{
               height: "50px",
               width:
@@ -998,7 +995,7 @@ const BusinessFinancialServicesHeaderComponent: PuckComponent<
             {t("logo", "Logo")}
           </div>
         ) : (
-          <div style={logoWrapperStyle}>
+          <div className="rounded-image-borderRadius" style={logoWrapperStyle}>
             <Image
               image={resolvedLogoImage}
               className="h-full w-full"
@@ -1026,7 +1023,7 @@ const BusinessFinancialServicesHeaderComponent: PuckComponent<
           }}
           eventName="headerLogo"
           className="inline-flex transition-opacity hover:opacity-80"
-          aria-label="Logo"
+          aria-label={t("logo", "Logo")}
         >
           {logoContent}
         </Link>
@@ -1125,7 +1122,7 @@ const BusinessFinancialServicesHeaderComponent: PuckComponent<
                     <ComprehensiveCTA
                       value={item.cta as Partial<ComprehensiveCTAValue>}
                       eventName={`tabletCta${index}`}
-                      className="inline-flex h-10 items-center justify-center px-5 transition-opacity hover:opacity-90"
+                      className="inline-flex items-center justify-center transition-opacity hover:opacity-90"
                     />
                   </EntityField>
                 ))}
@@ -1143,9 +1140,11 @@ const BusinessFinancialServicesHeaderComponent: PuckComponent<
             }}
             aria-expanded={menuOpen}
             aria-label={
-              menuOpen ? "Close navigation menu" : "Open navigation menu"
+              menuOpen
+                ? t("closeMenu", "Close menu")
+                : t("openMenu", "Open menu")
             }
-            className="inline-flex h-10 w-10 items-center justify-center rounded-full"
+            className="inline-flex h-10 w-10 items-center justify-center"
             style={{
               color: resolveThemeColorCssValue(navigationColor),
             }}
@@ -1198,7 +1197,7 @@ const BusinessFinancialServicesHeaderComponent: PuckComponent<
                           <ComprehensiveCTA
                             value={item.cta as Partial<ComprehensiveCTAValue>}
                             eventName={`mobileOverlayCta${index}`}
-                            className="inline-flex h-10 w-full items-center justify-center px-5 transition-opacity hover:opacity-90 md:hidden"
+                            className="inline-flex w-full items-center justify-center transition-opacity hover:opacity-90 md:hidden"
                           />
                         </EntityField>
                       ))}
@@ -1221,7 +1220,7 @@ const BusinessFinancialServicesHeaderComponent: PuckComponent<
                               : undefined
                           }
                           aria-label={item.label}
-                          className="inline-flex h-8 w-8 items-center justify-center rounded-full transition-opacity hover:opacity-80"
+                          className="inline-flex h-8 w-8 items-center justify-center transition-opacity hover:opacity-80"
                           style={{
                             color: resolveThemeColorCssValue(navigationColor),
                           }}
@@ -1248,7 +1247,7 @@ const BusinessFinancialServicesHeaderComponent: PuckComponent<
 
 export const BusinessFinancialServicesHeader: YextComponentConfig<BusinessFinancialServicesHeaderProps> =
   {
-    label: "Header",
+    label: msg("components.header", "Header"),
     fields: BusinessFinancialServicesHeaderFields,
     defaultProps: {
       variant: "utilityTopRow",

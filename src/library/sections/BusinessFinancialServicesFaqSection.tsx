@@ -1,5 +1,5 @@
+import "../shared/typography.css";
 import type { SectionConfig } from "@yext/visual-editor";
-import { createScopedTypographyStyles } from "../shared/typography";
 
 import * as React from "react";
 import type { PuckComponent } from "@puckeditor/core";
@@ -32,11 +32,6 @@ import type {
   StyledTextStyles,
 } from "../shared/sectionFields";
 
-const faqTypographyScopeClass = "bfs-faq-typography";
-const faqTypographyStyles = createScopedTypographyStyles(
-  faqTypographyScopeClass,
-  ["button"],
-);
 import { FaPlus, FaMinus } from "react-icons/fa";
 
 type FaqItem = {
@@ -249,21 +244,20 @@ export const BusinessFinancialServicesFaqSectionComponent: PuckComponent<
         <Background
           as="section"
           background={props.section.backgroundColor}
-          className={`${faqTypographyScopeClass} px-0 py-[60px]`}
+          className="px-0 py-pageSection-verticalPadding"
           style={getSurfaceColorStyle(
             props.section.backgroundColor,
             streamDocument,
           )}
         >
-          <style>{faqTypographyStyles}</style>
-          <div className="mx-auto w-full max-w-[1440px] px-[22px]">
+          <div className="mx-auto w-full max-w-pageSection-contentWidth px-4 md:px-6">
             <EntityField
               displayName="Heading"
               fieldId={props.heading.text.field}
               constantValueEnabled={props.heading.text.constantValueEnabled}
             >
               <h2
-                className="font-[family:var(--fontFamily-h2-fontFamily)] text-center text-[28px] font-normal leading-[1.3] md:text-[36px]"
+                className="text-center"
                 style={getTextStyles(
                   props.heading.styles,
                   props.heading.fontColor,
@@ -309,7 +303,7 @@ export const BusinessFinancialServicesFaqSectionComponent: PuckComponent<
                         >
                           <button
                             type="button"
-                            className="font-[family:var(--fontFamily-body-fontFamily)] flex w-full items-center justify-between gap-4 px-[14px] py-[10px] text-left"
+                            className="flex w-full items-center justify-between gap-4 px-[14px] py-[10px] text-left"
                             style={getTextStyles(
                               props.faqStyles.question.styles,
                               props.faqStyles.question.fontColor,
@@ -325,7 +319,7 @@ export const BusinessFinancialServicesFaqSectionComponent: PuckComponent<
                           </button>
                           {isOpen ? (
                             <div
-                              className="font-[family:var(--fontFamily-body-fontFamily)] px-[14px] pb-3"
+                              className="px-[14px] pb-3"
                               style={getTextStyles(
                                 props.faqStyles.answer.styles,
                                 props.faqStyles.answer.fontColor,
@@ -353,7 +347,7 @@ export const BusinessFinancialServicesFaqSectionComponent: PuckComponent<
 
 export const BusinessFinancialServicesFaqSection: YextComponentConfig<BusinessFinancialServicesFaqSectionProps> =
   {
-    label: "FAQ Section",
+    label: msg("components.faqSection", "FAQ Section"),
     fields: BusinessFinancialServicesFaqSectionFields,
     defaultProps: {
       heading: {
