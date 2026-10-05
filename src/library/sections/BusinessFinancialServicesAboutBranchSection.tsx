@@ -184,14 +184,14 @@ export const BusinessFinancialServicesAboutBranchSectionComponent: PuckComponent
               />
             </div>
           ) : null}
-          <div className="relative z-10 mx-auto flex min-h-[672px] w-full max-w-[1098px] flex-col items-center justify-center px-[22px] py-16 text-center">
+          <div className="relative z-10 mx-auto flex min-h-[672px] w-full max-w-pageSection-contentWidth flex-col items-center justify-center px-4 md:px-6 py-pageSection-verticalPadding text-center">
             <EntityField
               displayName="Heading"
               fieldId={props.heading.text.field}
               constantValueEnabled={props.heading.text.constantValueEnabled}
             >
               <h2
-                className="leading-[1.3]"
+                className=""
                 style={getTextStyles(
                   props.heading.styles,
                   props.heading.fontColor,
@@ -206,7 +206,7 @@ export const BusinessFinancialServicesAboutBranchSectionComponent: PuckComponent
               fieldId={props.body.text.field}
               constantValueEnabled={props.body.text.constantValueEnabled}
             >
-              <div className="mt-4 space-y-4 leading-[1.7]">
+              <div className="mt-4 space-y-4">
                 {renderRichText(body, bodyRichTextStyleOverrides)}
               </div>
             </EntityField>
@@ -257,7 +257,7 @@ export const BusinessFinancialServicesAboutBranchSection: YextComponentConfig<Bu
           constantValue: {
             defaultValue: {
               json: '{"root":{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"[[name]] - [[address.city]] is located in the [[geomodifier]] district near [[address.city]] and supports clients across [[address.region]] and surrounding communities. The office provides in-person and virtual financial planning conversations for individuals, families, retirees, and business owners looking for guidance around long-term financial goals.\\n","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1},{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"\\nClients commonly visit this location for retirement planning, portfolio reviews, investment guidance, and broader financial planning conversations. Advisors at this branch support both ongoing wealth management relationships and one-time planning discussions depending on client needs.\\n","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1},{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"\\nThe office includes private consultation rooms, multilingual support, and online scheduling for added flexibility. Saturday hours are available for select appointment types.","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1}],"direction":"ltr","format":"","indent":0,"type":"root","version":1}}',
-              html: '<p dir="ltr" style="font-size: 14.67px; font-weight: 400; line-height: 18.67px; color: rgb(0, 0, 0); margin: 0; padding: 3px 2px 3px 2px; position: relative;"><span>[[name]] - [[address.city]] is located in the [[geomodifier]] district near [[address.city]] and supports clients across [[address.region]] and surrounding communities. The office provides in-person and virtual financial planning conversations for individuals, families, retirees, and business owners looking for guidance around long-term financial goals.\n</span></p><p dir="ltr" style="font-size: 14.67px; font-weight: 400; line-height: 18.67px; color: rgb(0, 0, 0); margin: 0; padding: 3px 2px 3px 2px; position: relative;"><span>\nClients commonly visit this location for retirement planning, portfolio reviews, investment guidance, and broader financial planning conversations. Advisors at this branch support both ongoing wealth management relationships and one-time planning discussions depending on client needs.\n</span></p><p dir="ltr" style="font-size: 14.67px; font-weight: 400; line-height: 18.67px; color: rgb(0, 0, 0); margin: 0; padding: 3px 2px 3px 2px; position: relative;"><span>\nThe office includes private consultation rooms, multilingual support, and online scheduling for added flexibility. Saturday hours are available for select appointment types.</span></p>',
+              html: '<p><span>[[name]] - [[address.city]] is located in the [[geomodifier]] district near [[address.city]] and supports clients across [[address.region]] and surrounding communities. The office provides in-person and virtual financial planning conversations for individuals, families, retirees, and business owners looking for guidance around long-term financial goals.\n</span></p><p><span>\nClients commonly visit this location for retirement planning, portfolio reviews, investment guidance, and broader financial planning conversations. Advisors at this branch support both ongoing wealth management relationships and one-time planning discussions depending on client needs.\n</span></p><p><span>\nThe office includes private consultation rooms, multilingual support, and online scheduling for added flexibility. Saturday hours are available for select appointment types.</span></p>',
             },
             hasLocalizedValue: "true",
           },

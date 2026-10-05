@@ -75,7 +75,7 @@ const pillDefault = (label: string): PillAction => ({
         fontWeight: "default",
         fontStyle: "default",
         textTransform: "default",
-        borderRadius: "999px",
+        borderRadius: "default",
         letterSpacing: "default",
       },
     },
@@ -181,20 +181,20 @@ export const BusinessFinancialServicesBeforeMeetSectionComponent: PuckComponent<
         <Background
           as="section"
           background={props.section.backgroundColor}
-          className="px-0 py-[34px]"
+          className="px-0 py-pageSection-verticalPadding"
           style={getSurfaceColorStyle(
             props.section.backgroundColor,
             streamDocument,
           )}
         >
-          <div className="mx-auto max-w-[902px] px-[22px] text-center">
+          <div className="mx-auto max-w-pageSection-contentWidth px-4 md:px-6 text-center">
             <EntityField
               displayName="Heading"
               fieldId={props.heading.text.field}
               constantValueEnabled={props.heading.text.constantValueEnabled}
             >
               <h2
-                className="leading-[1.3]"
+                className=""
                 style={getTextStyles(
                   props.heading.styles,
                   props.heading.fontColor,
@@ -209,7 +209,7 @@ export const BusinessFinancialServicesBeforeMeetSectionComponent: PuckComponent<
               constantValueEnabled={props.body.text.constantValueEnabled}
             >
               <div
-                className="mx-auto mt-2 max-w-[690px] leading-[1.6]"
+                className="mx-auto mt-2 max-w-[690px]"
                 style={getTextStyles(props.body.styles, props.body.fontColor)}
               >
                 {renderRichText(body, bodyRichTextStyleOverrides)}
@@ -227,7 +227,7 @@ export const BusinessFinancialServicesBeforeMeetSectionComponent: PuckComponent<
                 >
                   <ComprehensiveCTA
                     value={item.cta as Partial<ComprehensiveCTAValue>}
-                    className="inline-flex min-h-[42px] items-center justify-center rounded-full px-[18px] py-2.5 no-underline"
+                    className="inline-flex items-center justify-center"
                   />
                 </EntityField>
               ))}

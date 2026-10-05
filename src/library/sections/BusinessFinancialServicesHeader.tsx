@@ -897,7 +897,7 @@ const BusinessFinancialServicesHeaderComponent: PuckComponent<
               target={item.openInNewTab ? "_blank" : undefined}
               rel={item.openInNewTab ? "noopener noreferrer" : undefined}
               aria-label={item.label}
-              className="inline-flex h-8 w-8 items-center justify-center rounded-full transition-opacity hover:opacity-80"
+              className="inline-flex h-8 w-8 items-center justify-center transition-opacity hover:opacity-80"
               style={{
                 color: resolveThemeColorCssValue(navigationColor),
               }}
@@ -930,7 +930,7 @@ const BusinessFinancialServicesHeaderComponent: PuckComponent<
                 <ComprehensiveCTA
                   value={item.cta as Partial<ComprehensiveCTAValue>}
                   eventName={`headerCta${index}`}
-                  className="inline-flex h-10 items-center justify-center px-5 transition-opacity hover:opacity-90"
+                  className="inline-flex items-center justify-center transition-opacity hover:opacity-90"
                 />
               </EntityField>
             ))}
@@ -1122,7 +1122,7 @@ const BusinessFinancialServicesHeaderComponent: PuckComponent<
                     <ComprehensiveCTA
                       value={item.cta as Partial<ComprehensiveCTAValue>}
                       eventName={`tabletCta${index}`}
-                      className="inline-flex h-10 items-center justify-center px-5 transition-opacity hover:opacity-90"
+                      className="inline-flex items-center justify-center transition-opacity hover:opacity-90"
                     />
                   </EntityField>
                 ))}
@@ -1144,7 +1144,7 @@ const BusinessFinancialServicesHeaderComponent: PuckComponent<
                 ? t("closeMenu", "Close menu")
                 : t("openMenu", "Open menu")
             }
-            className="inline-flex h-10 w-10 items-center justify-center rounded-full"
+            className="inline-flex h-10 w-10 items-center justify-center"
             style={{
               color: resolveThemeColorCssValue(navigationColor),
             }}
@@ -1197,7 +1197,7 @@ const BusinessFinancialServicesHeaderComponent: PuckComponent<
                           <ComprehensiveCTA
                             value={item.cta as Partial<ComprehensiveCTAValue>}
                             eventName={`mobileOverlayCta${index}`}
-                            className="inline-flex h-10 w-full items-center justify-center px-5 transition-opacity hover:opacity-90 md:hidden"
+                            className="inline-flex w-full items-center justify-center transition-opacity hover:opacity-90 md:hidden"
                           />
                         </EntityField>
                       ))}
@@ -1220,7 +1220,7 @@ const BusinessFinancialServicesHeaderComponent: PuckComponent<
                               : undefined
                           }
                           aria-label={item.label}
-                          className="inline-flex h-8 w-8 items-center justify-center rounded-full transition-opacity hover:opacity-80"
+                          className="inline-flex h-8 w-8 items-center justify-center transition-opacity hover:opacity-80"
                           style={{
                             color: resolveThemeColorCssValue(navigationColor),
                           }}

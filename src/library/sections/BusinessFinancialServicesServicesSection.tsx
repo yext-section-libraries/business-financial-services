@@ -123,7 +123,7 @@ const serviceCtaStyles: ComprehensiveCTAValue["styles"] = {
     fontWeight: "default",
     fontStyle: "default",
     textTransform: "default",
-    borderRadius: "999px",
+    borderRadius: "default",
     letterSpacing: "default",
   },
 };
@@ -278,20 +278,20 @@ export const BusinessFinancialServicesServicesSectionComponent: PuckComponent<
         <Background
           as="section"
           background={props.section.backgroundColor}
-          className="px-0 pb-[60px] pt-10"
+          className="px-0 py-pageSection-verticalPadding"
           style={getSurfaceColorStyle(
             props.section.backgroundColor,
             streamDocument,
           )}
         >
-          <div className="mx-auto w-full max-w-[1440px] px-[22px]">
+          <div className="mx-auto w-full max-w-pageSection-contentWidth px-4 md:px-6">
             <EntityField
               displayName="Heading Brow"
               fieldId={props.headingBrow.text.field}
               constantValueEnabled={props.headingBrow.text.constantValueEnabled}
             >
               <p
-                className="m-0 text-center leading-6"
+                className="m-0 text-center"
                 style={getTextStyles(
                   props.headingBrow.styles,
                   props.headingBrow.fontColor,
@@ -306,7 +306,7 @@ export const BusinessFinancialServicesServicesSectionComponent: PuckComponent<
               constantValueEnabled={props.heading.text.constantValueEnabled}
             >
               <h2
-                className="mt-2 text-center leading-[1.3]"
+                className="mt-2 text-center"
                 style={getTextStyles(
                   props.heading.styles,
                   props.heading.fontColor,
@@ -338,7 +338,7 @@ export const BusinessFinancialServicesServicesSectionComponent: PuckComponent<
                       )}
                     >
                       <h3
-                        className="leading-[1.3]"
+                        className=""
                         style={getTextStyles(
                           props.cardStyles.title.styles,
                           props.cardStyles.title.fontColor,
@@ -346,7 +346,7 @@ export const BusinessFinancialServicesServicesSectionComponent: PuckComponent<
                       >
                         {title}
                       </h3>
-                      <div className="mt-[18px] max-w-full leading-[1.6]">
+                      <div className="mt-[18px] max-w-full">
                         {renderRichText(body, cardBodyRichTextStyleOverrides)}
                       </div>
                       {item.cta ? (
@@ -365,7 +365,7 @@ export const BusinessFinancialServicesServicesSectionComponent: PuckComponent<
                               },
                               styles: serviceCtaStyles,
                             }}
-                            className="inline-flex min-h-[42px] w-full items-center justify-center rounded-full border border-current px-5 py-2.5 text-center no-underline sm:w-auto"
+                            className="inline-flex w-full items-center justify-center text-center sm:w-auto"
                           />
                         </div>
                       ) : null}
@@ -384,7 +384,7 @@ export const BusinessFinancialServicesServicesSectionComponent: PuckComponent<
               >
                 <ComprehensiveCTA
                   value={props.footerCta as Partial<ComprehensiveCTAValue>}
-                  className="inline-flex min-h-[42px] items-center justify-center rounded-full px-5 py-2.5 no-underline"
+                  className="inline-flex items-center justify-center"
                 />
               </EntityField>
             </div>

@@ -254,20 +254,20 @@ export const BusinessFinancialServicesHoursSectionComponent: PuckComponent<
         <Background
           as="section"
           background={props.section.backgroundColor}
-          className="px-0 py-[60px]"
+          className="px-0 py-pageSection-verticalPadding"
           style={getSurfaceColorStyle(
             props.section.backgroundColor,
             streamDocument,
           )}
         >
-          <div className="mx-auto w-full max-w-[1440px] px-[22px]">
+          <div className="mx-auto w-full max-w-pageSection-contentWidth px-4 md:px-6">
             <EntityField
               displayName="Heading"
               fieldId={props.heading.text.field}
               constantValueEnabled={props.heading.text.constantValueEnabled}
             >
               <h2
-                className="text-center leading-[1.3]"
+                className="text-center"
                 style={getTextStyles(
                   props.heading.styles,
                   props.heading.fontColor ?? sectionForeground,
@@ -292,7 +292,7 @@ export const BusinessFinancialServicesHoursSectionComponent: PuckComponent<
                   }
                 >
                   <h3
-                    className="text-center leading-[1.2]"
+                    className="text-center"
                     style={getTextStyles(
                       props.lobbyHeading.styles,
                       props.lobbyHeading.fontColor ?? cardForeground,
@@ -343,7 +343,7 @@ export const BusinessFinancialServicesHoursSectionComponent: PuckComponent<
                   }
                 >
                   <h3
-                    className="text-center leading-[1.2]"
+                    className="text-center"
                     style={getTextStyles(
                       props.secondHoursHeading.styles,
                       props.secondHoursHeading.fontColor ?? cardForeground,

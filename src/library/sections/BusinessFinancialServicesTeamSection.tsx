@@ -223,7 +223,7 @@ const teamMemberCtaStyles: ComprehensiveCTAValue["styles"] = {
     fontWeight: "default",
     fontStyle: "default",
     textTransform: "default",
-    borderRadius: "999px",
+    borderRadius: "default",
     letterSpacing: "default",
   },
 };
@@ -409,20 +409,20 @@ export const BusinessFinancialServicesTeamSectionComponent: PuckComponent<
         <Background
           as="section"
           background={props.section.backgroundColor}
-          className="px-0 py-[60px]"
+          className="px-0 py-pageSection-verticalPadding"
           style={getSurfaceColorStyle(
             props.section.backgroundColor,
             streamDocument,
           )}
         >
-          <div className="mx-auto w-full max-w-[1440px] px-[22px]">
+          <div className="mx-auto w-full max-w-pageSection-contentWidth px-4 md:px-6">
             <EntityField
               displayName="Heading"
               fieldId={props.heading.text.field}
               constantValueEnabled={props.heading.text.constantValueEnabled}
             >
               <h2
-                className="text-center leading-[1.3]"
+                className="text-center"
                 style={getTextStyles(
                   props.heading.styles,
                   props.heading.fontColor,
@@ -555,7 +555,7 @@ export const BusinessFinancialServicesTeamSectionComponent: PuckComponent<
                         }
                       >
                         <h3
-                          className="leading-[1.3]"
+                          className=""
                           style={getTextStyles(
                             props.cardStyles.name.styles,
                             props.cardStyles.name.fontColor,
@@ -573,7 +573,7 @@ export const BusinessFinancialServicesTeamSectionComponent: PuckComponent<
                         }
                       >
                         <p
-                          className="mb-[14px] mt-0.5 leading-6"
+                          className="mb-[14px] mt-0.5"
                           style={getTextStyles(
                             props.cardStyles.role.styles,
                             props.cardStyles.role.fontColor,
@@ -583,7 +583,7 @@ export const BusinessFinancialServicesTeamSectionComponent: PuckComponent<
                           {role}
                         </p>
                       </EntityField>
-                      <div className="bfs-team-card-details grid grid-cols-[110px_1fr] gap-x-2 gap-y-1 text-left leading-6">
+                      <div className="bfs-team-card-details grid grid-cols-[110px_1fr] gap-x-2 gap-y-1 text-left">
                         <EntityField
                           displayName={`Team Member ${index + 1} Credentials Label`}
                           fieldId={itemFields?.credentialsLabel.field}
@@ -714,7 +714,7 @@ export const BusinessFinancialServicesTeamSectionComponent: PuckComponent<
                                 },
                                 styles: teamMemberCtaStyles,
                               }}
-                              className="inline-flex min-h-[42px] items-center justify-center rounded-full px-[18px] py-2.5 no-underline"
+                              className="inline-flex items-center justify-center"
                             />
                           </EntityField>
                         </div>

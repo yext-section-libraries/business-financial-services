@@ -537,13 +537,13 @@ export const BusinessFinancialServicesBranchInfoSectionComponent: PuckComponent<
         <Background
           as="section"
           background={props.section.backgroundColor}
-          className="px-0 py-[60px]"
+          className="px-0 py-pageSection-verticalPadding"
           style={getSurfaceColorStyle(
             props.section.backgroundColor,
             streamDocument,
           )}
         >
-          <div className="mx-auto w-full max-w-[1440px] px-[22px]">
+          <div className="mx-auto w-full max-w-pageSection-contentWidth px-4 md:px-6">
             <EntityField
               displayName="Section Heading"
               fieldId={props.sectionHeading.text.field}
@@ -552,7 +552,7 @@ export const BusinessFinancialServicesBranchInfoSectionComponent: PuckComponent<
               }
             >
               <h2
-                className="text-center leading-[1.3]"
+                className="text-center"
                 style={getTextStyles(
                   props.sectionHeading.styles,
                   props.sectionHeading.fontColor,
@@ -579,7 +579,7 @@ export const BusinessFinancialServicesBranchInfoSectionComponent: PuckComponent<
                   }
                 >
                   <h3
-                    className="leading-[1.3]"
+                    className=""
                     style={getTextStyles(
                       props.cardSurface.header.textStyles,
                       props.cardSurface.header.fontColor,
@@ -632,7 +632,7 @@ export const BusinessFinancialServicesBranchInfoSectionComponent: PuckComponent<
                             <Link
                               cta={{ link: item.digits, linkType: "PHONE" }}
                               eventName={`phone${index}`}
-                              className="underline hover:no-underline"
+                              className=""
                               style={getTextStyles(
                                 props.cardSurface.content.textStyles,
                                 props.cardSurface.content.fontColor,
@@ -722,7 +722,7 @@ export const BusinessFinancialServicesBranchInfoSectionComponent: PuckComponent<
                           key={`${email}-${index}`}
                           cta={{ link: email, linkType: "EMAIL" }}
                           eventName={`email${index}`}
-                          className="underline hover:no-underline"
+                          className=""
                           style={getTextStyles(
                             props.cardSurface.content.textStyles,
                             props.cardSurface.content.fontColor,
@@ -752,7 +752,7 @@ export const BusinessFinancialServicesBranchInfoSectionComponent: PuckComponent<
                   }
                 >
                   <h3
-                    className="leading-[1.3]"
+                    className=""
                     style={getTextStyles(
                       props.cardSurface.header.textStyles,
                       props.cardSurface.header.fontColor,
@@ -769,7 +769,7 @@ export const BusinessFinancialServicesBranchInfoSectionComponent: PuckComponent<
                     props.visitCard.body.text.constantValueEnabled
                   }
                 >
-                  <div className="mt-3 leading-7">
+                  <div className="mt-3">
                     {renderRichText(visitBody, contentRichTextStyleOverrides)}
                   </div>
                 </EntityField>
@@ -782,7 +782,7 @@ export const BusinessFinancialServicesBranchInfoSectionComponent: PuckComponent<
                     }
                   >
                     <div
-                      className="bfs-branch-info-address mt-3 leading-7"
+                      className="bfs-branch-info-address mt-3"
                       style={getTextStyles(
                         props.cardSurface.content.textStyles,
                         props.cardSurface.content.fontColor,
@@ -828,7 +828,7 @@ export const BusinessFinancialServicesBranchInfoSectionComponent: PuckComponent<
                     }
                   >
                     <ul
-                      className="mt-3 list-disc pl-4 leading-7"
+                      className="mt-3 list-disc pl-4"
                       style={getTextStyles(
                         props.cardSurface.content.textStyles,
                         props.cardSurface.content.fontColor,
@@ -858,7 +858,7 @@ export const BusinessFinancialServicesBranchInfoSectionComponent: PuckComponent<
                   }
                 >
                   <h3
-                    className="leading-[1.3]"
+                    className=""
                     style={getTextStyles(
                       props.cardSurface.header.textStyles,
                       props.cardSurface.header.fontColor,
@@ -875,7 +875,7 @@ export const BusinessFinancialServicesBranchInfoSectionComponent: PuckComponent<
                     props.aboutCard.body.text.constantValueEnabled
                   }
                 >
-                  <div className="mt-3 leading-7">
+                  <div className="mt-3">
                     {renderRichText(aboutBody, contentRichTextStyleOverrides)}
                   </div>
                 </EntityField>
@@ -1079,7 +1079,7 @@ export const BusinessFinancialServicesBranchInfoSection: YextComponentConfig<Bus
             constantValue: {
               defaultValue: {
                 json: '{"root":{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"Service area: [[address.city]] metro\\n","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1},{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"\\nNMLS number: 1987654\\n","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1},{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"\\nADA compliant entrance, elevator access, private consultation rooms","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1}],"direction":"ltr","format":"","indent":0,"type":"root","version":1}}',
-                html: '<p dir="ltr" style="font-size: 14.67px; font-weight: 400; line-height: 18.67px; color: rgb(0, 0, 0); margin: 0; padding: 3px 2px 3px 2px; position: relative;"><span>Service area: [[address.city]] metro\n</span></p><p dir="ltr" style="font-size: 14.67px; font-weight: 400; line-height: 18.67px; color: rgb(0, 0, 0); margin: 0; padding: 3px 2px 3px 2px; position: relative;"><span>\nNMLS number: 1987654\n</span></p><p dir="ltr" style="font-size: 14.67px; font-weight: 400; line-height: 18.67px; color: rgb(0, 0, 0); margin: 0; padding: 3px 2px 3px 2px; position: relative;"><span>\nADA compliant entrance, elevator access, private consultation rooms</span></p>',
+                html: '<p><span>Service area: [[address.city]] metro\n</span></p><p><span>\nNMLS number: 1987654\n</span></p><p><span>\nADA compliant entrance, elevator access, private consultation rooms</span></p>',
               },
               hasLocalizedValue: "true",
             },

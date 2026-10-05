@@ -63,14 +63,12 @@ const getCtaStyles = (
   ctaStyle: CardCtaStyle,
   ctaColor: ThemeColor | undefined,
   defaultColor: ThemeColor,
-  textStyles: React.CSSProperties,
 ): React.CSSProperties => {
   const resolvedCtaColor = ctaColor ?? defaultColor;
   const color = resolveThemeColorCssValue(resolvedCtaColor);
 
   if (ctaStyle === "solid") {
     return {
-      ...textStyles,
       backgroundColor: color,
       borderColor: color,
       color: resolveThemeColorCssValue(
@@ -80,7 +78,6 @@ const getCtaStyles = (
   }
 
   return {
-    ...textStyles,
     backgroundColor: "transparent",
     borderColor: ctaStyle === "outline" ? color : "transparent",
     color,
@@ -276,12 +273,11 @@ export const BusinessFinancialServicesNearbyLocationsSectionComponent: PuckCompo
     props.cardSurface.ctaStyle,
     props.cardSurface.ctaColor,
     cardForeground,
-    cardTextStyles,
   );
   const ctaClassName =
     props.cardSurface.ctaStyle === "link"
-      ? "inline-flex items-center justify-center no-underline hover:underline"
-      : "inline-flex min-h-[42px] items-center justify-center rounded-full border px-[18px] py-2.5 no-underline hover:underline";
+      ? "inline-flex items-center justify-center font-link-fontFamily text-link-fontSize font-link-fontWeight tracking-link-letterSpacing"
+      : "inline-flex min-h-[42px] items-center justify-center rounded-button-borderRadius border px-[18px] py-2.5 font-button-fontFamily text-button-fontSize font-button-fontWeight tracking-button-letterSpacing";
 
   if (!enableNearbyLocations) {
     return <></>;
@@ -290,15 +286,15 @@ export const BusinessFinancialServicesNearbyLocationsSectionComponent: PuckCompo
   if (status === "pending") {
     return (
       <section
-        className="components px-0 py-[60px]"
+        className="components px-0 py-pageSection-verticalPadding"
       >
-        <div className="mx-auto w-full max-w-[1440px] px-[22px]">
+        <div className="mx-auto w-full max-w-pageSection-contentWidth px-4 md:px-6">
           <EntityField
             displayName="Heading"
             fieldId={props.heading.text.field}
             constantValueEnabled={props.heading.text.constantValueEnabled}
           >
-            <h2 className="text-center leading-[1.3]">
+            <h2 className="text-center">
               {heading}
             </h2>
           </EntityField>
@@ -317,15 +313,15 @@ export const BusinessFinancialServicesNearbyLocationsSectionComponent: PuckCompo
 
     return (
       <section
-        className="components px-0 py-[60px]"
+        className="components px-0 py-pageSection-verticalPadding"
       >
-        <div className="mx-auto w-full max-w-[1440px] px-[22px]">
+        <div className="mx-auto w-full max-w-pageSection-contentWidth px-4 md:px-6">
           <EntityField
             displayName="Heading"
             fieldId={props.heading.text.field}
             constantValueEnabled={props.heading.text.constantValueEnabled}
           >
-            <h2 className="text-center leading-[1.3]">
+            <h2 className="text-center">
               {heading}
             </h2>
           </EntityField>
@@ -349,20 +345,20 @@ export const BusinessFinancialServicesNearbyLocationsSectionComponent: PuckCompo
         <Background
           as="section"
           background={props.section.backgroundColor}
-          className="px-0 py-[60px]"
+          className="px-0 py-pageSection-verticalPadding"
           style={getSurfaceColorStyle(
             props.section.backgroundColor,
             streamDocument,
           )}
         >
-          <div className="mx-auto w-full max-w-[1440px] px-[22px]">
+          <div className="mx-auto w-full max-w-pageSection-contentWidth px-4 md:px-6">
             <EntityField
               displayName="Heading"
               fieldId={props.heading.text.field}
               constantValueEnabled={props.heading.text.constantValueEnabled}
             >
               <h2
-                className="text-center leading-[1.3]"
+                className="text-center"
                 style={getTextStyles(
                   props.heading.styles,
                   props.heading.fontColor,
@@ -395,21 +391,21 @@ export const BusinessFinancialServicesNearbyLocationsSectionComponent: PuckCompo
                       <Link
                         cta={{ link: resolvedUrl, linkType: "URL" }}
                         eventName={`nearbyLocation${index}`}
-                        className="leading-[1.4] no-underline"
+                        className=""
                         style={cardTextStyles}
                       >
                         {name}
                       </Link>
                       {distanceLabel ? (
                         <p
-                          className="mb-1.5 mt-1 leading-6"
+                          className="mb-1.5 mt-1"
                           style={cardTextStyles}
                         >
                           {distanceLabel}
                         </p>
                       ) : null}
                       <p
-                        className="m-0 leading-6"
+                        className="m-0"
                         style={cardTextStyles}
                       >
                         {locationData.address?.line1}

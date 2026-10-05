@@ -216,13 +216,13 @@ export const BusinessFinancialServicesResourcesGallerySectionComponent: PuckComp
         <Background
           as="section"
           background={props.section.backgroundColor}
-          className="overflow-hidden px-0 pb-5"
+          className="overflow-hidden px-0 py-pageSection-verticalPadding"
           style={getSurfaceColorStyle(
             props.section.backgroundColor,
             streamDocument,
           )}
         >
-          <div className="mx-auto grid w-full max-w-[1440px] gap-[10px] px-[22px] md:grid-cols-2 xl:grid-cols-[1fr_1fr_1.58fr_1fr_1fr]">
+          <div className="mx-auto grid w-full max-w-pageSection-contentWidth gap-[10px] px-4 md:px-6 md:grid-cols-2 xl:grid-cols-[1fr_1fr_1.58fr_1fr_1fr]">
             <div className="contents xl:grid xl:grid-rows-[minmax(0,345fr)_minmax(0,144fr)] xl:gap-[10px] xl:overflow-hidden xl:[contain:size]">
               {renderGalleryImage(
                 0,
@@ -252,7 +252,7 @@ export const BusinessFinancialServicesResourcesGallerySectionComponent: PuckComp
                 }
               >
                 <h3
-                  className="leading-[1.3]"
+                  className=""
                   style={getTextStyles(
                     props.featureHeading.styles,
                     props.featureHeading.fontColor,
@@ -269,7 +269,7 @@ export const BusinessFinancialServicesResourcesGallerySectionComponent: PuckComp
                 }
               >
                 <div
-                  className="my-8 leading-[1.6]"
+                  className="my-8"
                   style={getTextStyles(
                     props.featureBody.styles,
                     props.featureBody.fontColor,
@@ -298,7 +298,7 @@ export const BusinessFinancialServicesResourcesGallerySectionComponent: PuckComp
                 >
                   <ComprehensiveCTA
                     value={props.featureCta as Partial<ComprehensiveCTAValue>}
-                    className="inline-flex min-h-[42px] items-center justify-center rounded-full border border-[var(--colors-palette-quaternary)] px-[18px] py-2.5 no-underline"
+                    className="inline-flex items-center justify-center"
                   />
                 </EntityField>
               </BackgroundProvider>

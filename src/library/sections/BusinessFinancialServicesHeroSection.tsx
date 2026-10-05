@@ -241,7 +241,7 @@ export const BusinessFinancialServicesHeroSectionComponent: PuckComponent<
               />
             </div>
           ) : null}
-          <div className="relative z-10 mx-auto flex min-h-[600px] w-full max-w-[1440px] flex-col justify-center px-[22px] py-20 lg:px-20">
+          <div className="relative z-10 mx-auto flex min-h-[600px] w-full max-w-pageSection-contentWidth flex-col justify-center px-4 md:px-6 py-pageSection-verticalPadding">
             {aggregateRating.averageRating && aggregateRating.reviewCount ? (
               <div className="flex flex-wrap items-center gap-1 pt-4">
                 <ReviewStars
@@ -255,7 +255,7 @@ export const BusinessFinancialServicesHeroSectionComponent: PuckComponent<
                         }
                   }
                 />
-                <span className="basis-full leading-6 md:basis-auto">
+                <span className="basis-full md:basis-auto">
                   {reviewInfo}
                 </span>
               </div>
@@ -266,7 +266,7 @@ export const BusinessFinancialServicesHeroSectionComponent: PuckComponent<
               constantValueEnabled={props.geomodifier.text.constantValueEnabled}
             >
               <p
-                className="mt-2 leading-[1.2] md:leading-[45px]"
+                className="mt-2"
                 style={getTextStyles(
                   props.geomodifier.styles,
                   props.geomodifier.fontColor,
@@ -281,7 +281,7 @@ export const BusinessFinancialServicesHeroSectionComponent: PuckComponent<
               constantValueEnabled={props.heading.text.constantValueEnabled}
             >
               <h1
-                className="max-w-[620px] leading-[1.1]"
+                className="max-w-[620px]"
                 style={getTextStyles(
                   props.heading.styles,
                   props.heading.fontColor,
@@ -297,7 +297,7 @@ export const BusinessFinancialServicesHeroSectionComponent: PuckComponent<
               constantValueEnabled={props.body.text.constantValueEnabled}
             >
               <div
-                className="mt-5 max-w-[620px] leading-[1.7]"
+                className="mt-5 max-w-[620px]"
                 style={getTextStyles(props.body.styles, props.body.fontColor)}
               >
                 {renderRichText(resolvedBody, bodyRichTextStyleOverrides)}
@@ -319,7 +319,7 @@ export const BusinessFinancialServicesHeroSectionComponent: PuckComponent<
                 >
                   <ComprehensiveCTA
                     value={props.primaryCta as Partial<ComprehensiveCTAValue>}
-                    className="inline-flex min-h-[42px] items-center justify-center rounded-full px-8 py-3 no-underline"
+                    className="inline-flex items-center justify-center"
                   />
                 </EntityField>
                 <EntityField
@@ -331,7 +331,7 @@ export const BusinessFinancialServicesHeroSectionComponent: PuckComponent<
                 >
                   <ComprehensiveCTA
                     value={props.secondaryCta as Partial<ComprehensiveCTAValue>}
-                    className="inline-flex min-h-[42px] items-center justify-center rounded-full px-8 py-3 no-underline"
+                    className="inline-flex items-center justify-center"
                   />
                 </EntityField>
               </div>
