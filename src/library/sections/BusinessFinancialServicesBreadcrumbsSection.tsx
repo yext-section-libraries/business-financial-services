@@ -40,7 +40,7 @@ export type BusinessFinancialServicesBreadcrumbsSectionProps = {
 
 const fields: YextFields<BusinessFinancialServicesBreadcrumbsSectionProps> = {
   section: {
-    label: msg("fields.section", "Section"),
+    label: msg("fields.styles", "Styles"),
     type: "object",
     objectFields: {
       backgroundColor: {
@@ -260,7 +260,7 @@ const BusinessFinancialServicesBreadcrumbsSectionComponent: PuckComponent<
 
 export const BusinessFinancialServicesBreadcrumbsSection: YextComponentConfig<BusinessFinancialServicesBreadcrumbsSectionProps> =
   {
-    label: msg("components.breadcrumbsSection", "Breadcrumbs"),
+    label: msg("components.breadcrumbs", "Breadcrumbs"),
     fields,
     defaultProps: {
       section: {

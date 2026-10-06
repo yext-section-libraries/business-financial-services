@@ -131,7 +131,7 @@ const getDistanceLabel = (
 const BusinessFinancialServicesNearbyLocationsSectionFields: YextFields<BusinessFinancialServicesNearbyLocationsSectionProps> =
   {
     section: {
-      label: msg("fields.section", "Section"),
+      label: msg("fields.styles", "Styles"),
       type: "object",
       objectFields: {
         backgroundColor: {
@@ -444,7 +444,7 @@ export const BusinessFinancialServicesNearbyLocationsSectionComponent: PuckCompo
 
 export const BusinessFinancialServicesNearbyLocationsSection: YextComponentConfig<BusinessFinancialServicesNearbyLocationsSectionProps> =
   {
-    label: msg("components.nearbyLocationsSection", "Nearby Locations"),
+    label: msg("components.nearbyLocations", "Nearby Locations"),
     fields: BusinessFinancialServicesNearbyLocationsSectionFields,
     defaultProps: {
       heading: {

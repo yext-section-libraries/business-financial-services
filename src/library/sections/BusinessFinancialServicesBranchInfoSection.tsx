@@ -118,7 +118,7 @@ const normalizeStringList = (value: unknown): string[] =>
 const BusinessFinancialServicesBranchInfoSectionFields: YextFields<BusinessFinancialServicesBranchInfoSectionProps> =
   {
     section: {
-      label: msg("fields.section", "Section"),
+      label: msg("fields.styles", "Styles"),
       type: "object",
       objectFields: {
         backgroundColor: {
@@ -137,7 +137,7 @@ const BusinessFinancialServicesBranchInfoSectionFields: YextFields<BusinessFinan
       },
     },
     sectionHeading: {
-      label: msg("fields.sectionHeading", "Section Heading"),
+      label: msg("fields.heading", "Heading"),
       type: "object",
       objectFields: {
         text: {
@@ -545,7 +545,7 @@ export const BusinessFinancialServicesBranchInfoSectionComponent: PuckComponent<
         >
           <div className="mx-auto w-full max-w-pageSection-contentWidth px-4 md:px-6">
             <EntityField
-              displayName="Section Heading"
+              displayName="Heading"
               fieldId={props.sectionHeading.text.field}
               constantValueEnabled={
                 props.sectionHeading.text.constantValueEnabled
@@ -890,7 +890,7 @@ export const BusinessFinancialServicesBranchInfoSectionComponent: PuckComponent<
 
 export const BusinessFinancialServicesBranchInfoSection: YextComponentConfig<BusinessFinancialServicesBranchInfoSectionProps> =
   {
-    label: msg("components.branchInfoSection", "Branch Info"),
+    label: msg("components.branchInfo", "Branch Info"),
     fields: BusinessFinancialServicesBranchInfoSectionFields,
     defaultProps: {
       sectionHeading: {

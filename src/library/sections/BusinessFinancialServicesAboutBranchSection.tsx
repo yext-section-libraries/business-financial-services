@@ -39,7 +39,7 @@ export type BusinessFinancialServicesAboutBranchSectionProps = {
 const BusinessFinancialServicesAboutBranchSectionFields: YextFields<BusinessFinancialServicesAboutBranchSectionProps> =
   {
     section: {
-      label: msg("fields.section", "Section"),
+      label: msg("fields.styles", "Styles"),
       type: "object",
       objectFields: {
         visibleOnLivePage: {
@@ -219,7 +219,7 @@ export const BusinessFinancialServicesAboutBranchSectionComponent: PuckComponent
 
 export const BusinessFinancialServicesAboutBranchSection: YextComponentConfig<BusinessFinancialServicesAboutBranchSectionProps> =
   {
-    label: msg("components.aboutBranchSection", "About Branch"),
+    label: msg("components.aboutBranch", "About Branch"),
     fields: BusinessFinancialServicesAboutBranchSectionFields,
     defaultProps: {
       backgroundImage: {

@@ -54,7 +54,7 @@ export type BusinessFinancialServicesHoursSectionProps = {
 const BusinessFinancialServicesHoursSectionFields: YextFields<BusinessFinancialServicesHoursSectionProps> =
   {
     section: {
-      label: msg("fields.section", "Section"),
+      label: msg("fields.styles", "Styles"),
       type: "object",
       objectFields: {
         backgroundColor: {
@@ -226,6 +226,15 @@ export const BusinessFinancialServicesHoursSectionComponent: PuckComponent<
     locale,
     streamDocument,
   );
+  const dayOfWeekNames: DayOfWeekNames = {
+    monday: t("monday", "Monday"),
+    tuesday: t("tuesday", "Tuesday"),
+    wednesday: t("wednesday", "Wednesday"),
+    thursday: t("thursday", "Thursday"),
+    friday: t("friday", "Friday"),
+    saturday: t("saturday", "Saturday"),
+    sunday: t("sunday", "Sunday"),
+  };
   const intervalTranslations: HoursTableIntervalTranslations = {
     isClosed: t("closed", "Closed"),
     open24Hours: t("open24Hours", "Open 24 Hours"),
@@ -313,6 +322,7 @@ export const BusinessFinancialServicesHoursSectionComponent: PuckComponent<
                       <HoursTable
                         className="w-full max-w-full self-stretch [&_.HoursTable-row]:w-full [&_.HoursTable-row]:justify-between [&_.HoursTable-day]:flex-none [&_.HoursTable-day]:min-w-0 [&_.HoursTable-intervals]:flex-1 [&_.HoursTable-intervals]:min-w-0 [&_.HoursTable-intervals]:items-end [&_.HoursTable-intervals]:text-right"
                         hours={resolvedHours}
+                        dayOfWeekNames={dayOfWeekNames}
                         comingSoon={streamDocument.comingSoon}
                         startOfWeek={props.hoursStyles.startOfWeek}
                         collapseDays={props.hoursStyles.collapseDays}
@@ -364,6 +374,7 @@ export const BusinessFinancialServicesHoursSectionComponent: PuckComponent<
                       <HoursTable
                         className="w-full max-w-full self-stretch [&_.HoursTable-row]:w-full [&_.HoursTable-row]:justify-between [&_.HoursTable-day]:flex-none [&_.HoursTable-day]:min-w-0 [&_.HoursTable-intervals]:flex-1 [&_.HoursTable-intervals]:min-w-0 [&_.HoursTable-intervals]:items-end [&_.HoursTable-intervals]:text-right"
                         hours={resolvedSecondHours}
+                        dayOfWeekNames={dayOfWeekNames}
                         comingSoon={streamDocument.comingSoon}
                         startOfWeek={props.hoursStyles.startOfWeek}
                         collapseDays={props.hoursStyles.collapseDays}
@@ -383,7 +394,7 @@ export const BusinessFinancialServicesHoursSectionComponent: PuckComponent<
 
 export const BusinessFinancialServicesHoursSection: YextComponentConfig<BusinessFinancialServicesHoursSectionProps> =
   {
-    label: msg("components.hoursSection", "Hours"),
+    label: msg("components.hours", "Hours"),
     fields: BusinessFinancialServicesHoursSectionFields,
     defaultProps: {
       heading: {

@@ -254,7 +254,7 @@ export type BusinessFinancialServicesTeamSectionProps = {
 const BusinessFinancialServicesTeamSectionFields: YextFields<BusinessFinancialServicesTeamSectionProps> =
   {
     section: {
-      label: msg("fields.section", "Section"),
+      label: msg("fields.styles", "Styles"),
       type: "object",
       objectFields: {
         backgroundColor: {
@@ -733,7 +733,7 @@ export const BusinessFinancialServicesTeamSectionComponent: PuckComponent<
 
 export const BusinessFinancialServicesTeamSection: YextComponentConfig<BusinessFinancialServicesTeamSectionProps> =
   {
-    label: msg("components.teamSection", "Team"),
+    label: msg("components.team", "Team"),
     fields: BusinessFinancialServicesTeamSectionFields,
     defaultProps: {
       heading: {

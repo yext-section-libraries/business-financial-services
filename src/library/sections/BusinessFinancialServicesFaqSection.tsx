@@ -112,7 +112,7 @@ const faqsSource = createItemSource<FaqItem>({
 const BusinessFinancialServicesFaqSectionFields: YextFields<BusinessFinancialServicesFaqSectionProps> =
   {
     section: {
-      label: msg("fields.section", "Section"),
+      label: msg("fields.styles", "Styles"),
       type: "object",
       objectFields: {
         backgroundColor: {
@@ -347,7 +347,7 @@ export const BusinessFinancialServicesFaqSectionComponent: PuckComponent<
 
 export const BusinessFinancialServicesFaqSection: YextComponentConfig<BusinessFinancialServicesFaqSectionProps> =
   {
-    label: msg("components.faqSection", "FAQ"),
+    label: msg("components.faq", "FAQ"),
     fields: BusinessFinancialServicesFaqSectionFields,
     defaultProps: {
       heading: {

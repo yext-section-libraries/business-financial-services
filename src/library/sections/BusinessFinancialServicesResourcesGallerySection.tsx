@@ -66,7 +66,7 @@ const imageDefault = (path: string): ImageField => ({
 const BusinessFinancialServicesResourcesGallerySectionFields: YextFields<BusinessFinancialServicesResourcesGallerySectionProps> =
   {
     section: {
-      label: msg("fields.section", "Section"),
+      label: msg("fields.styles", "Styles"),
       type: "object",
       objectFields: {
         backgroundColor: {
@@ -320,7 +320,7 @@ export const BusinessFinancialServicesResourcesGallerySectionComponent: PuckComp
 
 export const BusinessFinancialServicesResourcesGallerySection: YextComponentConfig<BusinessFinancialServicesResourcesGallerySectionProps> =
   {
-    label: msg("components.resourcesGallerySection", "Resources Gallery"),
+    label: msg("components.resourcesGallery", "Resources Gallery"),
     fields: BusinessFinancialServicesResourcesGallerySectionFields,
     defaultProps: {
       galleryImages: [

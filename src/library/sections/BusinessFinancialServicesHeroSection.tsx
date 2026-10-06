@@ -50,7 +50,7 @@ export type BusinessFinancialServicesHeroSectionProps = {
 const BusinessFinancialServicesHeroSectionFields: YextFields<BusinessFinancialServicesHeroSectionProps> =
   {
     section: {
-      label: msg("fields.section", "Section"),
+      label: msg("fields.styles", "Styles"),
       type: "object",
       objectFields: {
         visibleOnLivePage: {
@@ -345,7 +345,7 @@ export const BusinessFinancialServicesHeroSectionComponent: PuckComponent<
 
 export const BusinessFinancialServicesHeroSection: YextComponentConfig<BusinessFinancialServicesHeroSectionProps> =
   {
-    label: msg("components.heroSection", "Hero"),
+    label: msg("components.hero", "Hero"),
     fields: BusinessFinancialServicesHeroSectionFields,
     defaultProps: {
       backgroundImage: {

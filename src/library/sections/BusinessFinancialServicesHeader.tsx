@@ -404,7 +404,7 @@ const SharedHeaderDefaultUtilityIcon = () => (
 const BusinessFinancialServicesHeaderFields: YextFields<BusinessFinancialServicesHeaderProps> =
   {
     section: {
-      label: msg("fields.section", "Section"),
+      label: msg("fields.styles", "Styles"),
       type: "object",
       objectFields: {
         backgroundColor: {

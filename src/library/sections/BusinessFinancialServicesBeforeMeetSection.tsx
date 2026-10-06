@@ -85,7 +85,7 @@ const pillDefault = (label: string): PillAction => ({
 const BusinessFinancialServicesBeforeMeetSectionFields: YextFields<BusinessFinancialServicesBeforeMeetSectionProps> =
   {
     section: {
-      label: msg("fields.section", "Section"),
+      label: msg("fields.styles", "Styles"),
       type: "object",
       objectFields: {
         backgroundColor: {
@@ -241,7 +241,7 @@ export const BusinessFinancialServicesBeforeMeetSectionComponent: PuckComponent<
 
 export const BusinessFinancialServicesBeforeMeetSection: YextComponentConfig<BusinessFinancialServicesBeforeMeetSectionProps> =
   {
-    label: msg("components.disclosuresSection", "Disclosures"),
+    label: msg("components.disclosures", "Disclosures"),
     fields: BusinessFinancialServicesBeforeMeetSectionFields,
     defaultProps: {
       heading: {

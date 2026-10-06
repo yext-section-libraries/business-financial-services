@@ -42,7 +42,7 @@ export type BusinessFinancialServicesBannerSectionProps = {
 
 const fields: YextFields<BusinessFinancialServicesBannerSectionProps> = {
   section: {
-    label: msg("fields.section", "Section"),
+    label: msg("fields.styles", "Styles"),
     type: "object",
     objectFields: {
       backgroundColor: {
@@ -168,7 +168,7 @@ const BusinessFinancialServicesBannerSectionComponent: PuckComponent<
 
 export const BusinessFinancialServicesBannerSection: YextComponentConfig<BusinessFinancialServicesBannerSectionProps> =
   {
-    label: msg("components.bannerSection", "Banner"),
+    label: msg("components.banner", "Banner"),
     fields,
     defaultProps: {
       data: {
