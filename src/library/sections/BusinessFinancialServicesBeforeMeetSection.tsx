@@ -241,7 +241,7 @@ export const BusinessFinancialServicesBeforeMeetSectionComponent: PuckComponent<
 
 export const BusinessFinancialServicesBeforeMeetSection: YextComponentConfig<BusinessFinancialServicesBeforeMeetSectionProps> =
   {
-    label: msg("components.disclosuresSection", "Disclosures Section"),
+    label: msg("components.disclosuresSection", "Disclosures"),
     fields: BusinessFinancialServicesBeforeMeetSectionFields,
     defaultProps: {
       heading: {
@@ -303,7 +303,7 @@ export const BusinessFinancialServicesBeforeMeetSection: YextComponentConfig<Bus
 
 export const config: SectionConfig = {
   id: "BusinessFinancialServicesBeforeMeetSection",
-  displayName: "Disclosures Section",
-  description: "Disclosures Section",
+  displayName: "Disclosures",
+  description: "Disclosures",
   pageSetTypes: ["ENTITY"],
 };

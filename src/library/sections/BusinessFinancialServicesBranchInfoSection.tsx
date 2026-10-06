@@ -890,7 +890,7 @@ export const BusinessFinancialServicesBranchInfoSectionComponent: PuckComponent<
 
 export const BusinessFinancialServicesBranchInfoSection: YextComponentConfig<BusinessFinancialServicesBranchInfoSectionProps> =
   {
-    label: msg("components.branchInfoSection", "Branch Info Section"),
+    label: msg("components.branchInfoSection", "Branch Info"),
     fields: BusinessFinancialServicesBranchInfoSectionFields,
     defaultProps: {
       sectionHeading: {
@@ -1138,7 +1138,7 @@ export const BusinessFinancialServicesBranchInfoSection: YextComponentConfig<Bus
 
 export const config: SectionConfig = {
   id: "BusinessFinancialServicesBranchInfoSection",
-  displayName: "Branch Info Section",
-  description: "Branch Info Section",
+  displayName: "Branch Info",
+  description: "Branch Info",
   pageSetTypes: ["ENTITY"],
 };

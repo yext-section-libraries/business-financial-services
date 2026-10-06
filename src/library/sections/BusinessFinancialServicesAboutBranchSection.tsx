@@ -219,7 +219,7 @@ export const BusinessFinancialServicesAboutBranchSectionComponent: PuckComponent
 
 export const BusinessFinancialServicesAboutBranchSection: YextComponentConfig<BusinessFinancialServicesAboutBranchSectionProps> =
   {
-    label: msg("components.aboutBranchSection", "About Branch Section"),
+    label: msg("components.aboutBranchSection", "About Branch"),
     fields: BusinessFinancialServicesAboutBranchSectionFields,
     defaultProps: {
       backgroundImage: {
@@ -289,7 +289,7 @@ export const BusinessFinancialServicesAboutBranchSection: YextComponentConfig<Bu
 
 export const config: SectionConfig = {
   id: "BusinessFinancialServicesAboutBranchSection",
-  displayName: "About Branch Section",
-  description: "About Branch Section",
+  displayName: "About Branch",
+  description: "About Branch",
   pageSetTypes: ["ENTITY"],
 };

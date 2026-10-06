@@ -444,7 +444,7 @@ export const BusinessFinancialServicesNearbyLocationsSectionComponent: PuckCompo
 
 export const BusinessFinancialServicesNearbyLocationsSection: YextComponentConfig<BusinessFinancialServicesNearbyLocationsSectionProps> =
   {
-    label: msg("components.nearbyLocationsSection", "Nearby Locations Section"),
+    label: msg("components.nearbyLocationsSection", "Nearby Locations"),
     fields: BusinessFinancialServicesNearbyLocationsSectionFields,
     defaultProps: {
       heading: {
@@ -498,7 +498,7 @@ export const BusinessFinancialServicesNearbyLocationsSection: YextComponentConfi
 
 export const config: SectionConfig = {
   id: "BusinessFinancialServicesNearbyLocationsSection",
-  displayName: "Nearby Locations Section",
-  description: "Nearby Locations Section",
+  displayName: "Nearby Locations",
+  description: "Nearby Locations",
   pageSetTypes: ["ENTITY"],
 };

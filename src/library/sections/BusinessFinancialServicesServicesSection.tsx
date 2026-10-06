@@ -397,7 +397,7 @@ export const BusinessFinancialServicesServicesSectionComponent: PuckComponent<
 
 export const BusinessFinancialServicesServicesSection: YextComponentConfig<BusinessFinancialServicesServicesSectionProps> =
   {
-    label: msg("components.servicesSection", "Services Section"),
+    label: msg("components.servicesSection", "Services"),
     fields: BusinessFinancialServicesServicesSectionFields,
     defaultProps: {
       headingBrow: {
@@ -516,7 +516,7 @@ export const BusinessFinancialServicesServicesSection: YextComponentConfig<Busin
 
 export const config: SectionConfig = {
   id: "BusinessFinancialServicesServicesSection",
-  displayName: "Services Section",
-  description: "Services Section",
+  displayName: "Services",
+  description: "Services",
   pageSetTypes: ["ENTITY"],
 };

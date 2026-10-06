@@ -347,7 +347,7 @@ export const BusinessFinancialServicesFaqSectionComponent: PuckComponent<
 
 export const BusinessFinancialServicesFaqSection: YextComponentConfig<BusinessFinancialServicesFaqSectionProps> =
   {
-    label: msg("components.faqSection", "FAQ Section"),
+    label: msg("components.faqSection", "FAQ"),
     fields: BusinessFinancialServicesFaqSectionFields,
     defaultProps: {
       heading: {
@@ -412,7 +412,7 @@ export const BusinessFinancialServicesFaqSection: YextComponentConfig<BusinessFi
 
 export const config: SectionConfig = {
   id: "BusinessFinancialServicesFaqSection",
-  displayName: "FAQ Section",
-  description: "FAQ Section",
+  displayName: "FAQ",
+  description: "FAQ",
   pageSetTypes: ["ENTITY"],
 };

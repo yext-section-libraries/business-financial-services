@@ -383,7 +383,7 @@ export const BusinessFinancialServicesHoursSectionComponent: PuckComponent<
 
 export const BusinessFinancialServicesHoursSection: YextComponentConfig<BusinessFinancialServicesHoursSectionProps> =
   {
-    label: msg("components.hoursSection", "Hours Section"),
+    label: msg("components.hoursSection", "Hours"),
     fields: BusinessFinancialServicesHoursSectionFields,
     defaultProps: {
       heading: {
@@ -477,7 +477,7 @@ export const BusinessFinancialServicesHoursSection: YextComponentConfig<Business
 
 export const config: SectionConfig = {
   id: "BusinessFinancialServicesHoursSection",
-  displayName: "Hours Section",
-  description: "Hours Section",
+  displayName: "Hours",
+  description: "Hours",
   pageSetTypes: ["ENTITY"],
 };

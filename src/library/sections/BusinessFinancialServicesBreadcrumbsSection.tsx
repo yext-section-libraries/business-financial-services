@@ -260,7 +260,7 @@ const BusinessFinancialServicesBreadcrumbsSectionComponent: PuckComponent<
 
 export const BusinessFinancialServicesBreadcrumbsSection: YextComponentConfig<BusinessFinancialServicesBreadcrumbsSectionProps> =
   {
-    label: msg("components.breadcrumbsSection", "Breadcrumbs Section"),
+    label: msg("components.breadcrumbsSection", "Breadcrumbs"),
     fields,
     defaultProps: {
       section: {
@@ -296,7 +296,7 @@ export const BusinessFinancialServicesBreadcrumbsSection: YextComponentConfig<Bu
 
 export const config: SectionConfig = {
   id: "BusinessFinancialServicesBreadcrumbsSection",
-  displayName: "Breadcrumbs Section",
-  description: "Breadcrumbs Section",
+  displayName: "Breadcrumbs",
+  description: "Breadcrumbs",
   pageSetTypes: ["ENTITY"],
 };

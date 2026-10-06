@@ -345,7 +345,7 @@ export const BusinessFinancialServicesHeroSectionComponent: PuckComponent<
 
 export const BusinessFinancialServicesHeroSection: YextComponentConfig<BusinessFinancialServicesHeroSectionProps> =
   {
-    label: msg("components.heroSection", "Hero Section"),
+    label: msg("components.heroSection", "Hero"),
     fields: BusinessFinancialServicesHeroSectionFields,
     defaultProps: {
       backgroundImage: {
@@ -501,7 +501,7 @@ export const BusinessFinancialServicesHeroSection: YextComponentConfig<BusinessF
 
 export const config: SectionConfig = {
   id: "BusinessFinancialServicesHeroSection",
-  displayName: "Hero Section",
-  description: "Hero Section",
+  displayName: "Hero",
+  description: "Hero",
   pageSetTypes: ["ENTITY"],
 };

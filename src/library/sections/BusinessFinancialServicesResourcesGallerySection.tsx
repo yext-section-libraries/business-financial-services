@@ -320,7 +320,7 @@ export const BusinessFinancialServicesResourcesGallerySectionComponent: PuckComp
 
 export const BusinessFinancialServicesResourcesGallerySection: YextComponentConfig<BusinessFinancialServicesResourcesGallerySectionProps> =
   {
-    label: msg("components.resourcesGallerySection", "Resources Gallery Section"),
+    label: msg("components.resourcesGallerySection", "Resources Gallery"),
     fields: BusinessFinancialServicesResourcesGallerySectionFields,
     defaultProps: {
       galleryImages: [
@@ -443,7 +443,7 @@ export const BusinessFinancialServicesResourcesGallerySection: YextComponentConf
 
 export const config: SectionConfig = {
   id: "BusinessFinancialServicesResourcesGallerySection",
-  displayName: "Resources Gallery Section",
-  description: "Resources Gallery Section",
+  displayName: "Resources Gallery",
+  description: "Resources Gallery",
   pageSetTypes: ["ENTITY"],
 };

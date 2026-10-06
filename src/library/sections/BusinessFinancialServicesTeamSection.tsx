@@ -733,7 +733,7 @@ export const BusinessFinancialServicesTeamSectionComponent: PuckComponent<
 
 export const BusinessFinancialServicesTeamSection: YextComponentConfig<BusinessFinancialServicesTeamSectionProps> =
   {
-    label: msg("components.teamSection", "Team Section"),
+    label: msg("components.teamSection", "Team"),
     fields: BusinessFinancialServicesTeamSectionFields,
     defaultProps: {
       heading: {
@@ -825,7 +825,7 @@ export const BusinessFinancialServicesTeamSection: YextComponentConfig<BusinessF
 
 export const config: SectionConfig = {
   id: "BusinessFinancialServicesTeamSection",
-  displayName: "Team Section",
-  description: "Team Section",
+  displayName: "Team",
+  description: "Team",
   pageSetTypes: ["ENTITY"],
 };

@@ -168,7 +168,7 @@ const BusinessFinancialServicesBannerSectionComponent: PuckComponent<
 
 export const BusinessFinancialServicesBannerSection: YextComponentConfig<BusinessFinancialServicesBannerSectionProps> =
   {
-    label: msg("components.bannerSection", "Banner Section"),
+    label: msg("components.bannerSection", "Banner"),
     fields,
     defaultProps: {
       data: {
@@ -207,7 +207,7 @@ export const BusinessFinancialServicesBannerSection: YextComponentConfig<Busines
 
 export const config: SectionConfig = {
   id: "BusinessFinancialServicesBannerSection",
-  displayName: "Banner Section",
-  description: "Banner Section",
+  displayName: "Banner",
+  description: "Banner",
   pageSetTypes: ["ENTITY"],
 };
