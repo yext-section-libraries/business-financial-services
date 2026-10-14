@@ -351,5 +351,6 @@
   "useOurLocatorToFindALocationNearYou": "Nutze unseren Locator, um einen Ort in deine Nähe zu finden",
   "visitPage": "Standortseite aufrufen",
   "visitPageForName": "Besuchsseite für {{name}}",
-  "wednesday": "Mittwoch"
+  "wednesday": "Mittwoch",
+  "mapRequiresWebGL": "Die Karte ist nicht verfügbar, weil WebGL nicht verfügbar ist."
 }

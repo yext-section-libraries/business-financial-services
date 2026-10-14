@@ -351,5 +351,6 @@
   "useOurLocatorToFindALocationNearYou": "Gebruik onze locator om een ​​locatie bij u in de buurt te vinden",
   "visitPage": "Bezoek pagina",
   "visitPageForName": "Bezoek pagina voor {{name}}",
-  "wednesday": "Woensdag"
+  "wednesday": "Woensdag",
+  "mapRequiresWebGL": "De kaart is niet beschikbaar omdat WebGL niet beschikbaar is."
 }
