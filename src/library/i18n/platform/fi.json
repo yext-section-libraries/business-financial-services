@@ -130,6 +130,7 @@
     "lobbyHeading": "Aulan otsikko",
     "logoImage": "Logokuva",
     "longitude": "Pituusaste",
+    "mapStartingZoom": "Kartan aloituszoomaus",
     "mapStyle": "Karttatyyli",
     "name": "Nimi",
     "navigation": "Navigointi",

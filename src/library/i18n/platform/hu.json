@@ -130,6 +130,7 @@
     "lobbyHeading": "Előcsarnok címsora",
     "logoImage": "Logó képe",
     "longitude": "Hosszúság",
+    "mapStartingZoom": "A térkép kezdeti nagyítási szintje",
     "mapStyle": "Térképstílus",
     "name": "Név",
     "navigation": "Navigáció",

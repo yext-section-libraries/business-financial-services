@@ -130,6 +130,7 @@
     "lobbyHeading": "Lobbykop",
     "logoImage": "Logoafbeelding",
     "longitude": "Lengte",
+    "mapStartingZoom": "Initieel zoomniveau van de kaart",
     "mapStyle": "Kaartstijl",
     "name": "Naam",
     "navigation": "Navigatie",
