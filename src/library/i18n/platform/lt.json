@@ -130,6 +130,7 @@
     "lobbyHeading": "Vestibiulio antraštė",
     "logoImage": "Logotipo vaizdas",
     "longitude": "Ilguma",
+    "mapStartingZoom": "Pradinis žemėlapio mastelio lygis",
     "mapStyle": "Žemėlapio stilius",
     "name": "Vardas",
     "navigation": "Naršymas",

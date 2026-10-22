@@ -130,6 +130,7 @@
     "lobbyHeading": "Lobi Başlığı",
     "logoImage": "Logo Görseli",
     "longitude": "Boylam",
+    "mapStartingZoom": "Haritanın başlangıç yakınlaştırma düzeyi",
     "mapStyle": "Harita stili",
     "name": "İsim",
     "navigation": "Gezinme",

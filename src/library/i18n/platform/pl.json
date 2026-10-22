@@ -130,6 +130,7 @@
     "lobbyHeading": "Nagłówek lobby",
     "logoImage": "Obraz logo",
     "longitude": "Długość geograficzna",
+    "mapStartingZoom": "Początkowy poziom powiększenia mapy",
     "mapStyle": "Styl mapy",
     "name": "Nazwa",
     "navigation": "Nawigacja",
