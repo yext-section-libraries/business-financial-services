@@ -50,6 +50,7 @@
     "analytics": "分析",
     "answer": "回答",
     "aspectRatio": "アスペクト比",
+    "autoSearchOnMapMove": "地図移動時に自動検索",
     "backgroundColor": "背景色",
     "backgroundImage": "背景画像",
     "bannerText": "バナーテキスト",
