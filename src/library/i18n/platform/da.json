@@ -50,6 +50,7 @@
     "analytics": "Analyser",
     "answer": "Svar",
     "aspectRatio": "Aspektforhold",
+    "autoSearchOnMapMove": "Søg automatisk på kortbevægelse",
     "backgroundColor": "Baggrundsfarve",
     "backgroundImage": "Baggrundsbillede",
     "bannerText": "Bannertekst",
